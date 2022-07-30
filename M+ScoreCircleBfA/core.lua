@@ -114,39 +114,39 @@ function LFGRegionMixin:CheckMythicScore(leaderName)
 
             if table.getn(_info.score) > 0 then
                 if table.getn(_info.score) == 1 then
-                    self:AddRegion(string.format(_info.score[1]:gsub('%d',''):gsub('%s','') .. findClosest(tonumber(_info.score[1]:sub(-4)), scoreTiers), string.match(_info.score[1], '%S+$')) ..
+                    self:AddRegion(string.format(_info.score[1]:gsub('%d',''):gsub('%s','') .. findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers), string.match(_info.score[1], '%S+$')) ..
                                    string.format("\nBest run: |cff00a000%s|r", _info.bestKey:sub(0,2)) .. 
                                    string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))))
                 end
                 if table.getn(_info.score) == 2 then
-                    self:AddRegion(string.format(_info.score[1]:gsub('%d',''):gsub('%s','') .. findClosest(tonumber(_info.score[1]:sub(-4)), scoreTiers), string.match(_info.score[1], '%S+$')) .. 
-                                   string.format(" " .. _info.score[2]:gsub('%d',''):gsub('%s','') .. findClosest(tonumber(_info.score[2]:sub(-4)), scoreTiers), string.match(_info.score[2], '%S+$'))
-                                    .. 
-                                   string.format("\nBest run: |cff00a000%s|r", _info.bestKey:sub(0,2)) .. 
-                                   string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3)))
-                                )
+                    self:AddRegion(string.format(_info.score[1]:gsub('%d',''):gsub('%s','') .. findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers), string.match(_info.score[1], '%S+$')) .. 
+                    string.format(" " .. _info.score[2]:gsub('%d',''):gsub('%s','') .. findClosest(tonumber(string.match(_info.score[2], '%S+$')), scoreTiers), string.match(_info.score[2], '%S+$'))
+                    .. 
+                    string.format("\nBest run: |cff00a000%s|r", _info.bestKey:sub(0,2)) .. 
+                    string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3)))
+                 )
                 end
                 if table.getn(_info.score) == 3 then
-                    self:AddRegion(string.format(_info.score[1]:gsub('%d',''):gsub('%s','') .. findClosest(tonumber(_info.score[1]:sub(-4)), scoreTiers), string.match(_info.score[1], '%S+$')) .. 
-                                   string.format(" " .. _info.score[2]:gsub('%d',''):gsub('%s','') .. findClosest(tonumber(_info.score[2]:sub(-4)), scoreTiers), string.match(_info.score[2], '%S+$')) ..
-                                   string.format(" " .. _info.score[3]:gsub('%d',''):gsub('%s','') .. findClosest(tonumber(_info.score[3]:sub(-4)), scoreTiers), string.match(_info.score[3], '%S+$')) 
+                    self:AddRegion(string.format(_info.score[1]:gsub('%d',''):gsub('%s','') .. findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers), string.match(_info.score[1], '%S+$')) .. 
+                                   string.format(" " .. _info.score[2]:gsub('%d',''):gsub('%s','') .. findClosest(tonumber(string.match(_info.score[2], '%S+$')), scoreTiers), string.match(_info.score[2], '%S+$')) ..
+                                   string.format(" " .. _info.score[3]:gsub('%d',''):gsub('%s','') .. findClosest(tonumber(string.match(_info.score[3], '%S+$')), scoreTiers), string.match(_info.score[3], '%S+$')) 
                                    .. 
                                    string.format("\nBest run: |cff00a000%s|r", _info.bestKey:sub(0,2)) .. 
                                    string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3)))
                                 )
                 end
                 if table.getn(_info.score) == 4 then
-                    self:AddRegion(string.format(_info.score[1]:gsub('%d',''):gsub('%s','') .. findClosest(tonumber(_info.score[1]:sub(-4)), scoreTiers), string.match(_info.score[1], '%S+$')) .. 
-                                   tring.format(" " .. _info.score[2]:gsub('%d',''):gsub('%s','') .. findClosest(tonumber(_info.score[2]:sub(-4)), scoreTiers), string.match(_info.score[2], '%S+$')) ..
-                                   tring.format(" " .. _info.score[3]:gsub('%d',''):gsub('%s','') .. findClosest(tonumber(_info.score[3]:sub(-4)), scoreTiers), string.match(_info.score[3], '%S+$')) ..
-                                   tring.format(" " .. _info.score[4]:gsub('%d',''):gsub('%s','') .. findClosest(tonumber(_info.score[4]:sub(-4)), scoreTiers), string.match(_info.score[4], '%S+$')) .. 
+                    self:AddRegion(string.format(_info.score[1]:gsub('%d',''):gsub('%s','') .. findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers), string.match(_info.score[1], '%S+$')) .. 
+                                   tring.format(" " .. _info.score[2]:gsub('%d',''):gsub('%s','') .. findClosest(tonumber(string.match(_info.score[2], '%S+$')), scoreTiers), string.match(_info.score[2], '%S+$')) ..
+                                   tring.format(" " .. _info.score[3]:gsub('%d',''):gsub('%s','') .. findClosest(tonumber(string.match(_info.score[3], '%S+$')), scoreTiers), string.match(_info.score[3], '%S+$')) ..
+                                   tring.format(" " .. _info.score[4]:gsub('%d',''):gsub('%s','') .. findClosest(tonumber(string.match(_info.score[4], '%S+$')), scoreTiers), string.match(_info.score[4], '%S+$')) .. 
                                    string.format("\nBest run: |cff00a000%s|r", _info.bestKey:sub(0,2)) .. 
                                    string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))))
                 end
             end
-            if table.getn(_info.score) == 0 then
-                self:AddRegion(string.format("|cffffffff%s|r", "No info"))
-            end
+            -- if table.getn(_info.score) == 0 then
+            --     self:AddRegion(string.format("|cffffffff%s|r", "No info"))
+            -- end
     end
         if _prep == nil then
                 self:AddRegion(string.format("|cffffffff%s|r", "No info"))
