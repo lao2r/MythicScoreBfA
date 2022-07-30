@@ -158,8 +158,6 @@ local frame = CreateFrame("frame");
 frame:RegisterEvent("UPDATE_MOUSEOVER_UNIT");
 frame:SetScript("OnEvent", F)
 
-local _, LFGRegion = ...
-
 LFGRegionMixin = {}
 
 function LFGRegionMixin:OnLoad()
@@ -181,6 +179,7 @@ function LFGRegionMixin:CheckMythicScore(leaderName)
     local _prep = getCharacterIdByName(leaderName)
     if _prep ~= nil then
     local _info = getMythicScore(_prep[1])
+    local _role, _role2, _role3
 
             if table.getn(_info.score) > 0 then
                 if table.getn(_info.score) == 1 then
