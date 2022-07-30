@@ -34,12 +34,12 @@ local function F()
         if table.getn(_info.score) > 0 then
             if table.getn(_info.score) == 1 then
                 
-                tooltip:AddLine(string.format("M+ Score: " .. findClosest(tonumber(_info.score[1]:sub(-4)), scoreTiers), _info.score[1]) .. 
+                tooltip:AddLine(string.format("M+ Score: " .. findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers), _info.score[1]) .. 
                 string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))))
             end
             if table.getn(_info.score) == 2 then
-                tooltip:AddLine(string.format("M+ Score: " .. _info.score[1]:gsub('%d',''):gsub('%s','') .. findClosest(tonumber(_info.score[1]:sub(-4)), scoreTiers), string.match(_info.score[1], '%S+$')) .. 
-                                string.format(" " .. _info.score[2]:gsub('%d',''):gsub('%s','') .. findClosest(tonumber(_info.score[2]:sub(-4)), scoreTiers), string.match(_info.score[2], '%S+$')) 
+                tooltip:AddLine(string.format("M+ Score: " .. _info.score[1]:gsub('%d',''):gsub('%s','') .. findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers), string.match(_info.score[1], '%S+$')) .. 
+                                string.format(" " .. _info.score[2]:gsub('%d',''):gsub('%s','') .. findClosest(tonumber(string.match(_info.score[2], '%S+$')), scoreTiers), string.match(_info.score[2], '%S+$')) 
                                 .. 
                                 string.format("\nBest run: |cff00a000%s|r", _info.bestKey:sub(0,2)) ..  
                                 string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3)))
@@ -47,9 +47,9 @@ local function F()
                 tooltip:Show()
             end
             if table.getn(_info.score) == 3 then
-                tooltip:AddLine(string.format("M+ Score: " .. _info.score[1]:gsub('%d',''):gsub('%s','') .. findClosest(tonumber(_info.score[1]:sub(-4)), scoreTiers), string.match(_info.score[1], '%S+$')) .. 
-                                string.format(" " .. _info.score[2]:gsub('%d',''):gsub('%s','') .. findClosest(tonumber(_info.score[2]:sub(-4)), scoreTiers), string.match(_info.score[2], '%S+$')) ..
-                                string.format(" " .. _info.score[3]:gsub('%d',''):gsub('%s','') .. findClosest(tonumber(_info.score[3]:sub(-4)), scoreTiers),string.match(_info.score[3], '%S+$')) 
+                tooltip:AddLine(string.format("M+ Score: " .. _info.score[1]:gsub('%d',''):gsub('%s','') .. findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers), string.match(_info.score[1], '%S+$')) .. 
+                                string.format(" " .. _info.score[2]:gsub('%d',''):gsub('%s','') .. findClosest(tonumber(string.match(_info.score[2], '%S+$')), scoreTiers), string.match(_info.score[2], '%S+$')) ..
+                                string.format(" " .. _info.score[3]:gsub('%d',''):gsub('%s','') .. findClosest(tonumber(string.match(_info.score[3], '%S+$')), scoreTiers),string.match(_info.score[3], '%S+$')) 
                                 .. 
                                 string.format("\nBest run: |cff00a000%s|r", _info.bestKey:sub(0,2)) ..  
                                 string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3)))
@@ -57,10 +57,10 @@ local function F()
                 tooltip:Show()
             end
             if table.getn(_info.score) == 4 then
-                tooltip:AddLine(string.format("M+ Score: " .. _info.score[1]:gsub('%d',''):gsub('%s','') .. findClosest(tonumber(_info.score[1]:sub(-4)), scoreTiers), string.match(_info.score[1], '%S+$')) .. 
-                                string.format(" " .. _info.score[2]:gsub('%d',''):gsub('%s','') .. findClosest(tonumber(_info.score[2]:sub(-4)), scoreTiers), string.match(_info.score[2], '%S+$')) ..
-                                string.format(" " .. _info.score[3]:gsub('%d',''):gsub('%s','') .. findClosest(tonumber(_info.score[3]:sub(-4)), scoreTiers), string.match(_info.score[3], '%S+$')) ..
-                                string.format(" " .. _info.score[4]:gsub('%d',''):gsub('%s','') .. findClosest(tonumber(_info.score[4]:sub(-4)), scoreTiers), string.match(_info.score[4], '%S+$')) 
+                tooltip:AddLine(string.format("M+ Score: " .. _info.score[1]:gsub('%d',''):gsub('%s','') .. findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers), string.match(_info.score[1], '%S+$')) .. 
+                                string.format(" " .. _info.score[2]:gsub('%d',''):gsub('%s','') .. findClosest(tonumber(string.match(_info.score[2], '%S+$')), scoreTiers), string.match(_info.score[2], '%S+$')) ..
+                                string.format(" " .. _info.score[3]:gsub('%d',''):gsub('%s','') .. findClosest(tonumber(string.match(_info.score[3], '%S+$')), scoreTiers), string.match(_info.score[3], '%S+$')) ..
+                                string.format(" " .. _info.score[4]:gsub('%d',''):gsub('%s','') .. findClosest(tonumber(string.match(_info.score[4], '%S+$')), scoreTiers), string.match(_info.score[4], '%S+$')) 
                                 .. 
                                 string.format("\nBest run: |cff00a000%s|r", _info.bestKey:sub(0,2)) ..  
                                 string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))))
