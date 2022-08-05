@@ -220,7 +220,7 @@ function LFGRegionMixin:CheckMythicScore(leaderName)
                                    string.format("\nЛучший за сезон: |cff00a000%s|r", "\n" .. _info.bestKey:sub(0,2)) .. 
                                    string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))), _info)
                 end
-                if table.getn(_info.score) == 4 then
+                if table.getn(_info.score) > 3 then
                     if (string.match(_info.score[1], "DPS")) then
                         _role = ROLE_ICONS.dps.full
                     end
@@ -247,8 +247,8 @@ function LFGRegionMixin:CheckMythicScore(leaderName)
                     end
                     if (string.match(_info.score[3], "HEALER")) then
                         _role2 = ROLE_ICONS.healer.full
-                    end 
-                    self:AddRegion(string.format(_role .. findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers), string.match(_info.score[1], '%S+$')) .. 
+                    end
+                    self:AddRegion(string.format(_role .. findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers), string.match(_info.score[1], '%S+$')) ..
                                    string.format(" " .. _role2 .. findClosest(tonumber(string.match(_info.score[2], '%S+$')), scoreTiers), string.match(_info.score[2], '%S+$')) ..
                                    string.format(" " .. _role3 .. findClosest(tonumber(string.match(_info.score[3], '%S+$')), scoreTiers), string.match(_info.score[3], '%S+$')) ..
                                    string.format("\nЛучший за сезон: |cff00a000%s|r", "\n" .. _info.bestKey:sub(0,2)) .. 
@@ -265,7 +265,7 @@ function LFGRegionMixin:CheckMythicScore(leaderName)
 end
 
 function LFGRegionMixin:AddRegion(_score, _info)
-    GameTooltip:AddLine(" ")
+    GameTooltip:AddDoubleLine(" ")
     GameTooltip:AddLine(string.format("M+ Score: %s", _score))
     GameTooltip:Show()
 
