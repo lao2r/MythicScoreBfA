@@ -39,8 +39,10 @@ ROLE_ICONS = {
 AppendToGameTooltipMixin = {}
 
 function AppendToGameTooltipMixin:CheckMythicScore()
-    
+
     local unitName, unit = GameTooltip:GetUnit()
+
+    if UnitIsPlayer(unit) then
 
     local _prep = getCharacterIdByName(unitName)
 
@@ -137,9 +139,11 @@ end
             self:AddRegion(string.format("|cffffffff%s|r", "No info"))
     end
 end
+end
 
 GameTooltip:HookScript("OnTooltipSetUnit", function(self)
     AppendToGameTooltipMixin:CheckMythicScore()
+
 end)
 
 function AppendToGameTooltipMixin:AddRegion(_score, _info)
