@@ -36,22 +36,24 @@ ROLE_ICONS = {
     }
 }
 
-local function F()
+AppendToGameTooltipMixin = {}
 
-    local _unitName = UnitName("mouseover")
-    local tooltip = GameTooltip
+function AppendToGameTooltipMixin:CheckMythicScore()
+    
+    local unitName, unit = GameTooltip:GetUnit()
 
-    if tooltip:IsShown() then
-        local _prep = getCharacterIdByName(_unitName)
+    local _prep = getCharacterIdByName(unitName)
+
         if _prep ~= nil then
         local _info = getMythicScore(_prep[1])
         local _role, _role2, _role3
 
         if table.getn(_info.score) > 0 then
             if table.getn(_info.score) == 1 then
-                tooltip:AddLine(string.format("M+ Score: " .. _info.score[1]:gsub('%d',''):gsub('%s','') .. findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers), _info.score[1]) .. 
+                self:AddRegion(string.format(_info.score[1]:gsub('%d',''):gsub('%s','') .. findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers), _info.score[1]) .. 
                 string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))))
             end
+
             if table.getn(_info.score) == 2 then
                 if (string.match(_info.score[1], "DPS")) then
                     _role = ROLE_ICONS.dps.full
@@ -62,15 +64,11 @@ local function F()
                 if (string.match(_info.score[1], "HEALER")) then
                     _role = ROLE_ICONS.healer.full
                 end
-                tooltip:AddLine(string.format("M+ Score: " .. _role .. findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers), string.match(_info.score[1], '%S+$')) .. 
-                                -- string.format(" " .. _info.score[2]:gsub('%d',''):gsub('%s','') .. findClosest(tonumber(string.match(_info.score[2], '%S+$')), scoreTiers), string.match(_info.score[2], '%S+$')) 
-                                -- .. 
+                self:AddRegion(string.format(_role .. findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers), string.match(_info.score[1], '%S+$')) .. 
                                 string.format("\nЛучший за сезон: |cff00a000%s|r", _info.bestKey:sub(0,2)) ..  
-                                string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3)))
-                            )
-                                           
-                tooltip:Show()
+                                string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))))
             end
+
             if table.getn(_info.score) == 3 then
                 if (string.match(_info.score[1], "DPS")) then
                     _role = ROLE_ICONS.dps.full
@@ -90,15 +88,12 @@ local function F()
                 if (string.match(_info.score[2], "HEALER")) then
                     _role2 = ROLE_ICONS.healer.full
                 end 
-                tooltip:AddLine(string.format("M+ Score: " .. _role .. findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers), string.match(_info.score[1], '%S+$')) .. 
+                self:AddRegion(string.format(_role .. findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers), string.match(_info.score[1], '%S+$')) .. 
                                 string.format(" " .. _role2 .. findClosest(tonumber(string.match(_info.score[2], '%S+$')), scoreTiers), string.match(_info.score[2], '%S+$')) ..
-                                -- string.format(" " .. _info.score[3]:gsub('%d',''):gsub('%s','') .. findClosest(tonumber(string.match(_info.score[3], '%S+$')), scoreTiers),string.match(_info.score[3], '%S+$')) 
-                                -- .. 
                                 string.format("\nЛучший за сезон: |cff00a000%s|r", _info.bestKey:sub(0,2)) ..  
-                                string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3)))
-                            )
-                tooltip:Show()
+                                string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))))
             end
+
             if table.getn(_info.score) == 4 then
                 if (string.match(_info.score[1], "DPS")) then
                     _role = ROLE_ICONS.dps.full
@@ -127,36 +122,31 @@ local function F()
                 if (string.match(_info.score[3], "HEALER")) then
                     _role3 = ROLE_ICONS.healer.full
                 end 
-                tooltip:AddLine(string.format("M+ Score: " .. _role .. findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers), string.match(_info.score[1], '%S+$')) .. 
+                self:AddRegion(string.format(_role .. findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers), string.match(_info.score[1], '%S+$')) .. 
                                 string.format(" " .. _role2 .. findClosest(tonumber(string.match(_info.score[2], '%S+$')), scoreTiers), string.match(_info.score[2], '%S+$')) ..
                                 string.format(" " .. _role3 .. findClosest(tonumber(string.match(_info.score[3], '%S+$')), scoreTiers), string.match(_info.score[3], '%S+$')) ..
-                                -- string.format(" " .. _info.score[4]:gsub('%d',''):gsub('%s','') .. findClosest(tonumber(string.match(_info.score[4], '%S+$')), scoreTiers), string.match(_info.score[4], '%S+$')) 
-                                -- .. 
                                 string.format("\nЛучший за сезон: |cff00a000%s|r", _info.bestKey:sub(0,2)) ..  
                                 string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))))
-                tooltip:Show()
             end
         end
-        if table.getn(_info.score) == (0 or nil) then
-            if UnitIsPlayer("mouseover") then
-            tooltip:AddLine(string.format("M+ Score: |cffffffff%s|r", "No info"))
-            tooltip:Show()
-            end
+        if table.getn(_info.score) == 0 then
+            self:AddRegion(string.format("|cffffffff%s|r", "No info"))
         end
+end
+    if _prep == nil then
+            self:AddRegion(string.format("|cffffffff%s|r", "No info"))
     end
-        if _prep == nil then
-            if UnitIsPlayer("mouseover") then
-            tooltip:AddLine(string.format("M+ Score: |cffffffff%s|r", "No info"))
-            tooltip:Show()
-            end
-        end
-    end
-
 end
 
-local frame = CreateFrame("frame");
-frame:RegisterEvent("UPDATE_MOUSEOVER_UNIT");
-frame:SetScript("OnEvent", F)
+GameTooltip:HookScript("OnTooltipSetUnit", function(self)
+    AppendToGameTooltipMixin:CheckMythicScore()
+end)
+
+function AppendToGameTooltipMixin:AddRegion(_score, _info)
+    GameTooltip:AddLine(" ")
+    GameTooltip:AddLine(string.format("M+ Score: %s", _score))
+    GameTooltip:Show()
+end
 
 LFGRegionMixin = {}
 
@@ -201,7 +191,6 @@ function LFGRegionMixin:CheckMythicScore(leaderName)
                     -- string.format(" " .. _info.score[2]:gsub('%d',''):gsub('%s','') .. findClosest(tonumber(string.match(_info.score[2], '%S+$')), scoreTiers), string.match(_info.score[2], '%S+$')) .. 
                     string.format("\nЛучший за сезон: |cff00a000%s|r", "\n" .. _info.bestKey:sub(0,2)) .. 
                     string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))), _info)
-
                 end
                 if table.getn(_info.score) == 3 then
                     if (string.match(_info.score[1], "DPS")) then
@@ -224,7 +213,6 @@ function LFGRegionMixin:CheckMythicScore(leaderName)
                     end 
                     self:AddRegion(string.format(_role .. findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers), string.match(_info.score[1], '%S+$')) .. 
                                    string.format(" " .. _role2 .. findClosest(tonumber(string.match(_info.score[2], '%S+$')), scoreTiers), string.match(_info.score[2], '%S+$')) ..
-                                --    string.format(" " .. _info.score[3]:gsub('%d',''):gsub('%s','') .. findClosest(tonumber(string.match(_info.score[3], '%S+$')), scoreTiers), string.match(_info.score[3], '%S+$')) .. 
                                    string.format("\nЛучший за сезон: |cff00a000%s|r", "\n" .. _info.bestKey:sub(0,2)) .. 
                                    string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))), _info)
                 end
@@ -259,7 +247,6 @@ function LFGRegionMixin:CheckMythicScore(leaderName)
                     self:AddRegion(string.format(_role .. findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers), string.match(_info.score[1], '%S+$')) .. 
                                    string.format(" " .. _role2 .. findClosest(tonumber(string.match(_info.score[2], '%S+$')), scoreTiers), string.match(_info.score[2], '%S+$')) ..
                                    string.format(" " .. _role3 .. findClosest(tonumber(string.match(_info.score[3], '%S+$')), scoreTiers), string.match(_info.score[3], '%S+$')) ..
-                                --    string.format(" " .. _info.score[4]:gsub('%d',''):gsub('%s','') .. findClosest(tonumber(string.match(_info.score[4], '%S+$')), scoreTiers), string.match(_info.score[4], '%S+$')) .. 
                                    string.format("\nЛучший за сезон: |cff00a000%s|r", "\n" .. _info.bestKey:sub(0,2)) .. 
                                    string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))), _info)
                 end
@@ -271,7 +258,6 @@ function LFGRegionMixin:CheckMythicScore(leaderName)
         if _prep == nil then
                 self:AddRegion(string.format("|cffffffff%s|r", "No info"))
         end
-
 end
 
 function LFGRegionMixin:AddRegion(_score, _info)
@@ -289,4 +275,3 @@ function LFGRegionMixin:AddRegion(_score, _info)
     end
     GameTooltip:Show()
 end
-    
