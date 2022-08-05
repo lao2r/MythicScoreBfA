@@ -146,7 +146,7 @@ GameTooltip:HookScript("OnTooltipSetUnit", function(self)
 
 end)
 
-function AppendToGameTooltipMixin:AddRegion(_score, _info)
+function AppendToGameTooltipMixin:AddRegion(_score)
     GameTooltip:AddLine(" ")
     GameTooltip:AddLine(string.format("M+ Score: %s", _score))
     GameTooltip:Show()
@@ -266,7 +266,6 @@ end
 
 function LFGRegionMixin:AddRegion(_score, _info)
     GameTooltip:AddLine(" ")
-    GameTooltip:AddLine(" ")
     GameTooltip:AddLine(string.format("M+ Score: %s", _score))
     GameTooltip:Show()
 
@@ -278,4 +277,28 @@ function LFGRegionMixin:AddRegion(_score, _info)
         end
     end
     GameTooltip:Show()
+end
+
+function LFGApplicantInit()
+for i = 1, 14 do
+    local button = _G["LFGListApplicationViewerScrollFrameButton" .. i]
+    button.Member1:HookScript("OnEnter", function(self)
+          applicants = C_LFGList.GetApplicants()
+          name, class, localizedClass, level, itemLevel, honorLevel, tank, healer, damage, assignedRole, relationship, pvpItemLevel = C_LFGList.GetApplicantMemberInfo(applicants[i], 1)
+          LFGRegionMixin:CheckMythicScore(name)
+    end)
+    button.Member1:HookScript("OnLeave", OnLeave)
+ end
+end
+
+function OnLeave(self)
+    GameTooltip:ClearLines() 
+    GameTooltip:Hide()
+end
+
+ do
+    local f = _G.LFGListFrame.ApplicationViewer.UnempoweredCover
+    f:EnableMouse(false)
+    f:EnableMouseWheel(false)
+    f:SetToplevel(false)
 end
