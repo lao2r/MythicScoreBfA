@@ -1,0 +1,38 @@
+<<<<<<< HEAD
+## Interface: 80300
+## Title: M+ScoreCircleBfA
+## Author: lao2r
+## Notes: Show Mythic+ progress
+## Notes-ruRU: Отображение Mythic+ прогресса
+## Title: M+ScoreCircleBfA
+## X-Email: ed9n.ed9n@gmail.com
+## Version:  0.0.1
+
+characters_db.lua
+characters_mapping.lua
+core.lua
+score_tier.lua
+
+#################
+
+lfg_load.xml
+=======
+## Interface: 80300
+## Title: M+ScoreCircleBfA
+## Author: lao2r
+## Notes: Show Mythic+ progress
+## Notes-ruRU: Отображение Mythic+ прогресса
+## Title: M+ScoreCircleBfA
+## X-Email: ed9n.ed9n@gmail.com
+## Version:  0.0.1
+
+characters_db.lua
+characters_mapping.lua
+core.lua
+score_tier.lua
+
+#################
+
+lfg_load.xml
+>>>>>>> b10072c6fceb585ad0d0eef4d4660f3e67eb70fb
+roles.blp
