@@ -240,15 +240,15 @@ function LFGRegionMixin:CheckMythicScore(leaderName)
                         _role2 = ROLE_ICONS.healer.full
                     end 
                     if (string.match(_info.score[3], "DPS")) then
-                        _role2 = ROLE_ICONS.dps.full
+                        _role3 = ROLE_ICONS.dps.full
                     end
                     if (string.match(_info.score[3], "TANK")) then
-                        _role2 = ROLE_ICONS.tank.full
+                        _role3 = ROLE_ICONS.tank.full
                     end
                     if (string.match(_info.score[3], "HEALER")) then
-                        _role2 = ROLE_ICONS.healer.full
+                        _role3 = ROLE_ICONS.healer.full
                     end
-                    self:AddRegion(string.format(_role .. findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers), string.match(_info.score[1], '%S+$')) ..
+                    self:AddRegion(string.format(_role ..         findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers), string.match(_info.score[1], '%S+$')) ..
                                    string.format(" " .. _role2 .. findClosest(tonumber(string.match(_info.score[2], '%S+$')), scoreTiers), string.match(_info.score[2], '%S+$')) ..
                                    string.format(" " .. _role3 .. findClosest(tonumber(string.match(_info.score[3], '%S+$')), scoreTiers), string.match(_info.score[3], '%S+$')) ..
                                    string.format("\nЛучший за сезон: |cff00a000%s|r", "\n" .. _info.bestKey:sub(0,2)) .. 
