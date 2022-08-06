@@ -1,0 +1,7 @@
+<Ui>
+    <Frame name="LFGRegionManager" mixin="LFGRegionMixin">
+        <Scripts>
+            <OnLoad method="OnLoad"/>
+        </Scripts>
+    </Frame>
+</Ui>
