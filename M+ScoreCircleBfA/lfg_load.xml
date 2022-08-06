@@ -1,16 +1,7 @@
-<<<<<<< HEAD
 <Ui>
     <Frame name="LFGRegionManager" mixin="LFGRegionMixin">
         <Scripts>
             <OnLoad method="OnLoad"/>
         </Scripts>
     </Frame>
-=======
-<Ui>
-    <Frame name="LFGRegionManager" mixin="LFGRegionMixin">
-        <Scripts>
-            <OnLoad method="OnLoad"/>
-        </Scripts>
-    </Frame>
->>>>>>> b10072c6fceb585ad0d0eef4d4660f3e67eb70fb
 </Ui>
