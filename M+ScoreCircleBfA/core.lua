@@ -279,8 +279,10 @@ function LFGRegionMixin:AddRegion(_score, _info)
     GameTooltip:Show()
 end
 
+
+
 function LFGApplicantInit()
-for i = 1, 14 do
+for i = 1, 16 do
     local button = _G["LFGListApplicationViewerScrollFrameButton" .. i]
     button.Member1:HookScript("OnEnter", function(self)
           applicants = C_LFGList.GetApplicants()
@@ -302,3 +304,5 @@ end
     f:EnableMouseWheel(false)
     f:SetToplevel(false)
 end
+
+LFGApplicantInit()
