@@ -9,7 +9,7 @@ if (isUpdateNeeded > 86400 and isUpdateNeeded < (86400*2)) then
     needToUpdate = string.format("|cfffff200[|r|cffff8000M+ScoreCircleBfA|r|cfffff200]:|r|cffbf40cdОбновление вышло 24 часа назад! Требуется обновление! Загрузите последнюю версию|r")
     print(needToUpdate)
 end
-if (isUpdateNeeded > 43200 and isUpdateNeeded < 86400) then 
+if (isUpdateNeeded > 14400 and isUpdateNeeded < 86400) then 
     needToUpdate = string.format("|cfffff200[|r|cffff8000M+ScoreCircleBfA|r|cfffff200]:|r|cffbf40cdВышло обновление! Загрузите последнюю версию|r")
     print(needToUpdate)
 end
