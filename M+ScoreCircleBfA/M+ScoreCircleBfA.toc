@@ -5,12 +5,14 @@
 ## Notes-ruRU: Отображение Mythic+ прогресса
 ## Title: M+ScoreCircleBfA
 ## X-Email: ed9n.ed9n@gmail.com
-## Version:  0.0.1
+## Version:  0.0.9
 
 characters_db.lua
 characters_mapping.lua
+version.lua
 core.lua
 score_tier.lua
+
 
 #################
 
