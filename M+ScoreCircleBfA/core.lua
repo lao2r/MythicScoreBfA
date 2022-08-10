@@ -311,8 +311,8 @@ end
 
 function LFGApplicantInit()
 
-local allApplicants = C_LFGList.GetApplicants()
-for i = 1, #allApplicants do
+-- local allApplicants = C_LFGList.GetApplicants()
+for i = 1, 14 do
     local button = _G["LFGListApplicationViewerScrollFrameButton" .. i]
     button:HookScript("OnEnter", OnEnter)
     button:HookScript("OnLeave", OnLeave)
