@@ -69,7 +69,7 @@ function AppendToGameTooltipMixin:CheckMythicScore()
         if table.getn(_info.score) > 0 then
             if table.getn(_info.score) == 1 then
                 self:AddRegion(string.format(_info.score[1]:gsub('%d',''):gsub('%s','') .. findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers), _info.score[1]) .. 
-                string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))))
+                string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))), _info)
             end
 
             if table.getn(_info.score) == 2 then
@@ -84,7 +84,7 @@ function AppendToGameTooltipMixin:CheckMythicScore()
                 end
                 self:AddRegion(string.format(_role .. findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers), string.match(_info.score[1], '%S+$')) .. 
                                 string.format("\nЛучший за сезон: |cff00a000%s|r", _info.bestKey:sub(0,2)) ..  
-                                string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))))
+                                string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))), _info)
             end
 
             if table.getn(_info.score) == 3 then
@@ -109,7 +109,7 @@ function AppendToGameTooltipMixin:CheckMythicScore()
                 self:AddRegion(string.format(_role .. findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers), string.match(_info.score[1], '%S+$')) .. 
                                 string.format(" " .. _role2 .. findClosest(tonumber(string.match(_info.score[2], '%S+$')), scoreTiers), string.match(_info.score[2], '%S+$')) ..
                                 string.format("\nЛучший за сезон: |cff00a000%s|r", _info.bestKey:sub(0,2)) ..  
-                                string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))))
+                                string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))), _info)
             end
 
             if table.getn(_info.score) == 4 then
@@ -144,7 +144,7 @@ function AppendToGameTooltipMixin:CheckMythicScore()
                                 string.format(" " .. _role2 .. findClosest(tonumber(string.match(_info.score[2], '%S+$')), scoreTiers), string.match(_info.score[2], '%S+$')) ..
                                 string.format(" " .. _role3 .. findClosest(tonumber(string.match(_info.score[3], '%S+$')), scoreTiers), string.match(_info.score[3], '%S+$')) ..
                                 string.format("\nЛучший за сезон: |cff00a000%s|r", _info.bestKey:sub(0,2)) ..  
-                                string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))))
+                                string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))), _info)
             end
         end
         if table.getn(_info.score) == 0 then
@@ -157,15 +157,44 @@ end
 end
 end
 
+-- TODO 
+-- local myFrame = CreateFrame("GameTooltip","myFrame")
+
+-- myFrame:SetScript("OnEvent",function(self, event, arg, ...)
+--     local key, state = select(1, ...)
+--     if (event == "MODIFIER_STATE_CHANGED") then
+--         -- Switch the dynamic tooltip when the SHIFT key is held.
+--         if myFrame:IsShown()
+--   and (arg == "LSHIFT" or arg == "RSHIFT") then
+--             AppendToGameTooltipMixin:CheckMythicScore()
+--         end
+--     end
+-- end)
+  
+-- myFrame:RegisterEvent("MODIFIER_STATE_CHANGED")
+
 GameTooltip:HookScript("OnTooltipSetUnit", function(self)
     AppendToGameTooltipMixin:CheckMythicScore()
-
 end)
 
-function AppendToGameTooltipMixin:AddRegion(_score)
+function AppendToGameTooltipMixin:AddRegion(_score, _info)
+    if IsShiftKeyDown() then
+        GameTooltip:AddLine(" ")
+        GameTooltip:AddLine(string.format("M+ Score: %s", _score))
+        GameTooltip:Show()
+        if (table.getn(_info.key_ru) > 0) then
+            GameTooltip:AddLine("\nЛучшие прохождения:")
+        for _, key in ipairs(_info.key_ru) do
+            GameTooltip:AddLine(string.format("|cff00a000%s|r", key:sub(0,2)) ..  
+            string.format(string.format("|cffffffff%s|r", key:sub(3))))
+        end
+    end 
+    GameTooltip:Show()
+else 
     GameTooltip:AddLine(" ")
     GameTooltip:AddLine(string.format("M+ Score: %s", _score))
     GameTooltip:Show()
+end
 end
 
 LFGRegionMixin = {}
