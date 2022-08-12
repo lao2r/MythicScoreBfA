@@ -52,19 +52,86 @@ ROLE_ICONS = {
     }
 }
 
+SPEC_ICONS = {
+    [6] = {
+         [250] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:0:18:0:18|t",
+         [251] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:19:36:0:18|t",
+         [252] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:37:54:0:18|t"
+    },
+    [11] = {
+         [102] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:53:71:0:18|t",
+         [103] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:71:89:0:18|t",
+         [104] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:89:106:0:18|t",
+         [105] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:106:123:0:18|t"
+    },
+     [3] = {
+         [253] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:123:142:0:18|t",
+         [254] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:0:18:18:36|t",
+         [255] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:18:36:18:36|t"
+    },
+     [8] = {
+         [62] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:37:54:18:36|t",
+         [63] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:54:71:18:36|t",
+         [64] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:71:88:18:36|t"
+    },
+     [10] = {
+         [268] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:88:106:18:36|t",
+         [270] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:106:123:18:36|t",
+         [269] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:123:143:18:36|t"
+    },
+     [2] = {
+         [65] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:0:18:36:54|t",
+         [66] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:18:36:36:54|t",
+         [70] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:36:53:36:53|t"
+    },
+     [5] = {
+         [256] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:54:71:36:53|t",
+         [257] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:72:88:36:53|t",
+         [258] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:88:106:36:53|t"
+    },
+     [4] = {
+         [259] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:106:123:36:53|t",
+         [260] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:123:141:36:53|t",
+         [261] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:0:18:53:71|t"
+    },
+     [7] = {
+         [262] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:18:36:53:71|t",
+         [263] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:37:54:53:71|t",
+         [264] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:54:71:53:71|t"
+    },
+     [9] = {
+         [265] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:71:89:53:71|t",
+         [266] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:89:106:53:71|t",
+         [267] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:106:123:53:71|t"
+    },
+     [1] = {
+         [71] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:123:141:53:71|t",
+         [72] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:18:0:71:90|t",
+         [73] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:18:36:71:90|t"
+    },
+     [12] = {
+         [577] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:36:53:71:90|t",
+         [581] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:54:71:71:90|t"
+    }
+ }
+
 AppendToGameTooltipMixin = {}
 
 function AppendToGameTooltipMixin:CheckMythicScore()
 
     local unitName, unit = GameTooltip:GetUnit()
 
-    if UnitIsPlayer(unit) then
 
+    if UnitIsPlayer(unit) then
+    -- No chance to inspect remote party members :(
+    -- local _, _, classId = UnitClass(unit)
+    -- local unitSpec = GetInspectSpecialization(unit)
     local _prep = getCharacterIdByName(unitName)
 
         if _prep ~= nil then
         local _info = getMythicScore(_prep[1])
         local _role, _role2, _role3
+        -- local _spec = SPEC_ICONS[classId][unitSpec]
 
         if table.getn(_info.score) > 0 then
             if table.getn(_info.score) == 1 then
@@ -82,7 +149,7 @@ function AppendToGameTooltipMixin:CheckMythicScore()
                 if (string.match(_info.score[1], "HEALER")) then
                     _role = ROLE_ICONS.healer.full
                 end
-                self:AddRegion(string.format(_role .. findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers), string.match(_info.score[1], '%S+$')) .. 
+                self:AddRegion(string.format(_role .. findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers), string.match(_info.score[1], '%S+$')) ..
                                 string.format("\nЛучший за сезон: |cff00a000%s|r", _info.bestKey:sub(0,2)) ..  
                                 string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))), _info)
             end
