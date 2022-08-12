@@ -157,44 +157,36 @@ end
 end
 end
 
--- TODO 
--- local myFrame = CreateFrame("GameTooltip","myFrame")
-
--- myFrame:SetScript("OnEvent",function(self, event, arg, ...)
---     local key, state = select(1, ...)
---     if (event == "MODIFIER_STATE_CHANGED") then
---         -- Switch the dynamic tooltip when the SHIFT key is held.
---         if myFrame:IsShown()
---   and (arg == "LSHIFT" or arg == "RSHIFT") then
---             AppendToGameTooltipMixin:CheckMythicScore()
---         end
---     end
--- end)
-  
--- myFrame:RegisterEvent("MODIFIER_STATE_CHANGED")
-
 GameTooltip:HookScript("OnTooltipSetUnit", function(self)
     AppendToGameTooltipMixin:CheckMythicScore()
 end)
 
+function OnLeave_T(self)
+    GameTooltip:ClearLines() 
+    GameTooltip:Hide()
+end
+
 function AppendToGameTooltipMixin:AddRegion(_score, _info)
-    if IsShiftKeyDown() then
+    flag = false
+    if IsShiftKeyDown() and not UnitAffectingCombat("player") then
+        flag = true
+        if flag == true then
         GameTooltip:AddLine(" ")
         GameTooltip:AddLine(string.format("M+ Score: %s", _score))
-        GameTooltip:Show()
+        end
         if (table.getn(_info.key_ru) > 0) then
             GameTooltip:AddLine("\nЛучшие прохождения:")
-        for _, key in ipairs(_info.key_ru) do
-            GameTooltip:AddLine(string.format("|cff00a000%s|r", key:sub(0,2)) ..  
-            string.format(string.format("|cffffffff%s|r", key:sub(3))))
+            for _, key in ipairs(_info.key_ru) do
+                GameTooltip:AddLine(string.format("|cff00a000%s|r", key:sub(0,2)) ..  
+                string.format(string.format("|cffffffff%s|r", key:sub(3))))
+            end
         end
-    end 
-    GameTooltip:Show()
-else 
-    GameTooltip:AddLine(" ")
-    GameTooltip:AddLine(string.format("M+ Score: %s", _score))
-    GameTooltip:Show()
-end
+    end
+    if (flag == false) then
+        GameTooltip:AddLine(" ")
+        GameTooltip:AddLine(string.format("M+ Score: %s", _score))
+    end
+    
 end
 
 LFGRegionMixin = {}
