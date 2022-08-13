@@ -181,7 +181,7 @@ function AppendToGameTooltipMixin:AddRegion(_score, _info, _prep)
     end
 
     total = ""
-
+    if(_prep ~= nill) then
     if (total_run[_prep[1]].tier1 > 0) then
         total = string.format("|cff55dc62 +5-9|r |cffffffff Ключи вовремя|r - |cffffffff(%s)|r", total_run[_prep[1]].tier1)
     end
@@ -202,6 +202,7 @@ function AppendToGameTooltipMixin:AddRegion(_score, _info, _prep)
     end
     GameTooltip:AddLine("------------------------------------")
     GameTooltip:AddLine(total, _, _, _, false)
+end
     GameTooltip:Show()
 end
 
@@ -317,6 +318,7 @@ function LFGRegionMixin:AddRegion(_score, _info, activityID, _prep)
 
     total = ""
 
+    if(_prep ~= nill) then
     if (total_run[_prep[1]].tier1 > 0) then
         total = string.format("|cff55dc62 +5-9|r |cffffffff Ключи вовремя|r - |cffffffff(%s)|r", total_run[_prep[1]].tier1)
     end
@@ -337,10 +339,11 @@ function LFGRegionMixin:AddRegion(_score, _info, activityID, _prep)
     end
     GameTooltip:AddLine("----------------------------------")
     GameTooltip:AddLine(total, _, _, _, false)
+end
     GameTooltip:Show()
     GameTooltip:AddLine(string.format("\n----------------------------------\nВаш рекорд в текущем подземелье:\n|cff42aaff%s|r "
         , currentLevel) ..
-        string.format("|cffc5d0e6%s|r ", currentBest) .. string.format("|cffffff00+%s|r ", currentChest))
+        string.format("|cffc5d0e6%s|r ", currentBest) .. string.format("|cffffff00+%s|r ", currentChest))  
     GameTooltip:Show()
 end
 
