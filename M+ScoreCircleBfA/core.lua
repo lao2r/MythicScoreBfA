@@ -279,19 +279,24 @@ function LFGRegionMixin:CheckMythicScore(leaderName, activityID)
             end
         end
         if table.getn(_info.score) == 0 then
-            self:AddRegion(string.format("|cffffffff%s|r", "No info"), 1, activityID)
+            self:AddRegion(string.format("|cffffffff%s|r", "No info"), 1, activityID, _prep)
         end
     end
     if (getCharacterIdByName(leaderName) == nil) then
-
-        self:AddRegion(string.format("|cffffffff%s|r", "No info"), 1, activityID)
+        self:AddRegion(string.format("|cffffffff%s|r", "No info"), 1, activityID, _prep)
     end
 end
 
+function tableHasKey(table,key)
+    return table[key] ~= nil
+end
+
 function LFGRegionMixin:AddRegion(_score, _info, activityID, _prep)
+    if (tableHasKey(playerBest, activityID) == true) then
     local currentBest = playerBest[activityID].dungeon_ru
     local currentLevel = playerBest[activityID].level
     local currentChest = playerBest[activityID].chest
+    end
 
     GameTooltip:AddLine(" ")
     GameTooltip:AddLine(string.format("M+ Score: %s", _score))
@@ -308,7 +313,6 @@ function LFGRegionMixin:AddRegion(_score, _info, activityID, _prep)
 
     total = ""
 
-    
     if (total_run[_prep[1]].tier1 > 0) then
         total = string.format("|cff55dc62 +5-9|r |cffffffff Ключи вовремя|r - |cffffffff(%s)|r", total_run[_prep[1]].tier1)
     end
@@ -329,6 +333,7 @@ function LFGRegionMixin:AddRegion(_score, _info, activityID, _prep)
     end
     GameTooltip:AddLine("----------------------------------")
     GameTooltip:AddLine(total, _, _, _, false)
+    GameTooltip:Show()
     GameTooltip:AddLine(string.format("\n----------------------------------\nВаш рекорд в текущем подземелье:\n|cff42aaff%s|r "
         , currentLevel) ..
         string.format("|cffc5d0e6%s|r ", currentBest) .. string.format("|cffffff00+%s|r ", currentChest))
