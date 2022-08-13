@@ -258,7 +258,7 @@ function AppendToGameTooltipMixin:AddRegion(_score, _info, _prep)
         total = string.format("|cffab38e6+20-24|r |cffffffff Ключи вовремя|r - |cffffffff(%s)|r", total_run[_prep[1]].tier4)
     end
     if (total_run[_prep[1]].tier5 > 0) then
-        total = string.format("|cffe1588e+25-30|r |cffffffff Ключи вовремя|r - |cffffffff(%s)|r", total_run[_prep[1]].tier5)
+        total = string.format("|cffe1588e+25-29|r |cffffffff Ключи вовремя|r - |cffffffff(%s)|r", total_run[_prep[1]].tier5)
     end
     if (total_run[_prep[1]].tier6 > 0) then
         total = string.format("|cfffb792e+30-34|r |cffffffff Ключи вовремя|r - |cffffffff(%s)|r", total_run[_prep[1]].tier6)
