@@ -1,11 +1,11 @@
-isUpdateNeeded = ((tonumber(string.format("%s",(time(dateTbl))))) - mythicLastUpdatedTime)
+isUpdateNeeded = ((tonumber(string.format("%s", (time(dateTbl))))) - mythicLastUpdatedTime)
 needToUpdate = ""
 
-if (isUpdateNeeded > (86400*2)) then 
+if (isUpdateNeeded > (86400 * 2)) then
     needToUpdate = string.format("|cfffff200[|r|cffff8000M+ScoreCircleBfA|r|cfffff200]:|r|cffbf40cdБазы сильно устарели! Требуется обновление! Загрузите последнюю версию|r")
     print(needToUpdate)
 end
-if (isUpdateNeeded > 90000 and isUpdateNeeded < 86400*2) then 
+if (isUpdateNeeded > 90000 and isUpdateNeeded < 86400 * 2) then
     needToUpdate = string.format("|cfffff200[|r|cffff8000M+ScoreCircleBfA|r|cfffff200]:|r|cffbf40cdВышло обновление! Загрузите последнюю версию|r")
     print(needToUpdate)
 end
@@ -38,82 +38,82 @@ function findClosest(r, n)
 end
 
 ROLE_ICONS = {
-    dps = {
+    ["DPS"] = {
         full = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\roles:14:14:0:0:64:64:0:18:0:18|t",
         partial = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\roles:14:14:0:0:64:64:0:18:36:54|t"
     },
-    healer = {
+    ["HEALER"] = {
         full = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\roles:14:14:0:0:64:64:19:37:0:18|t",
         partial = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\roles:14:14:0:0:64:64:19:37:36:54|t"
     },
-    tank = {
+    ["TANK"] = {
         full = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\roles:14:14:0:0:64:64:38:56:0:18|t",
-        partial	= "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\roles:14:14:0:0:64:64:38:56:36:54|t"
+        partial = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\roles:14:14:0:0:64:64:38:56:36:54|t"
     }
 }
 
 SPEC_ICONS = {
     [6] = {
-         [250] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:0:18:0:18|t",
-         [251] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:19:36:0:18|t",
-         [252] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:37:54:0:18|t"
+        [250] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:0:18:0:18|t",
+        [251] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:19:36:0:18|t",
+        [252] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:37:54:0:18|t"
     },
     [11] = {
-         [102] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:53:71:0:18|t",
-         [103] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:71:89:0:18|t",
-         [104] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:89:106:0:18|t",
-         [105] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:106:123:0:18|t"
+        [102] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:53:71:0:18|t",
+        [103] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:71:89:0:18|t",
+        [104] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:89:106:0:18|t",
+        [105] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:106:123:0:18|t"
     },
-     [3] = {
-         [253] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:123:142:0:18|t",
-         [254] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:0:18:18:36|t",
-         [255] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:18:36:18:36|t"
+    [3] = {
+        [253] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:123:142:0:18|t",
+        [254] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:0:18:18:36|t",
+        [255] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:18:36:18:36|t"
     },
-     [8] = {
-         [62] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:37:54:18:36|t",
-         [63] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:54:71:18:36|t",
-         [64] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:71:88:18:36|t"
+    [8] = {
+        [62] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:37:54:18:36|t",
+        [63] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:54:71:18:36|t",
+        [64] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:71:88:18:36|t"
     },
-     [10] = {
-         [268] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:88:106:18:36|t",
-         [270] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:106:123:18:36|t",
-         [269] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:123:143:18:36|t"
+    [10] = {
+        [268] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:88:106:18:36|t",
+        [270] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:106:123:18:36|t",
+        [269] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:123:143:18:36|t"
     },
-     [2] = {
-         [65] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:0:18:36:54|t",
-         [66] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:18:36:36:54|t",
-         [70] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:36:53:36:53|t"
+    [2] = {
+        [65] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:0:18:36:54|t",
+        [66] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:18:36:36:54|t",
+        [70] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:36:53:36:53|t"
     },
-     [5] = {
-         [256] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:54:71:36:53|t",
-         [257] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:72:88:36:53|t",
-         [258] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:88:106:36:53|t"
+    [5] = {
+        [256] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:54:71:36:53|t",
+        [257] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:72:88:36:53|t",
+        [258] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:88:106:36:53|t"
     },
-     [4] = {
-         [259] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:106:123:36:53|t",
-         [260] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:123:141:36:53|t",
-         [261] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:0:18:53:71|t"
+    [4] = {
+        [259] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:106:123:36:53|t",
+        [260] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:123:141:36:53|t",
+        [261] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:0:18:53:71|t"
     },
-     [7] = {
-         [262] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:18:36:53:71|t",
-         [263] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:37:54:53:71|t",
-         [264] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:54:71:53:71|t"
+    [7] = {
+        [262] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:18:36:53:71|t",
+        [263] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:37:54:53:71|t",
+        [264] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:54:71:53:71|t"
     },
-     [9] = {
-         [265] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:71:89:53:71|t",
-         [266] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:89:106:53:71|t",
-         [267] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:106:123:53:71|t"
+    [9] = {
+        [265] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:71:89:53:71|t",
+        [266] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:89:106:53:71|t",
+        [267] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:106:123:53:71|t"
     },
-     [1] = {
-         [71] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:123:141:53:71|t",
-         [72] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:18:0:71:90|t",
-         [73] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:18:36:71:90|t"
+    [1] = {
+        [71] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:123:141:53:71|t",
+        [72] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:18:0:71:90|t",
+        [73] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:18:36:71:90|t"
     },
-     [12] = {
-         [577] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:36:53:71:90|t",
-         [581] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:54:71:71:90|t"
+    [12] = {
+        [577] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:36:53:71:90|t",
+        [581] = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\spec_icons_normal:14:14:0:0:140:140:54:71:71:90|t"
     }
- }
+}
 
 AppendToGameTooltipMixin = {}
 
@@ -123,105 +123,62 @@ function AppendToGameTooltipMixin:CheckMythicScore()
 
 
     if UnitIsPlayer(unit) then
-    -- No chance to inspect remote party members :(
-    -- local _, _, classId = UnitClass(unit)
-    -- local unitSpec = GetInspectSpecialization(unit)
-    local _prep = getCharacterIdByName(unitName)
+        local _prep = getCharacterIdByName(unitName)
 
         if _prep ~= nil then
-        local _info = getMythicScore(_prep[1])
-        local _role, _role2, _role3
-        -- local _spec = SPEC_ICONS[classId][unitSpec]
+            local _info = getMythicScore(_prep[1])
 
-        if table.getn(_info.score) > 0 then
-            if table.getn(_info.score) == 1 then
-                self:AddRegion(string.format(_info.score[1]:gsub('%d',''):gsub('%s','') .. findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers), _info.score[1]) .. 
-                string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))), _info)
+            if table.getn(_info.score) > 0 then
+                if table.getn(_info.score) == 1 then
+                    self:AddRegion(string.format(_info.score[1]:gsub('%d', ''):gsub('%s', '') ..
+                        findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers), _info.score[1]) ..
+                        string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))), _info)
+                end
+
+                if table.getn(_info.score) == 2 then
+                    self:AddRegion(string.format(ROLE_ICONS[string.match(_info.score[1], "%u*")].full ..
+                        findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers),
+                        string.match(_info.score[1], '%S+$')) ..
+                        string.format("\nЛучший за сезон: |cff00a000%s|r", _info.bestKey:sub(0, 2)) ..
+                        string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))), _info)
+                end
+
+                if table.getn(_info.score) == 3 then
+                    self:AddRegion(string.format(ROLE_ICONS[string.match(_info.score[1], "%u*")].full ..
+                        findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers),
+                        string.match(_info.score[1], '%S+$')) ..
+                        string.format(" " ..
+                            ROLE_ICONS[string.match(_info.score[2], "%u*")].full ..
+                            findClosest(tonumber(string.match(_info.score[2], '%S+$')), scoreTiers),
+                            string.match(_info.score[2], '%S+$')) ..
+                        string.format("\nЛучший за сезон: |cff00a000%s|r", _info.bestKey:sub(0, 2)) ..
+                        string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))), _info)
+                end
+
+                if table.getn(_info.score) == 4 then
+                    self:AddRegion(string.format(ROLE_ICONS[string.match(_info.score[1], "%u*")].full ..
+                        findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers),
+                        string.match(_info.score[1], '%S+$')) ..
+                        string.format(" " ..
+                            ROLE_ICONS[string.match(_info.score[2], "%u*")].full ..
+                            findClosest(tonumber(string.match(_info.score[2], '%S+$')), scoreTiers),
+                            string.match(_info.score[2], '%S+$')) ..
+                        string.format(" " ..
+                            ROLE_ICONS[string.match(_info.score[3], "%u*")].full ..
+                            findClosest(tonumber(string.match(_info.score[3], '%S+$')), scoreTiers),
+                            string.match(_info.score[3], '%S+$')) ..
+                        string.format("\nЛучший за сезон: |cff00a000%s|r", _info.bestKey:sub(0, 2)) ..
+                        string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))), _info)
+                end
             end
-
-            if table.getn(_info.score) == 2 then
-                if (string.match(_info.score[1], "DPS")) then
-                    _role = ROLE_ICONS.dps.full
-                end
-                if (string.match(_info.score[1], "TANK")) then
-                    _role = ROLE_ICONS.tank.full
-                end
-                if (string.match(_info.score[1], "HEALER")) then
-                    _role = ROLE_ICONS.healer.full
-                end
-                self:AddRegion(string.format(_role .. findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers), string.match(_info.score[1], '%S+$')) ..
-                                string.format("\nЛучший за сезон: |cff00a000%s|r", _info.bestKey:sub(0,2)) ..  
-                                string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))), _info)
-            end
-
-            if table.getn(_info.score) == 3 then
-                if (string.match(_info.score[1], "DPS")) then
-                    _role = ROLE_ICONS.dps.full
-                end
-                if (string.match(_info.score[1], "TANK")) then
-                    _role = ROLE_ICONS.tank.full
-                end
-                if (string.match(_info.score[1], "HEALER")) then
-                    _role = ROLE_ICONS.healer.full
-                end 
-                if (string.match(_info.score[2], "DPS")) then
-                    _role2 = ROLE_ICONS.dps.full
-                end
-                if (string.match(_info.score[2], "TANK")) then
-                    _role2 = ROLE_ICONS.tank.full
-                end
-                if (string.match(_info.score[2], "HEALER")) then
-                    _role2 = ROLE_ICONS.healer.full
-                end 
-                self:AddRegion(string.format(_role .. findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers), string.match(_info.score[1], '%S+$')) .. 
-                                string.format(" " .. _role2 .. findClosest(tonumber(string.match(_info.score[2], '%S+$')), scoreTiers), string.match(_info.score[2], '%S+$')) ..
-                                string.format("\nЛучший за сезон: |cff00a000%s|r", _info.bestKey:sub(0,2)) ..  
-                                string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))), _info)
-            end
-
-            if table.getn(_info.score) == 4 then
-                if (string.match(_info.score[1], "DPS")) then
-                    _role = ROLE_ICONS.dps.full
-                end
-                if (string.match(_info.score[1], "TANK")) then
-                    _role = ROLE_ICONS.tank.full
-                end
-                if (string.match(_info.score[1], "HEALER")) then
-                    _role = ROLE_ICONS.healer.full
-                end 
-                if (string.match(_info.score[2], "DPS")) then
-                    _role2 = ROLE_ICONS.dps.full
-                end
-                if (string.match(_info.score[2], "TANK")) then
-                    _role2 = ROLE_ICONS.tank.full
-                end
-                if (string.match(_info.score[2], "HEALER")) then
-                    _role2 = ROLE_ICONS.healer.full
-                end 
-                if (string.match(_info.score[3], "DPS")) then
-                    _role3 = ROLE_ICONS.dps.full
-                end
-                if (string.match(_info.score[3], "TANK")) then
-                    _role3 = ROLE_ICONS.tank.full
-                end
-                if (string.match(_info.score[3], "HEALER")) then
-                    _role3 = ROLE_ICONS.healer.full
-                end 
-                self:AddRegion(string.format(_role .. findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers), string.match(_info.score[1], '%S+$')) .. 
-                                string.format(" " .. _role2 .. findClosest(tonumber(string.match(_info.score[2], '%S+$')), scoreTiers), string.match(_info.score[2], '%S+$')) ..
-                                string.format(" " .. _role3 .. findClosest(tonumber(string.match(_info.score[3], '%S+$')), scoreTiers), string.match(_info.score[3], '%S+$')) ..
-                                string.format("\nЛучший за сезон: |cff00a000%s|r", _info.bestKey:sub(0,2)) ..  
-                                string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))), _info)
+            if table.getn(_info.score) == 0 then
+                self:AddRegion(string.format("|cffffffff%s|r", "No info"))
             end
         end
-        if table.getn(_info.score) == 0 then
+        if _prep == nil then
             self:AddRegion(string.format("|cffffffff%s|r", "No info"))
         end
-end
-    if _prep == nil then
-            self:AddRegion(string.format("|cffffffff%s|r", "No info"))
     end
-end
 end
 
 GameTooltip:HookScript("OnTooltipSetUnit", function(self)
@@ -229,7 +186,7 @@ GameTooltip:HookScript("OnTooltipSetUnit", function(self)
 end)
 
 function OnLeave_T(self)
-    GameTooltip:ClearLines() 
+    GameTooltip:ClearLines()
     GameTooltip:Hide()
 end
 
@@ -238,14 +195,14 @@ function AppendToGameTooltipMixin:AddRegion(_score, _info)
     if IsShiftKeyDown() and not UnitAffectingCombat("player") then
         flag = true
         if flag == true then
-        GameTooltip:AddLine(" ")
-        GameTooltip:AddLine(string.format("M+ Score: %s", _score))
+            GameTooltip:AddLine(" ")
+            GameTooltip:AddLine(string.format("M+ Score: %s", _score))
         end
         if (table.getn(_info.key_ru) > 0) then
             GameTooltip:AddLine("\nЛучшие прохождения:")
             for _, key in ipairs(_info.key_ru) do
-                GameTooltip:AddLine(string.format("|cff00a000%s|r", key:sub(0,2)) ..  
-                string.format(string.format("|cffffffff%s|r", key:sub(3))))
+                GameTooltip:AddLine(string.format("|cff00a000%s|r", key:sub(0, 2)) ..
+                    string.format(string.format("|cffffffff%s|r", key:sub(3))))
             end
         end
     end
@@ -253,7 +210,7 @@ function AppendToGameTooltipMixin:AddRegion(_score, _info)
         GameTooltip:AddLine(" ")
         GameTooltip:AddLine(string.format("M+ Score: %s", _score))
     end
-    
+
 end
 
 LFGRegionMixin = {}
@@ -265,7 +222,7 @@ end
 function LFGRegionMixin:Initialize()
     local function SetSearchEntryTooltip(_, resultID)
         local info = C_LFGList.GetSearchResultInfo(resultID)
-        if ( info.leaderName ) then
+        if (info.leaderName) then
             self:CheckMythicScore(info.leaderName)
         end
     end
@@ -276,96 +233,58 @@ end
 function LFGRegionMixin:CheckMythicScore(leaderName)
     local _prep = getCharacterIdByName(leaderName)
     if _prep ~= nil then
-    local _info = getMythicScore(_prep[1])
-    local _role, _role2, _role3
+        local _info = getMythicScore(_prep[1])
+        local _role, _role2, _role3
 
-            if table.getn(_info.score) > 0 then
-                if table.getn(_info.score) == 1 then
-                    self:AddRegion(string.format(_info.score[1]:gsub('%d',''):gsub('%s','') .. findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers), string.match(_info.score[1], '%S+$')) ..
-                                   string.format("\nЛучший за сезон: |cff00a000%s|r", _info.bestKey:sub(0,2)) .. 
-                                   string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))), _info)
-                end
-                if table.getn(_info.score) == 2 then
-                    if (string.match(_info.score[1], "DPS")) then
-                        _role = ROLE_ICONS.dps.full
-                    end
-                    if (string.match(_info.score[1], "TANK")) then
-                        _role = ROLE_ICONS.tank.full
-                    end
-                    if (string.match(_info.score[1], "HEALER")) then
-                        _role = ROLE_ICONS.healer.full
-                    end 
-                    self:AddRegion(string.format(_role .. findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers), string.match(_info.score[1], '%S+$')) .. 
-                    -- string.format(" " .. _info.score[2]:gsub('%d',''):gsub('%s','') .. findClosest(tonumber(string.match(_info.score[2], '%S+$')), scoreTiers), string.match(_info.score[2], '%S+$')) .. 
-                    string.format("\nЛучший за сезон: |cff00a000%s|r", "\n" .. _info.bestKey:sub(0,2)) .. 
+        if table.getn(_info.score) > 0 then
+            if table.getn(_info.score) == 1 then
+                self:AddRegion(string.format(_info.score[1]:gsub('%d', ''):gsub('%s', '') ..
+                    findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers),
+                    string.match(_info.score[1], '%S+$')) ..
+                    string.format("\nЛучший за сезон: |cff00a000%s|r", _info.bestKey:sub(0, 2)) ..
                     string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))), _info)
-                end
-                if table.getn(_info.score) == 3 then
-                    if (string.match(_info.score[1], "DPS")) then
-                        _role = ROLE_ICONS.dps.full
-                    end
-                    if (string.match(_info.score[1], "TANK")) then
-                        _role = ROLE_ICONS.tank.full
-                    end
-                    if (string.match(_info.score[1], "HEALER")) then
-                        _role = ROLE_ICONS.healer.full
-                    end 
-                    if (string.match(_info.score[2], "DPS")) then
-                        _role2 = ROLE_ICONS.dps.full
-                    end
-                    if (string.match(_info.score[2], "TANK")) then
-                        _role2 = ROLE_ICONS.tank.full
-                    end
-                    if (string.match(_info.score[2], "HEALER")) then
-                        _role2 = ROLE_ICONS.healer.full
-                    end 
-                    self:AddRegion(string.format(_role .. findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers), string.match(_info.score[1], '%S+$')) .. 
-                                   string.format(" " .. _role2 .. findClosest(tonumber(string.match(_info.score[2], '%S+$')), scoreTiers), string.match(_info.score[2], '%S+$')) ..
-                                   string.format("\nЛучший за сезон: |cff00a000%s|r", "\n" .. _info.bestKey:sub(0,2)) .. 
-                                   string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))), _info)
-                end
-                if table.getn(_info.score) > 3 then
-                    if (string.match(_info.score[1], "DPS")) then
-                        _role = ROLE_ICONS.dps.full
-                    end
-                    if (string.match(_info.score[1], "TANK")) then
-                        _role = ROLE_ICONS.tank.full
-                    end
-                    if (string.match(_info.score[1], "HEALER")) then
-                        _role = ROLE_ICONS.healer.full
-                    end 
-                    if (string.match(_info.score[2], "DPS")) then
-                        _role2 = ROLE_ICONS.dps.full
-                    end
-                    if (string.match(_info.score[2], "TANK")) then
-                        _role2 = ROLE_ICONS.tank.full
-                    end
-                    if (string.match(_info.score[2], "HEALER")) then
-                        _role2 = ROLE_ICONS.healer.full
-                    end 
-                    if (string.match(_info.score[3], "DPS")) then
-                        _role3 = ROLE_ICONS.dps.full
-                    end
-                    if (string.match(_info.score[3], "TANK")) then
-                        _role3 = ROLE_ICONS.tank.full
-                    end
-                    if (string.match(_info.score[3], "HEALER")) then
-                        _role3 = ROLE_ICONS.healer.full
-                    end
-                    self:AddRegion(string.format(_role ..         findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers), string.match(_info.score[1], '%S+$')) ..
-                                   string.format(" " .. _role2 .. findClosest(tonumber(string.match(_info.score[2], '%S+$')), scoreTiers), string.match(_info.score[2], '%S+$')) ..
-                                   string.format(" " .. _role3 .. findClosest(tonumber(string.match(_info.score[3], '%S+$')), scoreTiers), string.match(_info.score[3], '%S+$')) ..
-                                   string.format("\nЛучший за сезон: |cff00a000%s|r", "\n" .. _info.bestKey:sub(0,2)) .. 
-                                   string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))), _info)
-                end
             end
-            if table.getn(_info.score) == 0 then
-                self:AddRegion(string.format("|cffffffff%s|r", "No info"))
+            if table.getn(_info.score) == 2 then
+                self:AddRegion(string.format(ROLE_ICONS[string.match(_info.score[1], "%u*")].full ..
+                    findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers),
+                    string.match(_info.score[1], '%S+$')) ..
+                    string.format("\nЛучший за сезон: |cff00a000%s|r", "\n" .. _info.bestKey:sub(0, 2)) ..
+                    string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))), _info)
             end
-    end
-        if _prep == nil then
-                self:AddRegion(string.format("|cffffffff%s|r", "No info"))
+            if table.getn(_info.score) == 3 then
+                self:AddRegion(string.format(ROLE_ICONS[string.match(_info.score[1], "%u*")].full ..
+                    findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers),
+                    string.match(_info.score[1], '%S+$')) ..
+                    string.format(" " ..
+                        ROLE_ICONS[string.match(_info.score[2], "%u*")].full ..
+                        findClosest(tonumber(string.match(_info.score[2], '%S+$')), scoreTiers),
+                        string.match(_info.score[2], '%S+$')) ..
+                    string.format("\nЛучший за сезон: |cff00a000%s|r", "\n" .. _info.bestKey:sub(0, 2)) ..
+                    string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))), _info)
+            end
+            if table.getn(_info.score) > 3 then
+                self:AddRegion(string.format(ROLE_ICONS[string.match(_info.score[1], "%u*")].full ..
+                    findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers),
+                    string.match(_info.score[1], '%S+$')) ..
+                    string.format(" " ..
+                        ROLE_ICONS[string.match(_info.score[2], "%u*")].full ..
+                        findClosest(tonumber(string.match(_info.score[2], '%S+$')), scoreTiers),
+                        string.match(_info.score[2], '%S+$')) ..
+                    string.format(" " ..
+                        ROLE_ICONS[string.match(_info.score[3], "%u*")].full ..
+                        findClosest(tonumber(string.match(_info.score[3], '%S+$')), scoreTiers),
+                        string.match(_info.score[3], '%S+$')) ..
+                    string.format("\nЛучший за сезон: |cff00a000%s|r", "\n" .. _info.bestKey:sub(0, 2)) ..
+                    string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))), _info)
+            end
         end
+        if table.getn(_info.score) == 0 then
+            self:AddRegion(string.format("|cffffffff%s|r", "No info"))
+        end
+    end
+    if _prep == nil then
+        self:AddRegion(string.format("|cffffffff%s|r", "No info"))
+    end
 end
 
 function LFGRegionMixin:AddRegion(_score, _info)
@@ -376,8 +295,8 @@ function LFGRegionMixin:AddRegion(_score, _info)
     if (table.getn(_info.key_ru) > 0) then
         GameTooltip:AddLine("\nЛучшие прохождения:")
         for _, key in ipairs(_info.key_ru) do
-            GameTooltip:AddLine(string.format("|cff00a000%s|r", key:sub(0,2)) ..  
-            string.format(string.format("|cffffffff%s|r", key:sub(3))))
+            GameTooltip:AddLine(string.format("|cff00a000%s|r", key:sub(0, 2)) ..
+                string.format(string.format("|cffffffff%s|r", key:sub(3))))
         end
     end
     GameTooltip:Show()
@@ -399,12 +318,11 @@ end
 
 function LFGApplicantInit()
 
--- local allApplicants = C_LFGList.GetApplicants()
-for i = 1, 14 do
-    local button = _G["LFGListApplicationViewerScrollFrameButton" .. i]
-    button:HookScript("OnEnter", OnEnter)
-    button:HookScript("OnLeave", OnLeave)
- end
+    for i = 1, 14 do
+        local button = _G["LFGListApplicationViewerScrollFrameButton" .. i]
+        button:HookScript("OnEnter", OnEnter)
+        button:HookScript("OnLeave", OnLeave)
+    end
 end
 
 function clearTooltip(self)
@@ -416,17 +334,18 @@ function OnEnter(self)
     if self.applicantID and self.Members then
         HookApplicantButtons(self.Members)
     elseif self.memberIdx then
-        name, class, localizedClass, level, itemLevel, honorLevel, tank, healer, damage, assignedRole, relationship, pvpItemLevel = C_LFGList.GetApplicantMemberInfo(self:GetParent().applicantID, self.memberIdx)
+        name, class, localizedClass, level, itemLevel, honorLevel, tank, healer, damage, assignedRole, relationship,
+            pvpItemLevel = C_LFGList.GetApplicantMemberInfo(self:GetParent().applicantID, self.memberIdx)
         LFGRegionMixin:CheckMythicScore(name)
     end
 end
 
 function OnLeave(self)
-    GameTooltip:ClearLines() 
+    GameTooltip:ClearLines()
     GameTooltip:Hide()
 end
 
- do
+do
     local f = _G.LFGListFrame.ApplicationViewer.UnempoweredCover
     f:EnableMouse(false)
     f:EnableMouseWheel(false)
