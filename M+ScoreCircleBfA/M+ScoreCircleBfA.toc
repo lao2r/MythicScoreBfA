@@ -9,6 +9,7 @@
 
 characters_db.lua
 characters_mapping.lua
+keystones_total.lua
 version.lua
 core.lua
 score_tier.lua

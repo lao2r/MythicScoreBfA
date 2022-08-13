@@ -31,15 +31,15 @@ local playerBest =
     [504] = { level = 0, dungeon_en = "Temple of Sethraliss", dungeon_ru = "Храм Сетралисс", chest = 0 },
     [510] = { level = 0, dungeon_en = "The MOTHERLODE!!", dungeon_ru = "ЗОЛОТАЯ ЖИЛА!!!", chest = 0 },
     [514] = { level = 0, dungeon_en = "Kings' Rest", dungeon_ru = "Гробница королей", chest = 0 },
+    [661] = { level = 0, dungeon_en = "Kings' Rest", dungeon_ru = "Гробница королей", chest = 0 },
     [518] = { level = 0, dungeon_en = "Freehold", dungeon_ru = "Вольная гавань", chest = 0 },
     [522] = { level = 0, dungeon_en = "Shrine of the Storm", dungeon_ru = "Святилище Штормов", chest = 0 },
     [526] = { level = 0, dungeon_en = "Tol Dagor", dungeon_ru = "Тол Дагор", chest = 0 },
     [530] = { level = 0, dungeon_en = "Waycrest Manor", dungeon_ru = "Усадьба Уейкрестов", chest = 0 },
-    [534] = { level = 0, dungeon_en = "Siege of Boralus", dungeon_ru = "Осада Боралуса", chest = 0 },
-    [679] = { level = 0, dungeon_en = "Mechagon Junkyard", dungeon_ru = "Операция Мехагон - свалка",
-        chest = 0 },
-    [683] = { level = 0, dungeon_en = "Mechagon Workshop", dungeon_ru = "Опервация Мехагон - мастерская",
-        chest = 0 },
+    [534] = { level = 0, dungeon_en = "Siege of Boralus", dungeon_ru = "Осада Боралуса", chest = 0, side = "Версия для Орды"  },
+    [659] = { level = 0, dungeon_en = "Siege of Boralus", dungeon_ru = "Осада Боралуса", chest = 0, side = "Версия для Альянса" },
+    [679] = { level = 0, dungeon_en = "Mechagon Junkyard", dungeon_ru = "Операция Мехагон - свалка", chest = 0 },
+    [683] = { level = 0, dungeon_en = "Mechagon Workshop", dungeon_ru = "Операция Мехагон - мастерская", chest = 0 },
 }
 
 for k, v in pairs(playerBest) do
@@ -164,7 +164,7 @@ function AppendToGameTooltipMixin:CheckMythicScore()
                 if table.getn(_info.score) == 1 then
                     self:AddRegion(string.format(_info.score[1]:gsub('%d', ''):gsub('%s', '') ..
                         findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers), _info.score[1]) ..
-                        string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))), _info)
+                        string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))), _info, _prep)
                 end
 
                 if table.getn(_info.score) == 2 then
@@ -172,7 +172,7 @@ function AppendToGameTooltipMixin:CheckMythicScore()
                         findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers),
                         string.match(_info.score[1], '%S+$')) ..
                         string.format("\nЛучший за сезон: |cff00a000%s|r", _info.bestKey:sub(0, 2)) ..
-                        string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))), _info)
+                        string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))), _info, _prep)
                 end
 
                 if table.getn(_info.score) == 3 then
@@ -184,7 +184,7 @@ function AppendToGameTooltipMixin:CheckMythicScore()
                             findClosest(tonumber(string.match(_info.score[2], '%S+$')), scoreTiers),
                             string.match(_info.score[2], '%S+$')) ..
                         string.format("\nЛучший за сезон: |cff00a000%s|r", _info.bestKey:sub(0, 2)) ..
-                        string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))), _info)
+                        string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))), _info, _prep)
                 end
 
                 if table.getn(_info.score) == 4 then
@@ -200,7 +200,7 @@ function AppendToGameTooltipMixin:CheckMythicScore()
                             findClosest(tonumber(string.match(_info.score[3], '%S+$')), scoreTiers),
                             string.match(_info.score[3], '%S+$')) ..
                         string.format("\nЛучший за сезон: |cff00a000%s|r", _info.bestKey:sub(0, 2)) ..
-                        string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))), _info)
+                        string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))), _info, _prep)
                 end
             end
             if table.getn(_info.score) == 0 then
@@ -222,7 +222,7 @@ function OnLeave_T(self)
     GameTooltip:Hide()
 end
 
-function AppendToGameTooltipMixin:AddRegion(_score, _info)
+function AppendToGameTooltipMixin:AddRegion(_score, _info, _prep)
     flag = false
     if IsShiftKeyDown() and not UnitAffectingCombat("player") then
         flag = true
@@ -243,6 +243,29 @@ function AppendToGameTooltipMixin:AddRegion(_score, _info)
         GameTooltip:AddLine(string.format("M+ Score: %s", _score))
     end
 
+    total = ""
+
+    if (total_run[_prep[1]].tier1 > 0) then
+        total = string.format("|cff55dc62 +5-9|r |cffffffff Ключи вовремя|r - |cffffffff(%s)|r", total_run[_prep[1]].tier1)
+    end
+    if (total_run[_prep[1]].tier2 > 0) then
+        total = string.format("|cff4687c5+10-14|r |cffffffff Ключи вовремя|r - |cffffffff(%s)|r", total_run[_prep[1]].tier2)
+    end
+    if (total_run[_prep[1]].tier3 > 0) then
+        total = string.format("|cff695ee4+15-19|r |cffffffff Ключи вовремя|r - |cffffffff(%s)|r", total_run[_prep[1]].tier3)
+    end
+    if (total_run[_prep[1]].tier4 > 0) then
+        total = string.format("|cffab38e6+20-24|r |cffffffff Ключи вовремя|r - |cffffffff(%s)|r", total_run[_prep[1]].tier4)
+    end
+    if (total_run[_prep[1]].tier5 > 0) then
+        total = string.format("|cffe1588e+25-30|r |cffffffff Ключи вовремя|r - |cffffffff(%s)|r", total_run[_prep[1]].tier5)
+    end
+    if (total_run[_prep[1]].tier6 > 0) then
+        total = string.format("|cfffb792e+30-34|r |cffffffff Ключи вовремя|r - |cffffffff(%s)|r", total_run[_prep[1]].tier6)
+    end
+    GameTooltip:AddLine("------------------------------------")
+    GameTooltip:AddLine(total, _, _, _, false)
+    GameTooltip:Show()
 end
 
 LFGRegionMixin = {}
@@ -279,7 +302,7 @@ function LFGRegionMixin:CheckMythicScore(leaderName, activityID)
                     string.match(_info.score[1], '%S+$')) ..
                     string.format("\nРекорд лидера группы:\n" .. "|cff00a000%s|r",
                         _info.bestKey:sub(0, 2)) ..
-                    string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))), _info, activityID)
+                    string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))), _info, activityID, _prep)
             end
             if table.getn(_info.score) == 2 then
                 self:AddRegion(string.format(ROLE_ICONS[string.match(_info.score[1], "%u*")].full ..
@@ -287,7 +310,7 @@ function LFGRegionMixin:CheckMythicScore(leaderName, activityID)
                     string.match(_info.score[1], '%S+$')) ..
                     string.format("\nРекорд лидера группы:\n" .. "|cff00a000%s|r",
                         _info.bestKey:sub(0, 2)) ..
-                    string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))), _info, activityID)
+                    string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))), _info, activityID, _prep)
             end
             if table.getn(_info.score) == 3 then
                 self:AddRegion(string.format(ROLE_ICONS[string.match(_info.score[1], "%u*")].full ..
@@ -299,7 +322,7 @@ function LFGRegionMixin:CheckMythicScore(leaderName, activityID)
                         string.match(_info.score[2], '%S+$')) ..
                     string.format("\nРекорд лидера группы:\n" .. "|cff00a000%s|r",
                         _info.bestKey:sub(0, 2)) ..
-                    string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))), _info, activityID)
+                    string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))), _info, activityID, _prep)
             end
             if table.getn(_info.score) > 3 then
                 self:AddRegion(string.format(ROLE_ICONS[string.match(_info.score[1], "%u*")].full ..
@@ -315,19 +338,20 @@ function LFGRegionMixin:CheckMythicScore(leaderName, activityID)
                         string.match(_info.score[3], '%S+$')) ..
                     string.format("\nРекорд лидера группы:\n" .. "|cff00a000%s|r",
                         _info.bestKey:sub(0, 2)) ..
-                    string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))), _info, activityID)
+                    string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))), _info, activityID, _prep)
             end
         end
         if table.getn(_info.score) == 0 then
-            self:AddRegion(string.format("|cffffffff%s|r", "No info"), _, activityID)
+            self:AddRegion(string.format("|cffffffff%s|r", "No info"), 1, activityID)
         end
     end
     if (getCharacterIdByName(leaderName) == nil) then
-        self:AddRegion(string.format("|cffffffff%s|r", "No info"), _, activityID)
+
+        self:AddRegion(string.format("|cffffffff%s|r", "No info"), 1, activityID)
     end
 end
 
-function LFGRegionMixin:AddRegion(_score, _info, activityID)
+function LFGRegionMixin:AddRegion(_score, _info, activityID, _prep)
     local currentBest = playerBest[activityID].dungeon_ru
     local currentLevel = playerBest[activityID].level
     local currentChest = playerBest[activityID].chest
@@ -335,7 +359,6 @@ function LFGRegionMixin:AddRegion(_score, _info, activityID)
     GameTooltip:AddLine(" ")
     GameTooltip:AddLine(string.format("M+ Score: %s", _score))
     GameTooltip:Show()
-
     if (_info ~= 1) then
         if (table.getn(_info.key_ru) > 0) then
             GameTooltip:AddLine("Лучшие прохождения лидера группы:")
@@ -345,6 +368,30 @@ function LFGRegionMixin:AddRegion(_score, _info, activityID)
             end
         end
     end
+
+    total = ""
+
+    
+    if (total_run[_prep[1]].tier1 > 0) then
+        total = string.format("|cff55dc62 +5-9|r |cffffffff Ключи вовремя|r - |cffffffff(%s)|r", total_run[_prep[1]].tier1)
+    end
+    if (total_run[_prep[1]].tier2 > 0) then
+        total = string.format("|cff4687c5+10-14|r |cffffffff Ключи вовремя|r - |cffffffff(%s)|r", total_run[_prep[1]].tier2)
+    end
+    if (total_run[_prep[1]].tier3 > 0) then
+        total = string.format("|cff695ee4+15-19|r |cffffffff Ключи вовремя|r - |cffffffff(%s)|r", total_run[_prep[1]].tier3)
+    end
+    if (total_run[_prep[1]].tier4 > 0) then
+        total = string.format("|cffab38e6+20-24|r |cffffffff Ключи вовремя|r - |cffffffff(%s)|r", total_run[_prep[1]].tier4)
+    end
+    if (total_run[_prep[1]].tier5 > 0) then
+        total = string.format("|cffe1588e+25-30|r |cffffffff Ключи вовремя|r - |cffffffff(%s)|r", total_run[_prep[1]].tier5)
+    end
+    if (total_run[_prep[1]].tier6 > 0) then
+        total = string.format("|cfffb792e+30-34|r |cffffffff Ключи вовремя|r - |cffffffff(%s)|r", total_run[_prep[1]].tier6)
+    end
+    GameTooltip:AddLine("----------------------------------")
+    GameTooltip:AddLine(total, _, _, _, false)
     GameTooltip:AddLine(string.format("\n----------------------------------\nВаш рекорд в текущем подземелье:\n|cff42aaff%s|r "
         , currentLevel) ..
         string.format("|cffc5d0e6%s|r ", currentBest) .. string.format("|cffffff00+%s|r ", currentChest))
