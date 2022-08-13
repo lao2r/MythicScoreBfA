@@ -22,6 +22,37 @@ function getMythicScore(hero_ID)
     return characters[hero_ID]
 end
 
+local playerId = getCharacterIdByName(UnitName("player"))[1]
+local playerInfo = getMythicScore(playerId)
+local playerBest =
+{
+    [502] = { level = 0, dungeon_en = "Atal'dazar", dungeon_ru = "Атал'дазар", chest = 0 },
+    [507] = { level = 0, dungeon_en = "The Underrot", dungeon_ru = "Подгнилье", chest = 0 },
+    [504] = { level = 0, dungeon_en = "Temple of Sethraliss", dungeon_ru = "Храм Сетралисс", chest = 0 },
+    [510] = { level = 0, dungeon_en = "The MOTHERLODE!!", dungeon_ru = "ЗОЛОТАЯ ЖИЛА!!!", chest = 0 },
+    [514] = { level = 0, dungeon_en = "Kings' Rest", dungeon_ru = "Гробница королей", chest = 0 },
+    [518] = { level = 0, dungeon_en = "Freehold", dungeon_ru = "Вольная гавань", chest = 0 },
+    [522] = { level = 0, dungeon_en = "Shrine of the Storm", dungeon_ru = "Святилище Штормов", chest = 0 },
+    [526] = { level = 0, dungeon_en = "Tol Dagor", dungeon_ru = "Тол Дагор", chest = 0 },
+    [530] = { level = 0, dungeon_en = "Waycrest Manor", dungeon_ru = "Усадьба Уейкрестов", chest = 0 },
+    [534] = { level = 0, dungeon_en = "Siege of Boralus", dungeon_ru = "Осада Боралуса", chest = 0 },
+    [679] = { level = 0, dungeon_en = "Mechagon Junkyard", dungeon_ru = "Операция Мехагон - свалка",
+        chest = 0 },
+    [683] = { level = 0, dungeon_en = "Mechagon Workshop", dungeon_ru = "Опервация Мехагон - мастерская",
+        chest = 0 },
+}
+
+for k, v in pairs(playerBest) do
+    for _, key in pairs(playerInfo.key) do
+        if string.match(key:sub(3), v.dungeon_en) == v.dungeon_en then
+            playerBest[k].level = key:sub(0, 2)
+            if string.match(key:sub(12, 30), "+" .. "%d") ~= nil then
+                playerBest[k].chest = string.match(key:sub(12, 30), "%d")
+            end
+        end
+    end
+end
+
 function findClosest(r, n)
     local min = n[1].score
     local subMin = math.abs(n[1].score - r)
@@ -115,12 +146,13 @@ SPEC_ICONS = {
     }
 }
 
+local playerId = getCharacterIdByName(UnitName("player")[1])
+
 AppendToGameTooltipMixin = {}
 
 function AppendToGameTooltipMixin:CheckMythicScore()
 
     local unitName, unit = GameTooltip:GetUnit()
-
 
     if UnitIsPlayer(unit) then
         local _prep = getCharacterIdByName(unitName)
@@ -223,33 +255,39 @@ function LFGRegionMixin:Initialize()
     local function SetSearchEntryTooltip(_, resultID)
         local info = C_LFGList.GetSearchResultInfo(resultID)
         if (info.leaderName) then
-            self:CheckMythicScore(info.leaderName)
+            self:CheckMythicScore(info.leaderName, info.activityID)
         end
     end
 
     hooksecurefunc("LFGListUtil_SetSearchEntryTooltip", SetSearchEntryTooltip)
 end
 
-function LFGRegionMixin:CheckMythicScore(leaderName)
-    local _prep = getCharacterIdByName(leaderName)
-    if _prep ~= nil then
-        local _info = getMythicScore(_prep[1])
-        local _role, _role2, _role3
+function LFGRegionMixin:CheckMythicScore(leaderName, activityID)
+    fullName, shortName, categoryID, groupID, itemLevel, filters,
+        minLevel, maxPlayers, displayType, orderIndex, useHonorLevel,
+        showQuickJoinToast, isMythicPlusActivity, isRatedPvpActivity,
+        isCurrentRaidActivity = C_LFGList.GetActivityInfo(activityID)
 
+    if (getCharacterIdByName(leaderName) ~= nil) then
+        local _prep = getCharacterIdByName(leaderName)
+
+        local _info = getMythicScore(_prep[1])
         if table.getn(_info.score) > 0 then
             if table.getn(_info.score) == 1 then
                 self:AddRegion(string.format(_info.score[1]:gsub('%d', ''):gsub('%s', '') ..
                     findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers),
                     string.match(_info.score[1], '%S+$')) ..
-                    string.format("\nЛучший за сезон: |cff00a000%s|r", _info.bestKey:sub(0, 2)) ..
-                    string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))), _info)
+                    string.format("\nРекорд лидера группы:\n" .. "|cff00a000%s|r",
+                        _info.bestKey:sub(0, 2)) ..
+                    string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))), _info, activityID)
             end
             if table.getn(_info.score) == 2 then
                 self:AddRegion(string.format(ROLE_ICONS[string.match(_info.score[1], "%u*")].full ..
                     findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers),
                     string.match(_info.score[1], '%S+$')) ..
-                    string.format("\nЛучший за сезон: |cff00a000%s|r", "\n" .. _info.bestKey:sub(0, 2)) ..
-                    string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))), _info)
+                    string.format("\nРекорд лидера группы:\n" .. "|cff00a000%s|r",
+                        _info.bestKey:sub(0, 2)) ..
+                    string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))), _info, activityID)
             end
             if table.getn(_info.score) == 3 then
                 self:AddRegion(string.format(ROLE_ICONS[string.match(_info.score[1], "%u*")].full ..
@@ -259,8 +297,9 @@ function LFGRegionMixin:CheckMythicScore(leaderName)
                         ROLE_ICONS[string.match(_info.score[2], "%u*")].full ..
                         findClosest(tonumber(string.match(_info.score[2], '%S+$')), scoreTiers),
                         string.match(_info.score[2], '%S+$')) ..
-                    string.format("\nЛучший за сезон: |cff00a000%s|r", "\n" .. _info.bestKey:sub(0, 2)) ..
-                    string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))), _info)
+                    string.format("\nРекорд лидера группы:\n" .. "|cff00a000%s|r",
+                        _info.bestKey:sub(0, 2)) ..
+                    string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))), _info, activityID)
             end
             if table.getn(_info.score) > 3 then
                 self:AddRegion(string.format(ROLE_ICONS[string.match(_info.score[1], "%u*")].full ..
@@ -274,31 +313,41 @@ function LFGRegionMixin:CheckMythicScore(leaderName)
                         ROLE_ICONS[string.match(_info.score[3], "%u*")].full ..
                         findClosest(tonumber(string.match(_info.score[3], '%S+$')), scoreTiers),
                         string.match(_info.score[3], '%S+$')) ..
-                    string.format("\nЛучший за сезон: |cff00a000%s|r", "\n" .. _info.bestKey:sub(0, 2)) ..
-                    string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))), _info)
+                    string.format("\nРекорд лидера группы:\n" .. "|cff00a000%s|r",
+                        _info.bestKey:sub(0, 2)) ..
+                    string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))), _info, activityID)
             end
         end
         if table.getn(_info.score) == 0 then
-            self:AddRegion(string.format("|cffffffff%s|r", "No info"))
+            self:AddRegion(string.format("|cffffffff%s|r", "No info"), _, activityID)
         end
     end
-    if _prep == nil then
-        self:AddRegion(string.format("|cffffffff%s|r", "No info"))
+    if (getCharacterIdByName(leaderName) == nil) then
+        self:AddRegion(string.format("|cffffffff%s|r", "No info"), _, activityID)
     end
 end
 
-function LFGRegionMixin:AddRegion(_score, _info)
+function LFGRegionMixin:AddRegion(_score, _info, activityID)
+    local currentBest = playerBest[activityID].dungeon_ru
+    local currentLevel = playerBest[activityID].level
+    local currentChest = playerBest[activityID].chest
+
     GameTooltip:AddLine(" ")
     GameTooltip:AddLine(string.format("M+ Score: %s", _score))
     GameTooltip:Show()
 
-    if (table.getn(_info.key_ru) > 0) then
-        GameTooltip:AddLine("\nЛучшие прохождения:")
-        for _, key in ipairs(_info.key_ru) do
-            GameTooltip:AddLine(string.format("|cff00a000%s|r", key:sub(0, 2)) ..
-                string.format(string.format("|cffffffff%s|r", key:sub(3))))
+    if (_info ~= 1) then
+        if (table.getn(_info.key_ru) > 0) then
+            GameTooltip:AddLine("Лучшие прохождения лидера группы:")
+            for _, key in ipairs(_info.key_ru) do
+                GameTooltip:AddLine(string.format("|cff00a000%s|r", key:sub(0, 2)) ..
+                    string.format(string.format("|cffffffff%s|r", key:sub(3))))
+            end
         end
     end
+    GameTooltip:AddLine(string.format("\n----------------------------------\nВаш рекорд в текущем подземелье:\n|cff42aaff%s|r "
+        , currentLevel) ..
+        string.format("|cffc5d0e6%s|r ", currentBest) .. string.format("|cffffff00+%s|r ", currentChest))
     GameTooltip:Show()
 end
 
