@@ -292,10 +292,14 @@ function tableHasKey(table,key)
 end
 
 function LFGRegionMixin:AddRegion(_score, _info, activityID, _prep)
+    local currentBest 
+    local currentLevel
+    local currentChest
+
     if (tableHasKey(playerBest, activityID) == true) then
-    local currentBest = playerBest[activityID].dungeon_ru
-    local currentLevel = playerBest[activityID].level
-    local currentChest = playerBest[activityID].chest
+    currentBest = playerBest[activityID].dungeon_ru
+    currentLevel = playerBest[activityID].level
+    currentChest = playerBest[activityID].chest
     end
 
     GameTooltip:AddLine(" ")
