@@ -546,19 +546,10 @@ UnitPopupButtons["MM"] = { text = "|cffff8000Прогресс M+Score|r",
 table.insert(UnitPopupMenus["FRIEND"], #(UnitPopupMenus["FRIEND"]) - 1, "MM");
 table.insert(UnitPopupMenus["GUILD"], #(UnitPopupMenus["GUILD"]) - 1, "MM");
 
-
-hooksecurefunc("UnitPopup_HideButtons", function(self)
-    local dropdownMenu = UIDROPDOWNMENU_INIT_MENU
-    for k, v in pairs(UnitPopupMenus[dropdownMenu.which]) do
-        if v == "MM" then
-            UnitPopupShown[k] = (dropdownMenu.name == UnitName("player") and 0) or 1
-        end
-    end
-end)
-
 hooksecurefunc("UnitPopup_OnClick", function(self)
     local dropdownFrame = UIDROPDOWNMENU_INIT_MENU
     local button = self.value
+    DropDownList1Button10:Hide()
     if button == "MM" then
         printMythicScoreInfo(dropdownFrame.name)
     end
