@@ -249,13 +249,8 @@ function LFGRegionMixin:Initialize()
 end
 
 function LFGRegionMixin:CheckMythicScore(leaderName, activityID)
-    fullName, shortName, categoryID, groupID, itemLevel, filters,
-        minLevel, maxPlayers, displayType, orderIndex, useHonorLevel,
-        showQuickJoinToast, isMythicPlusActivity, isRatedPvpActivity,
-        isCurrentRaidActivity = C_LFGList.GetActivityInfo(activityID)
 
     local summary = ""
-
     if (getCharacterIdByName(leaderName) ~= nil) then
         local _prep = getCharacterIdByName(leaderName)
 
@@ -378,9 +373,14 @@ function LFGRegionMixin:AddRegion(_score, _info, activityID, _prep)
         GameTooltip:AddLine(total, _, _, _, false)
     end
     GameTooltip:Show()
+    if (tableHasKey(playerBest, activityID) == true) then
+        currentBest = playerBest[activityID].dungeon_ru
+        currentLevel = playerBest[activityID].level
+        currentChest = playerBest[activityID].chest
     GameTooltip:AddLine(string.format("\n----------------------------------\nВаш рекорд в текущем подземелье:\n|cff42aaff%s|r "
         , currentLevel) ..
         string.format("|cffc5d0e6%s|r ", currentBest) .. string.format("|cffffff00+%s|r ", currentChest))
+    end
     GameTooltip:Show()
 end
 
@@ -399,7 +399,6 @@ local function HookApplicantButtons(buttons)
 end
 
 function LFGApplicantInit()
-
     for i = 1, 14 do
         local button = _G["LFGListApplicationViewerScrollFrameButton" .. i]
         button:HookScript("OnEnter", OnEnter)
@@ -416,7 +415,7 @@ function OnEnter(self)
     if self.applicantID and self.Members then
         HookApplicantButtons(self.Members)
     elseif self.memberIdx then
-        name, class, localizedClass, level, itemLevel, honorLevel, tank, healer, damage, assignedRole, relationship,
+        local name, class, localizedClass, level, itemLevel, honorLevel, tank, healer, damage, assignedRole, relationship,
             pvpItemLevel = C_LFGList.GetApplicantMemberInfo(self:GetParent().applicantID, self.memberIdx)
         LFGRegionMixin:CheckMythicScore(name)
     end
@@ -440,7 +439,6 @@ function printMythicScoreInfo(unitName)
 
     local unitName   = unitName
     local summary    = ""
-    local classColor = ""
 
     local _prep = getCharacterIdByName(unitName)
 
