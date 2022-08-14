@@ -36,10 +36,14 @@ local playerBest =
     [522] = { level = 0, dungeon_en = "Shrine of the Storm", dungeon_ru = "Святилище Штормов", chest = 0 },
     [526] = { level = 0, dungeon_en = "Tol Dagor", dungeon_ru = "Тол Дагор", chest = 0 },
     [530] = { level = 0, dungeon_en = "Waycrest Manor", dungeon_ru = "Усадьба Уейкрестов", chest = 0 },
-    [534] = { level = 0, dungeon_en = "Siege of Boralus", dungeon_ru = "Осада Боралуса", chest = 0, side = "Версия для Орды"  },
-    [659] = { level = 0, dungeon_en = "Siege of Boralus", dungeon_ru = "Осада Боралуса", chest = 0, side = "Версия для Альянса" },
-    [679] = { level = 0, dungeon_en = "Mechagon Junkyard", dungeon_ru = "Операция Мехагон - свалка", chest = 0 },
-    [683] = { level = 0, dungeon_en = "Mechagon Workshop", dungeon_ru = "Операция Мехагон - мастерская", chest = 0 },
+    [534] = { level = 0, dungeon_en = "Siege of Boralus", dungeon_ru = "Осада Боралуса", chest = 0,
+        side = "Версия для Орды" },
+    [659] = { level = 0, dungeon_en = "Siege of Boralus", dungeon_ru = "Осада Боралуса", chest = 0,
+        side = "Версия для Альянса" },
+    [679] = { level = 0, dungeon_en = "Mechagon Junkyard", dungeon_ru = "Операция Мехагон - свалка",
+        chest = 0 },
+    [683] = { level = 0, dungeon_en = "Mechagon Workshop", dungeon_ru = "Операция Мехагон - мастерская",
+        chest = 0 },
 }
 
 for k, v in pairs(playerBest) do
@@ -68,28 +72,39 @@ function findClosest(r, n)
     return color[1]
 end
 
-ROLE_ICONS = {
-    ["DPS"] = {
-        full = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\roles:14:14:0:0:64:64:0:18:0:18|t",
-        partial = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\roles:14:14:0:0:64:64:0:18:36:54|t"
-    },
-    ["HEALER"] = {
-        full = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\roles:14:14:0:0:64:64:19:37:0:18|t",
-        partial = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\roles:14:14:0:0:64:64:19:37:36:54|t"
-    },
-    ["TANK"] = {
-        full = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\roles:14:14:0:0:64:64:38:56:0:18|t",
-        partial = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\roles:14:14:0:0:64:64:38:56:36:54|t"
-    }
+local classColors = {
+    ["Paladin"] = { "|cfff48cba%s|r" },
+    ["Mage"] = { "|cff68ccef%s|r" },
+    ["Monk"] = { "|cff00ffba%s|r" },
+    ["Warrior"] = { "|cffc69b6d%s|r" },
+    ["Hunter"] = { "|cffaad372%s|r" },
+    ["Demon Hunter"] = { "|cffa330c9%s|r" },
+    ["Druid"] = { "|cffff7c0a%s|r" },
+    ["Warlock"] = { "|cff9382c9%s|r" },
+    ["Shaman"] = { "|cff2359ff%s|r" },
+    ["Death Knight"] = { "|cffc41e3b%s|r" },
+    ["Priest"] = { "|cfff0ebe0%s|r" },
+    ["Rogue"] = { "|cfffff468%s|r" }
 }
 
-local playerId = getCharacterIdByName(UnitName("player")[1])
+ROLE_ICONS = {
+    ["DPS"] = {
+        full = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\roles:14:14:0:0:64:64:0:18:0:18|t"
+    },
+    ["HEALER"] = {
+        full = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\roles:14:14:0:0:64:64:19:37:0:18|t"
+    },
+    ["TANK"] = {
+        full = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\roles:14:14:0:0:64:64:38:56:0:18|t"
+    }
+}
 
 AppendToGameTooltipMixin = {}
 
 function AppendToGameTooltipMixin:CheckMythicScore()
 
     local unitName, unit = GameTooltip:GetUnit()
+    local summary = ""
 
     if UnitIsPlayer(unit) then
         local _prep = getCharacterIdByName(unitName)
@@ -99,21 +114,23 @@ function AppendToGameTooltipMixin:CheckMythicScore()
 
             if table.getn(_info.score) > 0 then
                 if table.getn(_info.score) == 1 then
-                    self:AddRegion(string.format(_info.score[1]:gsub('%d', ''):gsub('%s', '') ..
+                    summary = string.format(_info.score[1]:gsub('%d', ''):gsub('%s', '') ..
                         findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers), _info.score[1]) ..
-                        string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))), _info, _prep)
+                        string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3)))
+                    self:AddRegion(summary, _info, _prep)
                 end
 
                 if table.getn(_info.score) == 2 then
-                    self:AddRegion(string.format(ROLE_ICONS[string.match(_info.score[1], "%u*")].full ..
+                    summary = string.format(ROLE_ICONS[string.match(_info.score[1], "%u*")].full ..
                         findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers),
                         string.match(_info.score[1], '%S+$')) ..
                         string.format("\nЛучший за сезон: |cff00a000%s|r", _info.bestKey:sub(0, 2)) ..
-                        string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))), _info, _prep)
+                        string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3)))
+                    self:AddRegion(summary, _info, _prep)
                 end
 
                 if table.getn(_info.score) == 3 then
-                    self:AddRegion(string.format(ROLE_ICONS[string.match(_info.score[1], "%u*")].full ..
+                    summary = string.format(ROLE_ICONS[string.match(_info.score[1], "%u*")].full ..
                         findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers),
                         string.match(_info.score[1], '%S+$')) ..
                         string.format(" " ..
@@ -121,11 +138,12 @@ function AppendToGameTooltipMixin:CheckMythicScore()
                             findClosest(tonumber(string.match(_info.score[2], '%S+$')), scoreTiers),
                             string.match(_info.score[2], '%S+$')) ..
                         string.format("\nЛучший за сезон: |cff00a000%s|r", _info.bestKey:sub(0, 2)) ..
-                        string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))), _info, _prep)
+                        string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3)))
+                    self:AddRegion(summary, _info, _prep)
                 end
 
                 if table.getn(_info.score) == 4 then
-                    self:AddRegion(string.format(ROLE_ICONS[string.match(_info.score[1], "%u*")].full ..
+                    summary = string.format(ROLE_ICONS[string.match(_info.score[1], "%u*")].full ..
                         findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers),
                         string.match(_info.score[1], '%S+$')) ..
                         string.format(" " ..
@@ -137,7 +155,8 @@ function AppendToGameTooltipMixin:CheckMythicScore()
                             findClosest(tonumber(string.match(_info.score[3], '%S+$')), scoreTiers),
                             string.match(_info.score[3], '%S+$')) ..
                         string.format("\nЛучший за сезон: |cff00a000%s|r", _info.bestKey:sub(0, 2)) ..
-                        string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))), _info, _prep)
+                        string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3)))
+                    self:AddRegion(summary, _info, _prep)
                 end
             end
             if table.getn(_info.score) == 0 then
@@ -181,28 +200,34 @@ function AppendToGameTooltipMixin:AddRegion(_score, _info, _prep)
     end
 
     total = ""
-    if(_prep ~= nill) then
-    if (total_run[_prep[1]].tier1 > 0) then
-        total = string.format("|cff55dc62 +5-9|r |cffffffff Ключи вовремя|r - |cffffffff(%s)|r", total_run[_prep[1]].tier1)
+    if (_prep ~= nill) then
+        if (total_run[_prep[1]].tier1 > 0) then
+            total = string.format("|cff55dc62 +5-9|r |cffffffff Ключи вовремя|r - |cffffffff(%s)|r",
+                total_run[_prep[1]].tier1)
+        end
+        if (total_run[_prep[1]].tier2 > 0) then
+            total = string.format("|cff4687c5+10-14|r |cffffffff Ключи вовремя|r - |cffffffff(%s)|r",
+                total_run[_prep[1]].tier2)
+        end
+        if (total_run[_prep[1]].tier3 > 0) then
+            total = string.format("|cff695ee4+15-19|r |cffffffff Ключи вовремя|r - |cffffffff(%s)|r",
+                total_run[_prep[1]].tier3)
+        end
+        if (total_run[_prep[1]].tier4 > 0) then
+            total = string.format("|cffab38e6+20-24|r |cffffffff Ключи вовремя|r - |cffffffff(%s)|r",
+                total_run[_prep[1]].tier4)
+        end
+        if (total_run[_prep[1]].tier5 > 0) then
+            total = string.format("|cffe1588e+25-29|r |cffffffff Ключи вовремя|r - |cffffffff(%s)|r",
+                total_run[_prep[1]].tier5)
+        end
+        if (total_run[_prep[1]].tier6 > 0) then
+            total = string.format("|cfffb792e+30-34|r |cffffffff Ключи вовремя|r - |cffffffff(%s)|r",
+                total_run[_prep[1]].tier6)
+        end
+        GameTooltip:AddLine("------------------------------------")
+        GameTooltip:AddLine(total, _, _, _, false)
     end
-    if (total_run[_prep[1]].tier2 > 0) then
-        total = string.format("|cff4687c5+10-14|r |cffffffff Ключи вовремя|r - |cffffffff(%s)|r", total_run[_prep[1]].tier2)
-    end
-    if (total_run[_prep[1]].tier3 > 0) then
-        total = string.format("|cff695ee4+15-19|r |cffffffff Ключи вовремя|r - |cffffffff(%s)|r", total_run[_prep[1]].tier3)
-    end
-    if (total_run[_prep[1]].tier4 > 0) then
-        total = string.format("|cffab38e6+20-24|r |cffffffff Ключи вовремя|r - |cffffffff(%s)|r", total_run[_prep[1]].tier4)
-    end
-    if (total_run[_prep[1]].tier5 > 0) then
-        total = string.format("|cffe1588e+25-29|r |cffffffff Ключи вовремя|r - |cffffffff(%s)|r", total_run[_prep[1]].tier5)
-    end
-    if (total_run[_prep[1]].tier6 > 0) then
-        total = string.format("|cfffb792e+30-34|r |cffffffff Ключи вовремя|r - |cffffffff(%s)|r", total_run[_prep[1]].tier6)
-    end
-    GameTooltip:AddLine("------------------------------------")
-    GameTooltip:AddLine(total, _, _, _, false)
-end
     GameTooltip:Show()
 end
 
@@ -229,29 +254,33 @@ function LFGRegionMixin:CheckMythicScore(leaderName, activityID)
         showQuickJoinToast, isMythicPlusActivity, isRatedPvpActivity,
         isCurrentRaidActivity = C_LFGList.GetActivityInfo(activityID)
 
+    local summary = ""
+
     if (getCharacterIdByName(leaderName) ~= nil) then
         local _prep = getCharacterIdByName(leaderName)
 
         local _info = getMythicScore(_prep[1])
         if table.getn(_info.score) > 0 then
             if table.getn(_info.score) == 1 then
-                self:AddRegion(string.format(_info.score[1]:gsub('%d', ''):gsub('%s', '') ..
+                summary = string.format(_info.score[1]:gsub('%d', ''):gsub('%s', '') ..
                     findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers),
                     string.match(_info.score[1], '%S+$')) ..
                     string.format("\nРекорд лидера группы:\n" .. "|cff00a000%s|r",
                         _info.bestKey:sub(0, 2)) ..
-                    string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))), _info, activityID, _prep)
+                    string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3)))
+                self:AddRegion(summary, _info, activityID, _prep)
             end
             if table.getn(_info.score) == 2 then
-                self:AddRegion(string.format(ROLE_ICONS[string.match(_info.score[1], "%u*")].full ..
+                summary = string.format(ROLE_ICONS[string.match(_info.score[1], "%u*")].full ..
                     findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers),
                     string.match(_info.score[1], '%S+$')) ..
                     string.format("\nРекорд лидера группы:\n" .. "|cff00a000%s|r",
                         _info.bestKey:sub(0, 2)) ..
-                    string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))), _info, activityID, _prep)
+                    string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3)))
+                self:AddRegion(summary, _info, activityID, _prep)
             end
             if table.getn(_info.score) == 3 then
-                self:AddRegion(string.format(ROLE_ICONS[string.match(_info.score[1], "%u*")].full ..
+                summary = string.format(ROLE_ICONS[string.match(_info.score[1], "%u*")].full ..
                     findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers),
                     string.match(_info.score[1], '%S+$')) ..
                     string.format(" " ..
@@ -260,10 +289,11 @@ function LFGRegionMixin:CheckMythicScore(leaderName, activityID)
                         string.match(_info.score[2], '%S+$')) ..
                     string.format("\nРекорд лидера группы:\n" .. "|cff00a000%s|r",
                         _info.bestKey:sub(0, 2)) ..
-                    string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))), _info, activityID, _prep)
+                    string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3)))
+                self:AddRegion(summary, _info, activityID, _prep)
             end
             if table.getn(_info.score) > 3 then
-                self:AddRegion(string.format(ROLE_ICONS[string.match(_info.score[1], "%u*")].full ..
+                summary = string.format(ROLE_ICONS[string.match(_info.score[1], "%u*")].full ..
                     findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers),
                     string.match(_info.score[1], '%S+$')) ..
                     string.format(" " ..
@@ -276,7 +306,8 @@ function LFGRegionMixin:CheckMythicScore(leaderName, activityID)
                         string.match(_info.score[3], '%S+$')) ..
                     string.format("\nРекорд лидера группы:\n" .. "|cff00a000%s|r",
                         _info.bestKey:sub(0, 2)) ..
-                    string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3))), _info, activityID, _prep)
+                    string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3)))
+                self:AddRegion(summary, _info, activityID, _prep)
             end
         end
         if table.getn(_info.score) == 0 then
@@ -288,19 +319,19 @@ function LFGRegionMixin:CheckMythicScore(leaderName, activityID)
     end
 end
 
-function tableHasKey(table,key)
+function tableHasKey(table, key)
     return table[key] ~= nil
 end
 
 function LFGRegionMixin:AddRegion(_score, _info, activityID, _prep)
-    local currentBest 
+    local currentBest
     local currentLevel
     local currentChest
 
     if (tableHasKey(playerBest, activityID) == true) then
-    currentBest = playerBest[activityID].dungeon_ru
-    currentLevel = playerBest[activityID].level
-    currentChest = playerBest[activityID].chest
+        currentBest = playerBest[activityID].dungeon_ru
+        currentLevel = playerBest[activityID].level
+        currentChest = playerBest[activityID].chest
     end
 
     GameTooltip:AddLine(" ")
@@ -316,34 +347,40 @@ function LFGRegionMixin:AddRegion(_score, _info, activityID, _prep)
         end
     end
 
-    total = ""
+    local total = ""
 
-    if(_prep ~= nill) then
-    if (total_run[_prep[1]].tier1 > 0) then
-        total = string.format("|cff55dc62 +5-9|r |cffffffff Ключи вовремя|r - |cffffffff(%s)|r", total_run[_prep[1]].tier1)
+    if (_prep ~= nill) then
+        if (total_run[_prep[1]].tier1 > 0) then
+            total = string.format("|cff55dc62 +5-9|r |cffffffff Ключи вовремя|r - |cffffffff(%s)|r",
+                total_run[_prep[1]].tier1)
+        end
+        if (total_run[_prep[1]].tier2 > 0) then
+            total = string.format("|cff4687c5+10-14|r |cffffffff Ключи вовремя|r - |cffffffff(%s)|r",
+                total_run[_prep[1]].tier2)
+        end
+        if (total_run[_prep[1]].tier3 > 0) then
+            total = string.format("|cff695ee4+15-19|r |cffffffff Ключи вовремя|r - |cffffffff(%s)|r",
+                total_run[_prep[1]].tier3)
+        end
+        if (total_run[_prep[1]].tier4 > 0) then
+            total = string.format("|cffab38e6+20-24|r |cffffffff Ключи вовремя|r - |cffffffff(%s)|r",
+                total_run[_prep[1]].tier4)
+        end
+        if (total_run[_prep[1]].tier5 > 0) then
+            total = string.format("|cffe1588e+25-30|r |cffffffff Ключи вовремя|r - |cffffffff(%s)|r",
+                total_run[_prep[1]].tier5)
+        end
+        if (total_run[_prep[1]].tier6 > 0) then
+            total = string.format("|cfffb792e+30-34|r |cffffffff Ключи вовремя|r - |cffffffff(%s)|r",
+                total_run[_prep[1]].tier6)
+        end
+        GameTooltip:AddLine("----------------------------------")
+        GameTooltip:AddLine(total, _, _, _, false)
     end
-    if (total_run[_prep[1]].tier2 > 0) then
-        total = string.format("|cff4687c5+10-14|r |cffffffff Ключи вовремя|r - |cffffffff(%s)|r", total_run[_prep[1]].tier2)
-    end
-    if (total_run[_prep[1]].tier3 > 0) then
-        total = string.format("|cff695ee4+15-19|r |cffffffff Ключи вовремя|r - |cffffffff(%s)|r", total_run[_prep[1]].tier3)
-    end
-    if (total_run[_prep[1]].tier4 > 0) then
-        total = string.format("|cffab38e6+20-24|r |cffffffff Ключи вовремя|r - |cffffffff(%s)|r", total_run[_prep[1]].tier4)
-    end
-    if (total_run[_prep[1]].tier5 > 0) then
-        total = string.format("|cffe1588e+25-30|r |cffffffff Ключи вовремя|r - |cffffffff(%s)|r", total_run[_prep[1]].tier5)
-    end
-    if (total_run[_prep[1]].tier6 > 0) then
-        total = string.format("|cfffb792e+30-34|r |cffffffff Ключи вовремя|r - |cffffffff(%s)|r", total_run[_prep[1]].tier6)
-    end
-    GameTooltip:AddLine("----------------------------------")
-    GameTooltip:AddLine(total, _, _, _, false)
-end
     GameTooltip:Show()
     GameTooltip:AddLine(string.format("\n----------------------------------\nВаш рекорд в текущем подземелье:\n|cff42aaff%s|r "
         , currentLevel) ..
-        string.format("|cffc5d0e6%s|r ", currentBest) .. string.format("|cffffff00+%s|r ", currentChest))  
+        string.format("|cffc5d0e6%s|r ", currentBest) .. string.format("|cffffff00+%s|r ", currentChest))
     GameTooltip:Show()
 end
 
@@ -398,3 +435,131 @@ do
 end
 
 LFGApplicantInit()
+
+function printMythicScoreInfo(unitName)
+
+    local unitName   = unitName
+    local summary    = ""
+    local classColor = ""
+
+    local _prep = getCharacterIdByName(unitName)
+
+    if _prep ~= nil then
+        local _info = getMythicScore(_prep[1])
+        local classColor = classColors[_info.class][1]
+        local total = ""
+        
+        if (_prep ~= nill) then
+            if (total_run[_prep[1]].tier1 > 0) then
+                total = string.format("|cffffff00Ключи в таймер:|r |cff55dc62 +5-9|r - |cffffffff(%s)|r",
+                    total_run[_prep[1]].tier1)
+            end
+            if (total_run[_prep[1]].tier2 > 0) then
+                total = string.format("|cffffff00Ключи в таймер:|r |cff4687c5+10-14|r - |cffffffff(%s)|r",
+                    total_run[_prep[1]].tier2)
+            end
+            if (total_run[_prep[1]].tier3 > 0) then
+                total = string.format("|cffffff00Ключи в таймер:|r |cff695ee4+15-19|r - |cffffffff(%s)|r",
+                    total_run[_prep[1]].tier3)
+            end
+            if (total_run[_prep[1]].tier4 > 0) then
+                total = string.format("|cffffff00Ключи в таймер:|r |cffab38e6+20-24|r - |cffffffff(%s)|r",
+                    total_run[_prep[1]].tier4)
+            end
+            if (total_run[_prep[1]].tier5 > 0) then
+                total = string.format("|cffffff00Ключи в таймер:|r |cffe1588e+25-30|r - |cffffffff(%s)|r",
+                    total_run[_prep[1]].tier5)
+            end
+            if (total_run[_prep[1]].tier6 > 0) then
+                total = string.format("|cffffff00Ключи в таймер:|r |cfffb792e+30-34|r - |cffffffff(%s)|r",
+                    total_run[_prep[1]].tier6)
+            end
+        end
+
+        if table.getn(_info.score) > 0 then
+            if table.getn(_info.score) == 1 then
+                summary = string.format(classColor, unitName) ..
+                    ": " .. string.format(_info.score[1]:gsub('%d', ''):gsub('%s', '') ..
+                        findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers), _info.score[1]) ..
+                    string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3)))
+                print("|cffffff00-------------------------------|r\n" .. summary .. "\n" .. total)
+                print("|cffffff00-------------------------------|r")
+            end
+
+            if table.getn(_info.score) == 2 then
+                summary = string.format(classColor, unitName) ..
+                    ": " .. string.format(ROLE_ICONS[string.match(_info.score[1], "%u*")].full ..
+                        findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers),
+                        string.match(_info.score[1], '%S+$')) ..
+                    string.format("\n|cffffff00Рекорд сезона:|r |cff00a000%s|r", _info.bestKey:sub(0, 2)) ..
+                    string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3)))
+                print("|cffffff00-------------------------------|r\n" .. summary .. "\n" .. total)
+                print("|cffffff00-------------------------------|r")
+            end
+
+            if table.getn(_info.score) == 3 then
+                summary = string.format(classColor, unitName) ..
+                    ": " .. string.format(ROLE_ICONS[string.match(_info.score[1], "%u*")].full ..
+                        findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers),
+                        string.match(_info.score[1], '%S+$')) ..
+                    string.format("" ..
+                        ROLE_ICONS[string.match(_info.score[2], "%u*")].full ..
+                        findClosest(tonumber(string.match(_info.score[2], '%S+$')), scoreTiers),
+                        string.match(_info.score[2], '%S+$')) ..
+                    string.format("\n|cffffff00Рекорд сезона:|r |cff00a000%s|r", _info.bestKey:sub(0, 2)) ..
+                    string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3)))
+                print("|cffffff00-------------------------------|r\n" .. summary .. "\n" .. total)
+                print("|cffffff00-------------------------------|r")
+            end
+
+            if table.getn(_info.score) == 4 then
+                summary = string.format(classColor, unitName) ..
+                    ": " .. string.format(ROLE_ICONS[string.match(_info.score[1], "%u*")].full ..
+                        findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers),
+                        string.match(_info.score[1], '%S+$')) ..
+                    string.format("" ..
+                        ROLE_ICONS[string.match(_info.score[2], "%u*")].full ..
+                        findClosest(tonumber(string.match(_info.score[2], '%S+$')), scoreTiers),
+                        string.match(_info.score[2], '%S+$')) ..
+                    string.format("" ..
+                        ROLE_ICONS[string.match(_info.score[3], "%u*")].full ..
+                        findClosest(tonumber(string.match(_info.score[3], '%S+$')), scoreTiers),
+                        string.match(_info.score[3], '%S+$')) ..
+                    string.format("\n|cffffff00Рекорд сезона:|r |cff00a000%s|r", _info.bestKey:sub(0, 2)) ..
+                    string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3)))
+                print("|cffffff00-------------------------------|r\n" .. summary .. "\n" .. total)
+                print("|cffffff00-------------------------------|r")
+            end
+        end
+        if table.getn(_info.score) == 0 then
+            print(string.format("|cffffff00M+ Score:|r |cffffffff%s|r", "Нет информации о прогрессе"))
+        end
+    end
+    if _prep == nil then
+        print(string.format("|cffffff00M+ Score:|r |cffffffff%s|r", "Нет информации о прогрессе"))
+    end
+end
+
+UnitPopupButtons["MM"] = { text = "|cffff8000Прогресс M+Score|r",
+    --dist = 0
+};
+table.insert(UnitPopupMenus["FRIEND"], #(UnitPopupMenus["FRIEND"]) - 1, "MM");
+table.insert(UnitPopupMenus["GUILD"], #(UnitPopupMenus["GUILD"]) - 1, "MM");
+
+
+hooksecurefunc("UnitPopup_HideButtons", function(self)
+    local dropdownMenu = UIDROPDOWNMENU_INIT_MENU
+    for k, v in pairs(UnitPopupMenus[dropdownMenu.which]) do
+        if v == "MM" then
+            UnitPopupShown[k] = (dropdownMenu.name == UnitName("player") and 0) or 1
+        end
+    end
+end)
+
+hooksecurefunc("UnitPopup_OnClick", function(self)
+    local dropdownFrame = UIDROPDOWNMENU_INIT_MENU
+    local button = self.value
+    if button == "MM" then
+        printMythicScoreInfo(dropdownFrame.name)
+    end
+end)
