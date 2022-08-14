@@ -202,27 +202,27 @@ function AppendToGameTooltipMixin:AddRegion(_score, _info, _prep)
     total = ""
     if (_prep ~= nill) then
         if (total_run[_prep[1]].tier1 > 0) then
-            total = string.format("|cff55dc62 +5-9|r |cffffffff Ключи вовремя|r - |cffffffff(%s)|r",
+            total = string.format("|cffffff00Ключи в таймер:|r |cff55dc62 +5-9|r - |cffffffff(%s)|r",
                 total_run[_prep[1]].tier1)
         end
         if (total_run[_prep[1]].tier2 > 0) then
-            total = string.format("|cff4687c5+10-14|r |cffffffff Ключи вовремя|r - |cffffffff(%s)|r",
+            total = string.format("|cffffff00Ключи в таймер:|r |cff4687c5+10-14|r - |cffffffff(%s)|r",
                 total_run[_prep[1]].tier2)
         end
         if (total_run[_prep[1]].tier3 > 0) then
-            total = string.format("|cff695ee4+15-19|r |cffffffff Ключи вовремя|r - |cffffffff(%s)|r",
+            total = string.format("|cffffff00Ключи в таймер:|r |cff695ee4+15-19|r - |cffffffff(%s)|r",
                 total_run[_prep[1]].tier3)
         end
         if (total_run[_prep[1]].tier4 > 0) then
-            total = string.format("|cffab38e6+20-24|r |cffffffff Ключи вовремя|r - |cffffffff(%s)|r",
+            total = string.format("|cffffff00Ключи в таймер:|r |cffab38e6+20-24|r - |cffffffff(%s)|r",
                 total_run[_prep[1]].tier4)
         end
         if (total_run[_prep[1]].tier5 > 0) then
-            total = string.format("|cffe1588e+25-29|r |cffffffff Ключи вовремя|r - |cffffffff(%s)|r",
+            total = string.format("|cffffff00Ключи в таймер:|r |cffe1588e+25-29|r - |cffffffff(%s)|r",
                 total_run[_prep[1]].tier5)
         end
         if (total_run[_prep[1]].tier6 > 0) then
-            total = string.format("|cfffb792e+30-34|r |cffffffff Ключи вовремя|r - |cffffffff(%s)|r",
+            total = string.format("|cffffff00Ключи в таймер:|r |cfffb792e+30-34|r - |cffffffff(%s)|r",
                 total_run[_prep[1]].tier6)
         end
         GameTooltip:AddLine("------------------------------------")
@@ -351,27 +351,27 @@ function LFGRegionMixin:AddRegion(_score, _info, activityID, _prep)
 
     if (_prep ~= nill) then
         if (total_run[_prep[1]].tier1 > 0) then
-            total = string.format("|cff55dc62 +5-9|r |cffffffff Ключи вовремя|r - |cffffffff(%s)|r",
+            total = string.format("|cffffff00Ключи в таймер:|r |cff55dc62 +5-9|r - |cffffffff(%s)|r",
                 total_run[_prep[1]].tier1)
         end
         if (total_run[_prep[1]].tier2 > 0) then
-            total = string.format("|cff4687c5+10-14|r |cffffffff Ключи вовремя|r - |cffffffff(%s)|r",
+            total = string.format("|cffffff00Ключи в таймер:|r |cff4687c5+10-14|r - |cffffffff(%s)|r",
                 total_run[_prep[1]].tier2)
         end
         if (total_run[_prep[1]].tier3 > 0) then
-            total = string.format("|cff695ee4+15-19|r |cffffffff Ключи вовремя|r - |cffffffff(%s)|r",
+            total = string.format("|cffffff00Ключи в таймер:|r |cff695ee4+15-19|r - |cffffffff(%s)|r",
                 total_run[_prep[1]].tier3)
         end
         if (total_run[_prep[1]].tier4 > 0) then
-            total = string.format("|cffab38e6+20-24|r |cffffffff Ключи вовремя|r - |cffffffff(%s)|r",
+            total = string.format("|cffffff00Ключи в таймер:|r |cffab38e6+20-24|r - |cffffffff(%s)|r",
                 total_run[_prep[1]].tier4)
         end
         if (total_run[_prep[1]].tier5 > 0) then
-            total = string.format("|cffe1588e+25-30|r |cffffffff Ключи вовремя|r - |cffffffff(%s)|r",
+            total = string.format("|cffffff00Ключи в таймер:|r |cffe1588e+25-30|r - |cffffffff(%s)|r",
                 total_run[_prep[1]].tier5)
         end
         if (total_run[_prep[1]].tier6 > 0) then
-            total = string.format("|cfffb792e+30-34|r |cffffffff Ключи вовремя|r - |cffffffff(%s)|r",
+            total = string.format("|cffffff00Ключи в таймер:|r |cfffb792e+30-34|r - |cffffffff(%s)|r",
                 total_run[_prep[1]].tier6)
         end
         GameTooltip:AddLine("----------------------------------")
@@ -448,7 +448,7 @@ function printMythicScoreInfo(unitName)
         local _info = getMythicScore(_prep[1])
         local classColor = classColors[_info.class][1]
         local total = ""
-        
+
         if (_prep ~= nill) then
             if (total_run[_prep[1]].tier1 > 0) then
                 total = string.format("|cffffff00Ключи в таймер:|r |cff55dc62 +5-9|r - |cffffffff(%s)|r",
