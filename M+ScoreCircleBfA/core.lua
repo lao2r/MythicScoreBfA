@@ -395,32 +395,37 @@ function LFGRegionMixin:AddRegion(_score, _info, activityID, _prep)
     local total = ""
 
     if (_prep ~= nill) then
+        GameTooltip:AddLine("----------------------------------")
         if (total_run[_prep[1]].tier1 > 0) then
             total = string.format("|cffffff00Ключи в таймер:|r |cff55dc62 +5-9|r - |cffffffff(%s)|r",
                 total_run[_prep[1]].tier1)
+                GameTooltip:AddLine(total, _, _, _, false)
         end
         if (total_run[_prep[1]].tier2 > 0) then
             total = string.format("|cffffff00Ключи в таймер:|r |cff4687c5+10-14|r - |cffffffff(%s)|r",
                 total_run[_prep[1]].tier2)
+                GameTooltip:AddLine(total, _, _, _, false)
         end
         if (total_run[_prep[1]].tier3 > 0) then
             total = string.format("|cffffff00Ключи в таймер:|r |cff695ee4+15-19|r - |cffffffff(%s)|r",
                 total_run[_prep[1]].tier3)
+                GameTooltip:AddLine(total, _, _, _, false)
         end
         if (total_run[_prep[1]].tier4 > 0) then
             total = string.format("|cffffff00Ключи в таймер:|r |cffab38e6+20-24|r - |cffffffff(%s)|r",
                 total_run[_prep[1]].tier4)
+                GameTooltip:AddLine(total, _, _, _, false)
         end
         if (total_run[_prep[1]].tier5 > 0) then
             total = string.format("|cffffff00Ключи в таймер:|r |cffe1588e+25-30|r - |cffffffff(%s)|r",
                 total_run[_prep[1]].tier5)
+                GameTooltip:AddLine(total, _, _, _, false)
         end
         if (total_run[_prep[1]].tier6 > 0) then
             total = string.format("|cffffff00Ключи в таймер:|r |cfffb792e+30-34|r - |cffffffff(%s)|r",
                 total_run[_prep[1]].tier6)
+                GameTooltip:AddLine(total, _, _, _, false)
         end
-        GameTooltip:AddLine("----------------------------------")
-        GameTooltip:AddLine(total, _, _, _, false)
     end
     GameTooltip:Show()
     if (tableHasKey(playerBest, activityID) == true) then
