@@ -101,7 +101,28 @@ ROLE_ICONS = {
 
 AppendToGameTooltipMixin = {}
 
-function AppendToGameTooltipMixin:CheckMythicScore()
+------------------------------------------------------------------------------------------------------------------------
+local addInfoFrame = CreateFrame("GameTooltip","addInfoFrame")
+
+addInfoFrame:SetScript("OnEvent",function(self, event, arg, ...)
+    local unitName, unit = GameTooltip:GetUnit()
+  if (event == "MODIFIER_STATE_CHANGED" and IsShiftKeyDown()) then
+  if arg == "LSHIFT" then
+    GameTooltip:SetUnit(unit)
+  end
+end
+if (event == "MODIFIER_STATE_CHANGED" and IsShiftKeyDown() == false) then
+    if (UnitIsPlayer(unit)) then
+        GameTooltip:SetUnit(unit)
+    end
+    GameTooltip:Show()
+end
+end)
+
+addInfoFrame:RegisterEvent("MODIFIER_STATE_CHANGED")
+------------------------------------------------------------------------------------------------------------------------
+
+function AppendToGameTooltipMixin:CheckMythicScore(check)
 
     local unitName, unit = GameTooltip:GetUnit()
     local summary = ""
@@ -179,27 +200,10 @@ function OnLeave_T(self)
 end
 
 function AppendToGameTooltipMixin:AddRegion(_score, _info, _prep)
-    flag = false
-    if IsShiftKeyDown() and not UnitAffectingCombat("player") then
-        flag = true
-        if flag == true then
-            GameTooltip:AddLine(" ")
-            GameTooltip:AddLine(string.format("M+ Score: %s", _score))
-        end
-        if (table.getn(_info.key_ru) > 0) then
-            GameTooltip:AddLine("\nЛучшие прохождения:")
-            for _, key in ipairs(_info.key_ru) do
-                GameTooltip:AddLine(string.format("|cff00a000%s|r", key:sub(0, 2)) ..
-                    string.format(string.format("|cffffffff%s|r", key:sub(3))))
-            end
-        end
-    end
-    if (flag == false) then
-        GameTooltip:AddLine(" ")
-        GameTooltip:AddLine(string.format("M+ Score: %s", _score))
-    end
+    GameTooltip:AddLine(" ")
+    GameTooltip:AddLine(string.format("M+ Score: %s", _score))
 
-    total = ""
+        total = ""
     if (_prep ~= nill) then
         if (total_run[_prep[1]].tier1 > 0) then
             total = string.format("|cffffff00Ключи в таймер:|r |cff55dc62 +5-9|r - |cffffffff(%s)|r",
@@ -228,8 +232,20 @@ function AppendToGameTooltipMixin:AddRegion(_score, _info, _prep)
         GameTooltip:AddLine("------------------------------------")
         GameTooltip:AddLine(total, _, _, _, false)
     end
+
+    if IsShiftKeyDown() and not UnitAffectingCombat("player") then
+        if (table.getn(_info.key_ru) > 0) then
+            GameTooltip:AddLine("\nЛучшие прохождения:")
+            for _, key in ipairs(_info.key_ru) do
+                GameTooltip:AddLine(string.format("|cff00a000%s|r", key:sub(0, 2)) ..
+                    string.format(string.format("|cffffffff%s|r", key:sub(3))))
+            end
+        end
+    end
+
     GameTooltip:Show()
 end
+
 
 LFGRegionMixin = {}
 
