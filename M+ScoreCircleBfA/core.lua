@@ -203,31 +203,38 @@ function AppendToGameTooltipMixin:AddRegion(_score, _info, _prep)
     GameTooltip:AddLine(" ")
     GameTooltip:AddLine(string.format("M+ Score: %s", _score))
 
+    bestTotalNum = "tier0";
         total = ""
     if (_prep ~= nill) then
         if (total_run[_prep[1]].tier1 > 0) then
             total = string.format("|cffffff00Ключи в таймер:|r |cff55dc62 +5-9|r - |cffffffff(%s)|r",
                 total_run[_prep[1]].tier1)
+                bestTotalNum = "tier1"
         end
         if (total_run[_prep[1]].tier2 > 0) then
             total = string.format("|cffffff00Ключи в таймер:|r |cff4687c5+10-14|r - |cffffffff(%s)|r",
                 total_run[_prep[1]].tier2)
+                bestTotalNum = "tier2"
         end
         if (total_run[_prep[1]].tier3 > 0) then
             total = string.format("|cffffff00Ключи в таймер:|r |cff695ee4+15-19|r - |cffffffff(%s)|r",
                 total_run[_prep[1]].tier3)
+                bestTotalNum = "tier3"
         end
         if (total_run[_prep[1]].tier4 > 0) then
             total = string.format("|cffffff00Ключи в таймер:|r |cffab38e6+20-24|r - |cffffffff(%s)|r",
                 total_run[_prep[1]].tier4)
+                bestTotalNum = "tier4"
         end
         if (total_run[_prep[1]].tier5 > 0) then
             total = string.format("|cffffff00Ключи в таймер:|r |cffe1588e+25-29|r - |cffffffff(%s)|r",
                 total_run[_prep[1]].tier5)
+                bestTotalNum = "tier5"
         end
         if (total_run[_prep[1]].tier6 > 0) then
             total = string.format("|cffffff00Ключи в таймер:|r |cfffb792e+30-34|r - |cffffffff(%s)|r",
                 total_run[_prep[1]].tier6)
+                bestTotalNum = "tier6"
         end
         GameTooltip:AddLine("------------------------------------")
         GameTooltip:AddLine(total, _, _, _, false)
@@ -235,6 +242,33 @@ function AppendToGameTooltipMixin:AddRegion(_score, _info, _prep)
 
     if IsShiftKeyDown() and not UnitAffectingCombat("player") then
         if (table.getn(_info.key_ru) > 0) then
+            total = ""
+            if (_prep ~= nill) then
+                if (total_run[_prep[1]].tier6 > 0 and bestTotalNum ~= "tier6") then
+                    GameTooltip:AddLine(string.format("|cffffff00Ключи в таймер:|r |cfffb792e+30-34|r - |cffffffff(%s)|r",
+                        total_run[_prep[1]].tier6), _, _, _, false)
+                end
+                if (total_run[_prep[1]].tier5 > 0 and bestTotalNum ~= "tier5") then
+                    GameTooltip:AddLine(string.format("|cffffff00Ключи в таймер:|r |cffe1588e+25-29|r - |cffffffff(%s)|r",
+                        total_run[_prep[1]].tier5), _, _, _, false)
+                end
+                if (total_run[_prep[1]].tier4 > 0 and bestTotalNum ~= "tier4") then
+                    GameTooltip:AddLine(string.format("|cffffff00Ключи в таймер:|r |cffab38e6+20-24|r - |cffffffff(%s)|r",
+                        total_run[_prep[1]].tier4), _, _, _, false)
+                end
+                if (total_run[_prep[1]].tier3 > 0 and bestTotalNum ~= "tier3") then
+                    GameTooltip:AddLine(string.format("|cffffff00Ключи в таймер:|r |cff695ee4+15-19|r - |cffffffff(%s)|r",
+                        total_run[_prep[1]].tier3), _, _, _, false)
+                end
+                if (total_run[_prep[1]].tier2 > 0 and bestTotalNum ~= "tier2") then
+                    GameTooltip:AddLine(string.format("|cffffff00Ключи в таймер:|r |cff4687c5+10-14|r - |cffffffff(%s)|r",
+                        total_run[_prep[1]].tier2), _, _, _, false)
+                end
+                if (total_run[_prep[1]].tier1 > 0 and bestTotalNum ~= "tier1") then
+                    GameTooltip:AddLine(string.format("|cffffff00Ключи в таймер:|r |cff55dc62 +5-9|r - |cffffffff(%s)|r",
+                        total_run[_prep[1]].tier1), _, _, _, false)
+                end
+            end
             GameTooltip:AddLine("\nЛучшие прохождения:")
             for _, key in ipairs(_info.key_ru) do
                 GameTooltip:AddLine(string.format("|cff00a000%s|r", key:sub(0, 2)) ..
