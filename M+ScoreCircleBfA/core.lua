@@ -440,7 +440,7 @@ function LFGRegionMixin:AddRegion(_score, _info, activityID, _prep)
             GameTooltip:AddLine(total, _, _, _, false)
         end
         if (total_run[_prep[1]].tier5 > 0) then
-            total = string.format("|cffffff00Ключи в таймер:|r |cffe1588e+25-30|r - |cffffffff(%s)|r",
+            total = string.format("|cffffff00Ключи в таймер:|r |cffe1588e+25-29|r - |cffffffff(%s)|r",
                 total_run[_prep[1]].tier5)
             GameTooltip:AddLine(total, _, _, _, false)
         end
