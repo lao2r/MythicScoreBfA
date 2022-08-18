@@ -631,17 +631,18 @@ function printMythicScoreInfo(unitName)
     end
 end
 
-UnitPopupButtons["MM"] = { text = "|cffff8000Прогресс M+Score|r",
-    --dist = 0
-};
-table.insert(UnitPopupMenus["FRIEND"], #(UnitPopupMenus["FRIEND"]) - 1, "MM");
-table.insert(UnitPopupMenus["GUILD"], #(UnitPopupMenus["GUILD"]) - 1, "MM");
 
-hooksecurefunc("UnitPopup_OnClick", function(self)
-    local dropdownFrame = UIDROPDOWNMENU_INIT_MENU
-    local button = self.value
-    DropDownList1Button10:Hide()
-    if button == "MM" then
-        printMythicScoreInfo(dropdownFrame.name)
-    end
-end)
+--Временно отключено из-за конфликтов с выпадающим меню
+-- UnitPopupButtons["MM"] = { text = "|cffff8000Прогресс M+Score|r",
+--     --dist = 0
+-- };
+-- table.insert(UnitPopupMenus["FRIEND"], #(UnitPopupMenus["FRIEND"]) - 1, "MM");
+-- table.insert(UnitPopupMenus["GUILD"], #(UnitPopupMenus["GUILD"]) - 1, "MM");
+
+-- hooksecurefunc("UnitPopup_OnClick", function(self)
+--     local dropdownFrame = UIDROPDOWNMENU_INIT_MENU
+--     local button = self.value
+--     if button == "MM" then
+--         printMythicScoreInfo(dropdownFrame.name)
+--     end
+-- end)
