@@ -22,6 +22,7 @@ function getMythicScore(hero_ID)
     return characters[hero_ID]
 end
 
+local show = true
 local playerId = getCharacterIdByName(UnitName("player"))[1]
 local playerInfo = getMythicScore(playerId)
 local playerBest =
@@ -56,6 +57,95 @@ for k, v in pairs(playerBest) do
         end
     end
 end
+
+local NWC = {
+	[1] = {
+		14078, -- [1]
+		14079, -- [2]
+		14080, -- [3]
+		14082, -- [4]
+	}, -- [1]
+	[2] = {
+		14089, -- [1]
+		14091, -- [2]
+		14093, -- [3]
+		14094, -- [4]
+	}, -- [2]
+	[3] = {
+		14095, -- [1]
+		14096, -- [2]
+		14097, -- [3]
+		14098, -- [4]
+	}, -- [3]
+	[4] = {
+		14101, -- [1]
+		14102, -- [2]
+		14104, -- [3]
+		14105, -- [4]
+	}, -- [4]
+	[5] = {
+		14107, -- [1]
+		14108, -- [2]
+		14109, -- [3]
+		14110, -- [4]
+	}, -- [5]
+	[6] = {
+		14111, -- [1]
+		14112, -- [2]
+		14114, -- [3]
+		14115, -- [4]
+	}, -- [6]
+	[7] = {
+		14117, -- [1]
+		14118, -- [2]
+		14119, -- [3]
+		14120, -- [4]
+	}, -- [7]
+	[8] = {
+		14207, -- [1]
+		14208, -- [2]
+		14210, -- [3]
+		14211, -- [4]
+	}, -- [8]
+	[9] = {
+		14123, -- [1]
+		14124, -- [2]
+		14125, -- [3]
+		14126, -- [4]
+	}, -- [9]
+	[10] = {
+		14127, -- [1]
+		14128, -- [2]
+		14129, -- [3]
+		14130, -- [4]
+	}, -- [10]
+	[11] = {
+		14131, -- [1]
+		14132, -- [2]
+		14133, -- [3]
+		14134, -- [4]
+	}, -- [11]
+	[12] = {
+		14135, -- [1]
+		14136, -- [2]
+		14137, -- [3]
+		14138, -- [4]
+	}, -- [12]
+}
+
+local LFR = { unitName = " ", raid = { [1] = 0, [2] = 0, [3] = 0, [4] = 0, [5] = 0 , [6] = 0, [7] = 0, [8] = 0, [9] = 0, [10] = 0, [11] = 0, [12] = 0 } }
+
+local N = { unitName = " ", raid = { [1] = 0, [2] = 0, [3] = 0, [4] = 0, [5] = 0 , [6] = 0, [7] = 0, [8] = 0, [9] = 0, [10] = 0, [11] = 0, [12] = 0 } }
+
+local H = { unitName = " ", raid = { [1] = 0, [2] = 0, [3] = 0, [4] = 0, [5] = 0 , [6] = 0, [7] = 0, [8] = 0, [9] = 0, [10] = 0, [11] = 0, [12] = 0 } }
+
+local M = { unitName = " ", raid = { [1] = 0, [2] = 0, [3] = 0, [4] = 0, [5] = 0 , [6] = 0, [7] = 0, [8] = 0, [9] = 0, [10] = 0, [11] = 0, [12] = 0 } }
+
+
+local lfr = 0
+local normal = 0
+local heroic = 0
+local mythic = 0
 
 function findClosest(r, n)
     local min = n[1].score
@@ -123,13 +213,43 @@ addInfoFrame:SetScript("OnEvent", function(self, event, arg, ...)
 end)
 
 addInfoFrame:RegisterEvent("MODIFIER_STATE_CHANGED")
+addInfoFrame:RegisterEvent("UPDATE_MOUSEOVER_UNIT")
+
 ------------------------------------------------------------------------------------------------------------------------
 
 function AppendToGameTooltipMixin:CheckMythicScore(check)
-
     local unitName, unit = GameTooltip:GetUnit()
+    SetAchievementComparisonUnit(unit)
     local summary = ""
+    local raidProgress = ""
+    local l = getKilledBossesCount(LFR.raid)
+    local n = getKilledBossesCount(N.raid)
+    local h = getKilledBossesCount(H.raid)
+    local m = getKilledBossesCount(M.raid)
+    local currentRaidBest = ""
 
+        if (l > 0) then
+            raidProgress = "|cff55dc62ПР |r" .. l .."/12"
+            currentRaidBest = "LFR"
+        end
+        if (n > 0) then
+            raidProgress = "|cff4687c5О |r" .. n .."/12"
+            currentRaidBest = "N"
+        end
+        if (h > 0) then
+            raidProgress = "|cff695ee4Г |r" .. h .."/12"
+            currentRaidBest = "H"
+        end
+        if (m > 0) then
+            raidProgress = "|cffe1588eЭ |r" .. m .."/12"
+            currentRaidBest = "M"
+        end
+
+        if(LFR.unitName ~= unitName) then
+            raidProgress = "Подождите..."
+            show = true
+        end
+ 
     if UnitIsPlayer(unit) then
         local _prep = getCharacterIdByName(unitName)
 
@@ -177,7 +297,7 @@ function AppendToGameTooltipMixin:CheckMythicScore(check)
                             findClosest(tonumber(string.match(_info.score[3], '%S+$')), scoreTiers),
                             string.match(_info.score[3], '%S+$'))
                 end
-                self:AddRegion(summary .. playerRecord, _info, _prep)
+                self:AddRegion(summary .. playerRecord, _info, _prep, raidProgress, currentRaidBest)
             end
             if table.getn(_info.score) == 0 then
                 self:AddRegion(string.format("|cffffffff%s|r", "No info"))
@@ -189,8 +309,11 @@ function AppendToGameTooltipMixin:CheckMythicScore(check)
     end
 end
 
+-------------------------------------------------------------------
 GameTooltip:HookScript("OnTooltipSetUnit", function(self)
+    ClearAchievementComparisonUnit()
     AppendToGameTooltipMixin:CheckMythicScore()
+    -- setDefaultKilledRaidBossesValue()
 end)
 
 function OnLeave_T(self)
@@ -198,9 +321,22 @@ function OnLeave_T(self)
     GameTooltip:Hide()
 end
 
-function AppendToGameTooltipMixin:AddRegion(_score, _info, _prep)
+function getKilledBossesCount(mode) 
+    count = 0
+    for k, v in pairs(mode) do
+        if v ~= 0 then
+        count = count + 1
+        end
+    end
+    return count
+end
+
+function AppendToGameTooltipMixin:AddRegion(_score, _info, _prep, raidProgress, currentRaidBest)
+    
     GameTooltip:AddLine(" ")
     GameTooltip:AddLine(string.format("M+ Score: %s", _score))
+
+    local detailedRaidInfo = ""
 
     bestTotalNum = "tier0";
     total = ""
@@ -295,7 +431,78 @@ function AppendToGameTooltipMixin:AddRegion(_score, _info, _prep)
             end
         end
     end
-
+    if (raidProgress ~= "") then
+        GameTooltip:AddLine("|cffffff00Ни'алота: |r"..raidProgress)
+    end
+    if (raidProgress == "") then
+        GameTooltip:AddLine("|cffffff00Ни'алота: |r No info")
+    end
+    if IsShiftKeyDown() and not UnitAffectingCombat("player") then
+        if currentRaidBest == "LFR" then
+            detailedRaidInfo = 
+            LFR.raid[1] ..  " |cffffffffГневион|r".. "\n" ..
+            LFR.raid[2] ..  " |cffffffffМаут|r".. "\n" ..
+            LFR.raid[3] ..  " |cffffffffПророк Скитра|r".. "\n" ..
+            LFR.raid[4] ..  " |cffffffffТемный инквизитор Занеш|r".. "\n" ..
+            LFR.raid[5] ..  " |cffffffffКоллективный разум|r".. "\n" ..
+            LFR.raid[6] ..  " |cffffffffШад'хар ненасытный|r".. "\n" ..
+            LFR.raid[7] ..  " |cffffffffДест'агат|r".. "\n" ..
+            LFR.raid[8] ..  " |cffffffffИл'гинот|r".. "\n" ..
+            LFR.raid[9] ..  " |cffffffffВексиона|r".. "\n" ..
+            LFR.raid[10] .. " |cffffffffРа-ден|r".. "\n" ..
+            LFR.raid[11] .. " |cffffffffПанцырь Н'зота|r".. "\n" ..
+            LFR.raid[12] .. " |cffffffffН'зот заразитель|r".. "\n"
+        end
+        if currentRaidBest == "N" then
+            detailedRaidInfo = 
+            N.raid[1] ..  " |cffffffffГневион|r".. "\n" ..
+            N.raid[2] ..  " |cffffffffМаут|r".. "\n" ..
+            N.raid[3] ..  " |cffffffffПророк Скитра|r".. "\n" ..
+            N.raid[4] ..  " |cffffffffТемный инквизитор Занеш|r".. "\n" ..
+            N.raid[5] ..  " |cffffffffКоллективный разум|r".. "\n" ..
+            N.raid[6] ..  " |cffffffffШад'хар ненасытный|r".. "\n" ..
+            N.raid[7] ..  " |cffffffffДест'агат|r".. "\n" ..
+            N.raid[8] ..  " |cffffffffИл'гинот|r".. "\n" ..
+            N.raid[9] ..  " |cffffffffВексиона|r".. "\n" ..
+            N.raid[10] .. " |cffffffffРа-ден|r".. "\n" ..
+            N.raid[11] .. " |cffffffffПанцырь Н'зота|r".. "\n" ..
+            N.raid[12] .. " |cffffffffН'зот заразитель|r".. "\n"
+        end
+        if currentRaidBest == "H" then
+            detailedRaidInfo = 
+            H.raid[1] ..  " |cffffffffГневион|r".. "\n" ..
+            H.raid[2] ..  " |cffffffffМаут|r".. "\n" ..
+            H.raid[3] ..  " |cffffffffПророк Скитра|r".. "\n" ..
+            H.raid[4] ..  " |cffffffffТемный инквизитор Занеш|r".. "\n" ..
+            H.raid[5] ..  " |cffffffffКоллективный разум|r".. "\n" ..
+            H.raid[6] ..  " |cffffffffШад'хар ненасытный|r".. "\n" ..
+            H.raid[7] ..  " |cffffffffДест'агат|r".. "\n" ..
+            H.raid[8] ..  " |cffffffffИл'гинот|r".. "\n" ..
+            H.raid[9] ..  " |cffffffffВексиона|r".. "\n" ..
+            H.raid[10] .. " |cffffffffРа-ден|r".. "\n" ..
+            H.raid[11] .. " |cffffffffПанцырь Н'зота|r".. "\n" ..
+            H.raid[12] .. " |cffffffffН'зот заразитель|r".. "\n"
+        
+        end
+        if currentRaidBest == "M" then
+            detailedRaidInfo = 
+            M.raid[1] ..  " |cffffffffГневион|r".. "\n" ..
+            M.raid[2] ..  " |cffffffffМаут|r".. "\n" ..
+            M.raid[3] ..  " |cffffffffПророк Скитра|r".. "\n" ..
+            M.raid[4] ..  " |cffffffffТемный инквизитор Занеш|r".. "\n" ..
+            M.raid[5] ..  " |cffffffffКоллективный разум|r".. "\n" ..
+            M.raid[6] ..  " |cffffffffШад'хар ненасытный|r".. "\n" ..
+            M.raid[7] ..  " |cffffffffДест'агат|r".. "\n" ..
+            M.raid[8] ..  " |cffffffffИл'гинот|r".. "\n" ..
+            M.raid[9] ..  " |cffffffffВексиона|r".. "\n" ..
+            M.raid[10] .. " |cffffffffРа-ден|r".. "\n" ..
+            M.raid[11] .. " |cffffffffПанцырь Н'зота|r".. "\n" ..
+            M.raid[12] .. " |cffffffffН'зот заразитель|r".. "\n"
+        end
+        GameTooltip:AddLine("|cffffff00Побеждённые боссы: |r\n" .. detailedRaidInfo)
+    end
+    setDefaultKilledRaidBossesValue()
+    ClearAchievementComparisonUnit()
     GameTooltip:Show()
 end
 
@@ -646,3 +853,63 @@ end
 --         printMythicScoreInfo(dropdownFrame.name)
 --     end
 -- end)
+-- { Wration = 0, Maut = 0, Skitra = 0, Zanesh = 0, Hivemind =0 , Shadhar = 0, Drestagath = 0, Ilgynoth = 0, Vexiona = 0, Raden = 0, Carapace = 0, Nzoth = 0 }
+
+charCheck = CreateFrame("Frame", "charCheck")
+charCheck:RegisterEvent("INSPECT_ACHIEVEMENT_READY")
+
+charCheck:SetScript("OnEvent", function(self, event, ...)
+    local unitName, unit = GameTooltip:GetUnit()
+    
+    setDefaultKilledRaidBossesValue()
+
+    LFR.unitName = unitName
+    N.unitName = unitName
+    H.unitName = unitName
+    M.unitName = unitName
+
+    for k, v in pairs(NWC) do
+        lfr = GetComparisonStatistic(v[1])
+        normal = GetComparisonStatistic(v[2])
+        heroic = GetComparisonStatistic(v[3])
+        mythic = GetComparisonStatistic(v[4])
+        if (lfr ~= "--") then
+            LFR.raid[k] = lfr
+        end
+        if (normal ~= "--") then
+            N.raid[k] = normal
+        end
+        if (heroic ~= "--") then
+            H.raid[k] = heroic
+        end
+        if (mythic ~= "--") then
+            M.raid[k] = mythic
+        end
+    end
+    if show == true then 
+    getRaidProgress(self, event, ...)
+    show = false
+    end
+end);
+
+function getRaidProgress(self, event, ...) 
+    local unitName, unit = GameTooltip:GetUnit()
+    if GameTooltip:IsShown() then 
+    GameTooltip:SetUnit(unit)
+    show = false
+    end
+end
+
+function setDefaultKilledRaidBossesValue()
+    LFR.unitName = " "
+    N.unitName = " "
+    H.unitName = " "
+    M.unitName = " "
+
+    for k, v in pairs(NWC) do
+            LFR.raid[k] = 0
+            N.raid[k] = 0
+            H.raid[k] = 0
+            M.raid[k] = 0
+    end
+end
