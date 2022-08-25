@@ -282,7 +282,7 @@ function AppendToGameTooltipMixin:CheckMythicScore(check)
                     findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers),
                     string.match(_info.score[1], '%S+$'))
 
-                if table.getn(_info.score) == 3 then
+                if table.getn(_info.score) > 2 then
                     summary = summary ..
                         string.format(" " ..
                             ROLE_ICONS[string.match(_info.score[2], "%u*")].full ..
@@ -290,7 +290,7 @@ function AppendToGameTooltipMixin:CheckMythicScore(check)
                             string.match(_info.score[2], '%S+$'))
                 end
 
-                if table.getn(_info.score) == 4 then
+                if table.getn(_info.score) > 3 then
                     summary = summary ..
                         string.format(" " ..
                             ROLE_ICONS[string.match(_info.score[3], "%u*")].full ..
