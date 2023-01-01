@@ -1,15 +1,15 @@
 isUpdateNeeded = ((tonumber(string.format("%s", (time(dateTbl))))) - mythicLastUpdatedTime)
 needToUpdate = ""
-remind = "|cfffff200[|r|cffff8000M+ScoreCircleBfA|r|cfffff200]:|r|cffbf40cd31.12.2022 поддержка и обновление аддона будут прекращены!|r"
+remind = "|cfffff200[|r|cffff8000M+ScoreCircleBfA|r|cfffff200]:|r|cffbf40cdС 31.12.2022 поддержка и обновление аддона прекращены! Это был крутой опыт! Спасибо всем и удачи в поиске новых приключений!|r"
 
 print(remind)
 if (isUpdateNeeded > (86400 * 2)) then
     needToUpdate = string.format("|cfffff200[|r|cffff8000M+ScoreCircleBfA|r|cfffff200]:|r|cffbf40cdБазы сильно устарели! Требуется обновление! Загрузите последнюю версию|r")
-    print(needToUpdate)
+    -- print(needToUpdate)
 end
 if (isUpdateNeeded > 90000 and isUpdateNeeded < 86400 * 2) then
     needToUpdate = string.format("|cfffff200[|r|cffff8000M+ScoreCircleBfA|r|cfffff200]:|r|cffbf40cdВышло обновление! Загрузите последнюю версию|r")
-    print(needToUpdate)
+    -- print(needToUpdate)
 end
 
 function getLastUpdateTime()
