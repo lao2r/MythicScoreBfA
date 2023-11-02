@@ -60,6 +60,8 @@ for k, v in pairs(playerBest) do
     end
 end
 
+local detailedRaidInfo = ""
+
 local NWC = {
 	[1] = {
 		14078, -- [1]
@@ -333,6 +335,28 @@ function getKilledBossesCount(mode)
     return count
 end
 
+local bosses = {
+    LFR = LFR.raid,
+    N = N.raid, 
+    H = H.raid,
+    M = M.raid
+  }
+  
+  local bossNames = {
+    "Гневион",
+    "Маут",
+    "Пророк Скитра",
+    "Темный инквизитор Занеш",
+    "Коллективный разум",
+    "Шад'хар ненасытный",
+    "Дест'агат",
+    "Ил'гинот",
+    "Вексиона", 
+    "Ра-ден",
+    "Панцырь Н'зота",
+    "Н'зот заразитель" 
+  }
+
 function AppendToGameTooltipMixin:AddRegion(_score, _info, _prep, raidProgress, currentRaidBest)
     
     GameTooltip:AddLine(" ")
@@ -439,64 +463,34 @@ function AppendToGameTooltipMixin:AddRegion(_score, _info, _prep, raidProgress, 
     if (raidProgress ~= "") then
         GameTooltip:AddLine("|cffffff00Ни'алота: |r"..raidProgress)
     if IsShiftKeyDown() and not UnitAffectingCombat("player") then
-        if currentRaidBest == "LFR" then
-            if (LFR.raid[1] ~= 0)  then detailedRaidInfo = detailedRaidInfo .. LFR.raid[1]  .. " |cffffffffГневион|r\n" else detailedRaidInfo = detailedRaidInfo ..                 LFR.raid[1]  .. " |cffA0A0A4Гневион|r" .. "\n" end
-            if (LFR.raid[2] ~= 0)  then detailedRaidInfo = detailedRaidInfo .. LFR.raid[2]  .. " |cffffffffМаут|r\n" else detailedRaidInfo = detailedRaidInfo ..                    LFR.raid[2]  .. " |cffA0A0A4Маут|r" .. "\n" end
-            if (LFR.raid[3] ~= 0)  then detailedRaidInfo = detailedRaidInfo .. LFR.raid[3]  .. " |cffffffffПророк Скитра|r\n" else detailedRaidInfo = detailedRaidInfo ..           LFR.raid[3]  .. " |cffA0A0A4Пророк Скитра|r" .. "\n" end
-            if (LFR.raid[4] ~= 0)  then detailedRaidInfo = detailedRaidInfo .. LFR.raid[4]  .. " |cffffffffТемный инквизитор Занеш|r\n" else detailedRaidInfo = detailedRaidInfo .. LFR.raid[4]  .. " |cffA0A0A4Темный инквизитор Занеш|r" .. "\n" end
-            if (LFR.raid[5] ~= 0)  then detailedRaidInfo = detailedRaidInfo .. LFR.raid[5]  .. " |cffffffffКоллективный разум|r\n" else detailedRaidInfo = detailedRaidInfo ..      LFR.raid[5]  .. " |cffA0A0A4Коллективный разум|r" .. "\n" end
-            if (LFR.raid[6] ~= 0)  then detailedRaidInfo = detailedRaidInfo .. LFR.raid[6]  .. " |cffffffffШад'хар ненасытный|r\n" else detailedRaidInfo = detailedRaidInfo ..      LFR.raid[6]  .. " |cffA0A0A4Шад'хар ненасытный|r" .. "\n" end
-            if (LFR.raid[7] ~= 0)  then detailedRaidInfo = detailedRaidInfo .. LFR.raid[7]  .. " |cffffffffДест'агат|r\n" else detailedRaidInfo = detailedRaidInfo ..               LFR.raid[7]  .. " |cffA0A0A4Дест'агат|r" .. "\n" end
-            if (LFR.raid[8] ~= 0)  then detailedRaidInfo = detailedRaidInfo .. LFR.raid[8]  .. " |cffffffffИл'гинот|r\n" else detailedRaidInfo = detailedRaidInfo ..                LFR.raid[8]  .. " |cffA0A0A4Ил'гинот|r" .. "\n" end
-            if (LFR.raid[9] ~= 0)  then detailedRaidInfo = detailedRaidInfo .. LFR.raid[9]  .. " |cffffffffВексиона|r\n" else detailedRaidInfo = detailedRaidInfo ..                LFR.raid[9]  .. " |cffA0A0A4Вексиона|r" .. "\n" end
-            if (LFR.raid[10] ~= 0) then detailedRaidInfo = detailedRaidInfo .. LFR.raid[10] .. " |cffffffffРа-ден|r\n" else detailedRaidInfo = detailedRaidInfo ..                  LFR.raid[10] .. " |cffA0A0A4Ра-ден|r" .. "\n" end
-            if (LFR.raid[11] ~= 0) then detailedRaidInfo = detailedRaidInfo .. LFR.raid[11] .. " |cffffffffПанцырь Н'зота|r\n" else detailedRaidInfo = detailedRaidInfo ..          LFR.raid[11] .. " |cffA0A0A4Панцырь Н'зота|r" .. "\n" end
-            if (LFR.raid[12] ~= 0) then detailedRaidInfo = detailedRaidInfo .. LFR.raid[12] .. " |cffffffffН'зот заразитель|r\n" else detailedRaidInfo = detailedRaidInfo ..        LFR.raid[12] .. " |cffA0A0A4Н'зот заразитель|r" end
-        end 
-        if currentRaidBest == "N" then 
-            if (N.raid[1] ~= 0)  then detailedRaidInfo = detailedRaidInfo .. N.raid[1]  .. " |cffffffffГневион|r\n" else detailedRaidInfo = detailedRaidInfo ..                 N.raid[1]  .. " |cffA0A0A4Гневион|r" .. "\n" end
-            if (N.raid[2] ~= 0)  then detailedRaidInfo = detailedRaidInfo .. N.raid[2]  .. " |cffffffffМаут|r\n" else detailedRaidInfo = detailedRaidInfo ..                    N.raid[2]  .. " |cffA0A0A4Маут|r" .. "\n" end
-            if (N.raid[3] ~= 0)  then detailedRaidInfo = detailedRaidInfo .. N.raid[3]  .. " |cffffffffПророк Скитра|r\n" else detailedRaidInfo = detailedRaidInfo ..           N.raid[3]  .. " |cffA0A0A4Пророк Скитра|r" .. "\n" end
-            if (N.raid[4] ~= 0)  then detailedRaidInfo = detailedRaidInfo .. N.raid[4]  .. " |cffffffffТемный инквизитор Занеш|r\n" else detailedRaidInfo = detailedRaidInfo .. N.raid[4]  .. " |cffA0A0A4Темный инквизитор Занеш|r" .. "\n" end
-            if (N.raid[5] ~= 0)  then detailedRaidInfo = detailedRaidInfo .. N.raid[5]  .. " |cffffffffКоллективный разум|r\n" else detailedRaidInfo = detailedRaidInfo ..      N.raid[5]  .. " |cffA0A0A4Коллективный разум|r" .. "\n" end
-            if (N.raid[6] ~= 0)  then detailedRaidInfo = detailedRaidInfo .. N.raid[6]  .. " |cffffffffШад'хар ненасытный|r\n" else detailedRaidInfo = detailedRaidInfo ..      N.raid[6]  .. " |cffA0A0A4Шад'хар ненасытный|r" .. "\n" end
-            if (N.raid[7] ~= 0)  then detailedRaidInfo = detailedRaidInfo .. N.raid[7]  .. " |cffffffffДест'агат|r\n" else detailedRaidInfo = detailedRaidInfo ..               N.raid[7]  .. " |cffA0A0A4Дест'агат|r" .. "\n" end
-            if (N.raid[8] ~= 0)  then detailedRaidInfo = detailedRaidInfo .. N.raid[8]  .. " |cffffffffИл'гинот|r\n" else detailedRaidInfo = detailedRaidInfo ..                N.raid[8]  .. " |cffA0A0A4Ил'гинот|r" .. "\n" end
-            if (N.raid[9] ~= 0)  then detailedRaidInfo = detailedRaidInfo .. N.raid[9]  .. " |cffffffffВексиона|r\n" else detailedRaidInfo = detailedRaidInfo ..                N.raid[9]  .. " |cffA0A0A4Вексиона|r" .. "\n" end
-            if (N.raid[10] ~= 0) then detailedRaidInfo = detailedRaidInfo .. N.raid[10] .. " |cffffffffРа-ден|r\n" else detailedRaidInfo = detailedRaidInfo ..                  N.raid[10] .. " |cffA0A0A4Ра-ден|r" .. "\n" end
-            if (N.raid[11] ~= 0) then detailedRaidInfo = detailedRaidInfo .. N.raid[11] .. " |cffffffffПанцырь Н'зота|r\n" else detailedRaidInfo = detailedRaidInfo ..          N.raid[11] .. " |cffA0A0A4Панцырь Н'зота|r" .. "\n" end
-            if (N.raid[12] ~= 0) then detailedRaidInfo = detailedRaidInfo .. N.raid[12] .. " |cffffffffН'зот заразитель|r\n" else detailedRaidInfo = detailedRaidInfo ..        N.raid[12] .. " |cffA0A0A4Н'зот заразитель|r" end
+          
+        local modes = {M, H, N, LFR}
+
+        local modeWithKills 
+        
+        for _,mode in ipairs(modes) do
+          for _,killed in ipairs(mode.raid) do
+            if killed ~= 0 then
+              modeWithKills = mode
+              break
+            end
+          end
         end
-        if currentRaidBest == "H" then
-            if (H.raid[1] ~= 0)  then detailedRaidInfo = detailedRaidInfo .. H.raid[1]  .. " |cffffffffГневион|r\n" else detailedRaidInfo = detailedRaidInfo ..                 H.raid[1]  .. " |cffA0A0A4Гневион|r" .. "\n" end
-            if (H.raid[2] ~= 0)  then detailedRaidInfo = detailedRaidInfo .. H.raid[2]  .. " |cffffffffМаут|r\n" else detailedRaidInfo = detailedRaidInfo ..                    H.raid[2]  .. " |cffA0A0A4Маут|r" .. "\n" end
-            if (H.raid[3] ~= 0)  then detailedRaidInfo = detailedRaidInfo .. H.raid[3]  .. " |cffffffffПророк Скитра|r\n" else detailedRaidInfo = detailedRaidInfo ..           H.raid[3]  .. " |cffA0A0A4Пророк Скитра|r" .. "\n" end
-            if (H.raid[4] ~= 0)  then detailedRaidInfo = detailedRaidInfo .. H.raid[4]  .. " |cffffffffТемный инквизитор Занеш|r\n" else detailedRaidInfo = detailedRaidInfo .. H.raid[4]  .. " |cffA0A0A4Темный инквизитор Занеш|r" .. "\n" end
-            if (H.raid[5] ~= 0)  then detailedRaidInfo = detailedRaidInfo .. H.raid[5]  .. " |cffffffffКоллективный разум|r\n" else detailedRaidInfo = detailedRaidInfo ..      H.raid[5]  .. " |cffA0A0A4Коллективный разум|r" .. "\n" end
-            if (H.raid[6] ~= 0)  then detailedRaidInfo = detailedRaidInfo .. H.raid[6]  .. " |cffffffffШад'хар ненасытный|r\n" else detailedRaidInfo = detailedRaidInfo ..      H.raid[6]  .. " |cffA0A0A4Шад'хар ненасытный|r" .. "\n" end
-            if (H.raid[7] ~= 0)  then detailedRaidInfo = detailedRaidInfo .. H.raid[7]  .. " |cffffffffДест'агат|r\n" else detailedRaidInfo = detailedRaidInfo ..               H.raid[7]  .. " |cffA0A0A4Дест'агат|r" .. "\n" end
-            if (H.raid[8] ~= 0)  then detailedRaidInfo = detailedRaidInfo .. H.raid[8]  .. " |cffffffffИл'гинот|r\n" else detailedRaidInfo = detailedRaidInfo ..                H.raid[8]  .. " |cffA0A0A4Ил'гинот|r" .. "\n" end
-            if (H.raid[9] ~= 0)  then detailedRaidInfo = detailedRaidInfo .. H.raid[9]  .. " |cffffffffВексиона|r\n" else detailedRaidInfo = detailedRaidInfo ..                H.raid[9]  .. " |cffA0A0A4Вексиона|r" .. "\n" end
-            if (H.raid[10] ~= 0) then detailedRaidInfo = detailedRaidInfo .. H.raid[10] .. " |cffffffffРа-ден|r\n" else detailedRaidInfo = detailedRaidInfo ..                  H.raid[10] .. " |cffA0A0A4Ра-ден|r" .. "\n" end
-            if (H.raid[11] ~= 0) then detailedRaidInfo = detailedRaidInfo .. H.raid[11] .. " |cffffffffПанцырь Н'зота|r\n" else detailedRaidInfo = detailedRaidInfo ..          H.raid[11] .. " |cffA0A0A4Панцырь Н'зота|r" .. "\n" end
-            if (H.raid[12] ~= 0) then detailedRaidInfo = detailedRaidInfo .. H.raid[12] .. " |cffffffffН'зот заразитель|r\n" else detailedRaidInfo = detailedRaidInfo ..        H.raid[12] .. " |cffA0A0A4Н'зот заразитель|r" end
+        
+        if modeWithKills then
+          GameTooltip:ClearLines()
+          GameTooltip:AddLine("|cffffff00Побеждённые боссы:|r")
+        
+          for id,killed in ipairs(modeWithKills.raid) do
+            local name = bossNames[id]
+            if killed ~= 0 then
+              GameTooltip:AddDoubleLine(killed.." "..name, "", 1, 1, 1)
+            else
+              GameTooltip:AddDoubleLine(killed.." ".."|cffA0A0A4"..name.."|r", "", 1, 1, 1)
+            end
+          end
         end
-        if currentRaidBest == "M" then
-            if (M.raid[1] ~= 0)  then detailedRaidInfo = detailedRaidInfo .. M.raid[1]  .. " |cffffffffГневион|r\n" else detailedRaidInfo = detailedRaidInfo ..                 M.raid[1]  .. " |cffA0A0A4Гневион|r" .. "\n" end
-            if (M.raid[2] ~= 0)  then detailedRaidInfo = detailedRaidInfo .. M.raid[2]  .. " |cffffffffМаут|r\n" else detailedRaidInfo = detailedRaidInfo ..                    M.raid[2]  .. " |cffA0A0A4Маут|r" .. "\n" end
-            if (M.raid[3] ~= 0)  then detailedRaidInfo = detailedRaidInfo .. M.raid[3]  .. " |cffffffffПророк Скитра|r\n" else detailedRaidInfo = detailedRaidInfo ..           M.raid[3]  .. " |cffA0A0A4Пророк Скитра|r" .. "\n" end
-            if (M.raid[4] ~= 0)  then detailedRaidInfo = detailedRaidInfo .. M.raid[4]  .. " |cffffffffТемный инквизитор Занеш|r\n" else detailedRaidInfo = detailedRaidInfo .. M.raid[4]  .. " |cffA0A0A4Темный инквизитор Занеш|r" .. "\n" end
-            if (M.raid[5] ~= 0)  then detailedRaidInfo = detailedRaidInfo .. M.raid[5]  .. " |cffffffffКоллективный разум|r\n" else detailedRaidInfo = detailedRaidInfo ..      M.raid[5]  .. " |cffA0A0A4Коллективный разум|r" .. "\n" end
-            if (M.raid[6] ~= 0)  then detailedRaidInfo = detailedRaidInfo .. M.raid[6]  .. " |cffffffffШад'хар ненасытный|r\n" else detailedRaidInfo = detailedRaidInfo ..      M.raid[6]  .. " |cffA0A0A4Шад'хар ненасытный|r" .. "\n" end
-            if (M.raid[7] ~= 0)  then detailedRaidInfo = detailedRaidInfo .. M.raid[7]  .. " |cffffffffДест'агат|r\n" else detailedRaidInfo = detailedRaidInfo ..               M.raid[7]  .. " |cffA0A0A4Дест'агат|r" .. "\n" end
-            if (M.raid[8] ~= 0)  then detailedRaidInfo = detailedRaidInfo .. M.raid[8]  .. " |cffffffffИл'гинот|r\n" else detailedRaidInfo = detailedRaidInfo ..                M.raid[8]  .. " |cffA0A0A4Ил'гинот|r" .. "\n" end
-            if (M.raid[9] ~= 0)  then detailedRaidInfo = detailedRaidInfo .. M.raid[9]  .. " |cffffffffВексиона|r\n" else detailedRaidInfo = detailedRaidInfo ..                M.raid[9]  .. " |cffA0A0A4Вексиона|r" .. "\n" end
-            if (M.raid[10] ~= 0) then detailedRaidInfo = detailedRaidInfo .. M.raid[10] .. " |cffffffffРа-ден|r\n" else detailedRaidInfo = detailedRaidInfo ..                  M.raid[10] .. " |cffA0A0A4Ра-ден|r" .. "\n" end
-            if (M.raid[11] ~= 0) then detailedRaidInfo = detailedRaidInfo .. M.raid[11] .. " |cffffffffПанцырь Н'зота|r\n" else detailedRaidInfo = detailedRaidInfo ..          M.raid[11] .. " |cffA0A0A4Панцырь Н'зота|r" .. "\n" end
-            if (M.raid[12] ~= 0) then detailedRaidInfo = detailedRaidInfo .. M.raid[12] .. " |cffffffffН'зот заразитель|r\n" else detailedRaidInfo = detailedRaidInfo ..        M.raid[12] .. " |cffA0A0A4Н'зот заразитель|r" end
         end
-        GameTooltip:AddLine("|cffffff00Побеждённые боссы:|r\n" .. detailedRaidInfo)
-    end
 end
     setDefaultKilledRaidBossesValue()
     ClearAchievementComparisonUnit()
