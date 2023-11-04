@@ -26585,4 +26585,6 @@ library = {
 ["Revissa"]={26608},
 ["Forjest"]={26609},
 ["Alics"]={26610},
+["Qizacal"]={26611},
+["Elbakro"]={26612},
 }
