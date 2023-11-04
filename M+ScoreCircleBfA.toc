@@ -3,10 +3,11 @@
 ## Author: lao2r
 ## Notes: Show Mythic+ progress
 ## Notes-ruRU: Отображение Mythic+ прогресса
-## Title: M+ScoreCircleBfA
 ## X-Email: ed9n.ed9n@gmail.com
 ## Version:  0.0.9
 
+localization.core.lua
+localization.en.lua
 characters_db.lua
 characters_mapping.lua
 keystones_total.lua

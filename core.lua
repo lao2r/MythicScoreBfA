@@ -1,10 +1,12 @@
+local _, L = ...;
+
 isUpdateNeeded = ((tonumber(string.format("%s", (time(dateTbl))))) - mythicLastUpdatedTime)
 needToUpdate = ""
-remind = "|cfffff200[|r|cffff8000M+ScoreCircleBfA|r|cfffff200]:|r|cffbf40cdС 20.02.2022 поддержка и обновление аддона возобновлены!|r"
+remind = "|cfffff200[|r|cffff8000M+ScoreCircleBfA|r|cfffff200]:|r|cffbf40cd" .. L["Актуальная статистика на mythicminus.com"] .. "|r"
 
 print(remind)
 if (isUpdateNeeded > (86400 * 2)) then
-    needToUpdate = string.format("|cfffff200[|r|cffff8000M+ScoreCircleBfA|r|cfffff200]:|r|cffbf40cdБазы сильно устарели! Требуется обновление! Загрузите последнюю версию|r")
+    needToUpdate = string.format("|cfffff200[|r|cffff8000M+ScoreCircleBfA|r|cfffff200]:|r|cffbf40cd" .. L["Базы сильно устарели! Требуется обновление! Загрузите последнюю версию"] .. "|r")
     print(needToUpdate)
 end
 if (isUpdateNeeded > 90000 and isUpdateNeeded < 86400 * 2) then
@@ -17,38 +19,87 @@ function getLastUpdateTime()
 end
 
 function getCharacterIdByName(name)
-    return library[name]
+    return library[name] or nil
 end
 
 function getMythicScore(hero_ID)
-    return characters[hero_ID]
+    return characters[hero_ID] or nil
 end
 
 local show = true
-local playerId = getCharacterIdByName(UnitName("player"))[1]
+
+local characterId = getCharacterIdByName(UnitName("player"))
+local playerId
+
+if characterId then
+    playerId = characterId[1]
+else
+    playerId = nil
+end
+
 local playerInfo = getMythicScore(playerId)
 local playerBest =
 {
-    [502] = { level = 0, dungeon_en = "Atal'dazar", dungeon_ru = "Атал'дазар", chest = 0 },
-    [507] = { level = 0, dungeon_en = "The Underrot", dungeon_ru = "Подгнилье", chest = 0 },
-    [504] = { level = 0, dungeon_en = "Temple of Sethraliss", dungeon_ru = "Храм Сетралисс", chest = 0 },
-    [510] = { level = 0, dungeon_en = "The MOTHERLODE!!", dungeon_ru = "ЗОЛОТАЯ ЖИЛА!!!", chest = 0 },
-    [514] = { level = 0, dungeon_en = "Kings' Rest", dungeon_ru = "Гробница королей", chest = 0 },
-    [661] = { level = 0, dungeon_en = "Kings' Rest", dungeon_ru = "Гробница королей", chest = 0 },
-    [518] = { level = 0, dungeon_en = "Freehold", dungeon_ru = "Вольная гавань", chest = 0 },
-    [522] = { level = 0, dungeon_en = "Shrine of the Storm", dungeon_ru = "Святилище Штормов", chest = 0 },
-    [526] = { level = 0, dungeon_en = "Tol Dagor", dungeon_ru = "Тол Дагор", chest = 0 },
-    [530] = { level = 0, dungeon_en = "Waycrest Manor", dungeon_ru = "Усадьба Уейкрестов", chest = 0 },
-    [534] = { level = 0, dungeon_en = "Siege of Boralus", dungeon_ru = "Осада Боралуса", chest = 0,
+    [502] = { level = 0, dungeon_en = "Atal'dazar", dungeon_ru = L["Атал'дазар"], chest = 0 },
+    [507] = { level = 0, dungeon_en = "The Underrot", dungeon_ru = L["Подгнилье"], chest = 0 },
+    [504] = { level = 0, dungeon_en = "Temple of Sethraliss", dungeon_ru = L["Храм Сетралисс"], chest = 0 },
+    [510] = { level = 0, dungeon_en = "The MOTHERLODE!!", dungeon_ru = L["ЗОЛОТАЯ ЖИЛА!!!"], chest = 0 },
+    [514] = { level = 0, dungeon_en = "Kings' Rest", dungeon_ru = L["Гробница королей"], chest = 0 },
+    [661] = { level = 0, dungeon_en = "Kings' Rest", dungeon_ru = L["Гробница королей"], chest = 0 },
+    [518] = { level = 0, dungeon_en = "Freehold", dungeon_ru = L["Вольная гавань"], chest = 0 },
+    [522] = { level = 0, dungeon_en = "Shrine of the Storm", dungeon_ru = L["Святилище Штормов"], chest = 0 },
+    [526] = { level = 0, dungeon_en = "Tol Dagor", dungeon_ru = L["Тол Дагор"], chest = 0 },
+    [530] = { level = 0, dungeon_en = "Waycrest Manor", dungeon_ru = L["Усадьба Уейкрестов"], chest = 0 },
+    [534] = { level = 0, dungeon_en = "Siege of Boralus", dungeon_ru = L["Осада Боралуса"], chest = 0,
         side = "Версия для Орды" },
-    [659] = { level = 0, dungeon_en = "Siege of Boralus", dungeon_ru = "Осада Боралуса", chest = 0,
+    [659] = { level = 0, dungeon_en = "Siege of Boralus", dungeon_ru = L["Осада Боралуса"], chest = 0,
         side = "Версия для Альянса" },
-    [679] = { level = 0, dungeon_en = "Mechagon Junkyard", dungeon_ru = "Операция Мехагон - свалка",
+    [679] = { level = 0, dungeon_en = "Mechagon Junkyard", dungeon_ru = L["Операция Мехагон - свалка"],
         chest = 0 },
-    [683] = { level = 0, dungeon_en = "Mechagon Workshop", dungeon_ru = "Операция Мехагон - мастерская",
+    [683] = { level = 0, dungeon_en = "Mechagon Workshop", dungeon_ru = L["Операция Мехагон - мастерская"],
         chest = 0 },
 }
 
+local bossNames = {
+    "Гневион",
+    "Маут",
+    "Пророк Скитра",
+    "Темный инквизитор Занеш",
+    "Коллективный разум",
+    "Шад'хар ненасытный",
+    "Дест'агат",
+    "Ил'гинот",
+    "Вексиона", 
+    "Ра-ден",
+    "Панцырь Н'зота",
+    "Н'зот заразитель" 
+  }
+  
+local tiers = {
+    {level=6, color="fb792e"},
+    {level=5, color="e1588e"},
+    {level=4, color="ab38e6"},
+    {level=3, color="695ee4"},
+    {level=2, color="4687c5"},
+    {level=1, color="55dc62"}
+  }
+
+local classColors = {
+    ["Paladin"] = { "|cfff48cba%s|r" },
+    ["Mage"] = { "|cff68ccef%s|r" },
+    ["Monk"] = { "|cff00ffba%s|r" },
+    ["Warrior"] = { "|cffc69b6d%s|r" },
+    ["Hunter"] = { "|cffaad372%s|r" },
+    ["Demon Hunter"] = { "|cffa330c9%s|r" },
+    ["Druid"] = { "|cffff7c0a%s|r" },
+    ["Warlock"] = { "|cff9382c9%s|r" },
+    ["Shaman"] = { "|cff2359ff%s|r" },
+    ["Death Knight"] = { "|cffc41e3b%s|r" },
+    ["Priest"] = { "|cfff0ebe0%s|r" },
+    ["Rogue"] = { "|cfffff468%s|r" }
+}
+
+if playerInfo ~= nil then
 for k, v in pairs(playerBest) do
     for _, key in pairs(playerInfo.key) do
         if string.match(key:sub(3), v.dungeon_en) == v.dungeon_en then
@@ -59,8 +110,8 @@ for k, v in pairs(playerBest) do
         end
     end
 end
+end
 
-local detailedRaidInfo = ""
 
 local NWC = {
 	[1] = {
@@ -137,13 +188,13 @@ local NWC = {
 	}, -- [12]
 }
 
-local LFR = { unitName = " ", raid = { [1] = 0, [2] = 0, [3] = 0, [4] = 0, [5] = 0 , [6] = 0, [7] = 0, [8] = 0, [9] = 0, [10] = 0, [11] = 0, [12] = 0 } }
+local LFR = { unitName = " ", raid = { [1] = 0, [2] = 0, [3] = 0, [4] = 0, [5] = 0 , [6] = 0, [7] = 0, [8] = 0, [9] = 0, [10] = 0, [11] = 0, [12] = 0 }, modeName = "|cff55dc62" .. L["ПР"] .. "|r"}
 
-local N = { unitName = " ", raid = { [1] = 0, [2] = 0, [3] = 0, [4] = 0, [5] = 0 , [6] = 0, [7] = 0, [8] = 0, [9] = 0, [10] = 0, [11] = 0, [12] = 0 } }
+local N = { unitName = " ", raid = { [1] = 0, [2] = 0, [3] = 0, [4] = 0, [5] = 0 , [6] = 0, [7] = 0, [8] = 0, [9] = 0, [10] = 0, [11] = 0, [12] = 0 }, modeName =   "|cff4687c5" .. L["ОБ"] .. "|r"}
 
-local H = { unitName = " ", raid = { [1] = 0, [2] = 0, [3] = 0, [4] = 0, [5] = 0 , [6] = 0, [7] = 0, [8] = 0, [9] = 0, [10] = 0, [11] = 0, [12] = 0 } }
+local H = { unitName = " ", raid = { [1] = 0, [2] = 0, [3] = 0, [4] = 0, [5] = 0 , [6] = 0, [7] = 0, [8] = 0, [9] = 0, [10] = 0, [11] = 0, [12] = 0 }, modeName =   "|cff695ee4" .. L["Г"] .. "|r"}
 
-local M = { unitName = " ", raid = { [1] = 0, [2] = 0, [3] = 0, [4] = 0, [5] = 0 , [6] = 0, [7] = 0, [8] = 0, [9] = 0, [10] = 0, [11] = 0, [12] = 0 } }
+local M = { unitName = " ", raid = { [1] = 0, [2] = 0, [3] = 0, [4] = 0, [5] = 0 , [6] = 0, [7] = 0, [8] = 0, [9] = 0, [10] = 0, [11] = 0, [12] = 0 }, modeName =   "|cffe1588e" .. L["Э"] .. "|r"}
 
 
 local lfr = 0
@@ -166,21 +217,6 @@ function findClosest(r, n)
     return color[1]
 end
 
-local classColors = {
-    ["Paladin"] = { "|cfff48cba%s|r" },
-    ["Mage"] = { "|cff68ccef%s|r" },
-    ["Monk"] = { "|cff00ffba%s|r" },
-    ["Warrior"] = { "|cffc69b6d%s|r" },
-    ["Hunter"] = { "|cffaad372%s|r" },
-    ["Demon Hunter"] = { "|cffa330c9%s|r" },
-    ["Druid"] = { "|cffff7c0a%s|r" },
-    ["Warlock"] = { "|cff9382c9%s|r" },
-    ["Shaman"] = { "|cff2359ff%s|r" },
-    ["Death Knight"] = { "|cffc41e3b%s|r" },
-    ["Priest"] = { "|cfff0ebe0%s|r" },
-    ["Rogue"] = { "|cfffff468%s|r" }
-}
-
 ROLE_ICONS = {
     ["DPS"] = {
         full = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\roles:14:14:0:0:64:64:0:18:0:18|t"
@@ -194,7 +230,6 @@ ROLE_ICONS = {
 }
 
 STAR_ICON = "|TInterface\\AddOns\\M+ScoreCircleBfA\\icons\\st:8:8:0:0:0:0:0:0:0:0|t"
-
 
 AppendToGameTooltipMixin = {}
 
@@ -222,6 +257,7 @@ addInfoFrame:RegisterEvent("UPDATE_MOUSEOVER_UNIT")
 ------------------------------------------------------------------------------------------------------------------------
 
 function AppendToGameTooltipMixin:CheckMythicScore(check)
+    
     local unitName, unit = GameTooltip:GetUnit()
     SetAchievementComparisonUnit(unit)
     local summary = ""
@@ -233,54 +269,56 @@ function AppendToGameTooltipMixin:CheckMythicScore(check)
     local currentRaidBest = ""
 
         if (l > 0) then
-            raidProgress = "|cff55dc62ПР |r" .. l .."/12"
+            raidProgress = "|cff55dc62" .. L["ПР"] .. " |r" .. l .."/12"
             currentRaidBest = "LFR"
         end
         if (n > 0) then
-            raidProgress = "|cff4687c5О |r" .. n .."/12"
+            raidProgress = "|cff4687c5" .. L["ОБ"] .. " |r" .. n .."/12"
             currentRaidBest = "N"
         end
         if (h > 0) then
-            raidProgress = "|cff695ee4Г |r" .. h .."/12"
+            raidProgress = "|cff695ee4" .. L["Г"] .. " |r" .. h .."/12"
             currentRaidBest = "H"
         end
         if (m > 0) then
-            raidProgress = "|cffe1588eЭ |r" .. m .."/12"
+            raidProgress = "|cffe1588e" .. L["Э"] .. " |r" .. m .."/12"
             currentRaidBest = "M"
         end
 
         if(LFR.unitName ~= unitName) then
-            raidProgress = "Подождите..."
+            raidProgress = L["Подождите..."]
             show = true
         end
- 
+        
     if UnitIsPlayer(unit) then
         local _prep = getCharacterIdByName(unitName)
+        
 
         if _prep ~= nil then
             local _info = getMythicScore(_prep[1])
 
             if table.getn(_info.score) > 0 then
 
-                local dungeonName = _info.bestKey:sub(3)
+                local dungeonName = string.gsub(_info.bestKey, "^%d+", "")
+
                 if (string.match(dungeonName, "(+0)")) then
-                    dungeonName = string.format("|cffA0A0A4%s|r", _info.bestKey:sub(3))
+                    dungeonName = string.format("|cffA0A0A4%s |r", L[dungeonName:sub(2, _info.bestKey:len() - 7)])
                 end
                 if (string.match(dungeonName, "(+1)")) then
-                    dungeonName = string.format("|cffffffff%s|r",
-                        _info.bestKey:sub(3, _info.bestKey:len() - 4) .. STAR_ICON)
+                    dungeonName = string.format("|cffffffff%s |r",
+                    L[dungeonName:sub(2, _info.bestKey:len() - 7)] .. STAR_ICON)
                 end
                 if (string.match(dungeonName, "(+2)")) then
-                    dungeonName = string.format("|cffffffff%s|r",
-                        _info.bestKey:sub(3, _info.bestKey:len() - 4) .. STAR_ICON .. STAR_ICON)
+                    dungeonName = string.format("|cffffffff%s |r",
+                    L[dungeonName:sub(2, _info.bestKey:len() - 7)] .. STAR_ICON .. STAR_ICON)
                 end
                 if (string.match(dungeonName, "(+3)")) then
-                    dungeonName = string.format("|cffffffff%s|r",
-                        _info.bestKey:sub(3, _info.bestKey:len() - 4) .. STAR_ICON .. STAR_ICON .. STAR_ICON)
+                    dungeonName = string.format("|cffffffff%s |r",
+                    L[dungeonName:sub(2, _info.bestKey:len() - 7)] .. STAR_ICON .. STAR_ICON .. STAR_ICON)
                 end
 
                 local playerRecord =
-                string.format("\nЛучший за сезон: |cff00a000%s|r", _info.bestKey:sub(0, 2)) .. dungeonName
+                string.format("\n" .. L["Лучший за сезон:"] .. " |cff00a000%s |r", _info.bestKey:sub(0, 2)) .. dungeonName
 
                 summary = string.format(ROLE_ICONS[string.match(_info.score[1], "%u*")].full ..
                     findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers),
@@ -335,28 +373,6 @@ function getKilledBossesCount(mode)
     return count
 end
 
-local bosses = {
-    LFR = LFR.raid,
-    N = N.raid, 
-    H = H.raid,
-    M = M.raid
-  }
-  
-  local bossNames = {
-    "Гневион",
-    "Маут",
-    "Пророк Скитра",
-    "Темный инквизитор Занеш",
-    "Коллективный разум",
-    "Шад'хар ненасытный",
-    "Дест'агат",
-    "Ил'гинот",
-    "Вексиона", 
-    "Ра-ден",
-    "Панцырь Н'зота",
-    "Н'зот заразитель" 
-  }
-
 function AppendToGameTooltipMixin:AddRegion(_score, _info, _prep, raidProgress, currentRaidBest)
     
     GameTooltip:AddLine(" ")
@@ -368,134 +384,142 @@ function AppendToGameTooltipMixin:AddRegion(_score, _info, _prep, raidProgress, 
     total = ""
     if (_prep ~= nill) then
         if (total_run[_prep[1]].tier1 > 0) then
-            total = string.format("|cffffff00Ключи в таймер:|r |cff55dc62 +5-9|r - |cffffffff(%s)|r",
+            total = string.format("|cffffff00" .. L["Ключи в таймер:"] .. "|r |cff55dc62 +5-9|r - |cffffffff(%s)|r",
                 total_run[_prep[1]].tier1)
             bestTotalNum = "tier1"
         end
         if (total_run[_prep[1]].tier2 > 0) then
-            total = string.format("|cffffff00Ключи в таймер:|r |cff4687c5+10-14|r - |cffffffff(%s)|r",
+            total = string.format("|cffffff00" .. L["Ключи в таймер:"] .. "|r |cff4687c5+10-14|r - |cffffffff(%s)|r",
                 total_run[_prep[1]].tier2)
             bestTotalNum = "tier2"
         end
         if (total_run[_prep[1]].tier3 > 0) then
-            total = string.format("|cffffff00Ключи в таймер:|r |cff695ee4+15-19|r - |cffffffff(%s)|r",
+            total = string.format("|cffffff00" .. L["Ключи в таймер:"] .. "|r |cff695ee4+15-19|r - |cffffffff(%s)|r",
                 total_run[_prep[1]].tier3)
             bestTotalNum = "tier3"
         end
         if (total_run[_prep[1]].tier4 > 0) then
-            total = string.format("|cffffff00Ключи в таймер:|r |cffab38e6+20-24|r - |cffffffff(%s)|r",
+            total = string.format("|cffffff00" .. L["Ключи в таймер:"] .. "|r |cffab38e6+20-24|r - |cffffffff(%s)|r",
                 total_run[_prep[1]].tier4)
             bestTotalNum = "tier4"
         end
         if (total_run[_prep[1]].tier5 > 0) then
-            total = string.format("|cffffff00Ключи в таймер:|r |cffe1588e+25-29|r - |cffffffff(%s)|r",
+            total = string.format("|cffffff00" .. L["Ключи в таймер:"] .. "|r |cffe1588e+25-29|r - |cffffffff(%s)|r",
                 total_run[_prep[1]].tier5)
             bestTotalNum = "tier5"
         end
         if (total_run[_prep[1]].tier6 > 0) then
-            total = string.format("|cffffff00Ключи в таймер:|r |cfffb792e+30-34|r - |cffffffff(%s)|r",
+            total = string.format("|cffffff00" .. L["Ключи в таймер:"] .. "|r |cfffb792e+30-34|r - |cffffffff(%s)|r",
                 total_run[_prep[1]].tier6)
             bestTotalNum = "tier6"
         end
         GameTooltip:AddLine("------------------------------------")
         GameTooltip:AddLine(total, _, _, _, false)
     end
+      
+    -- Here is an enhanced and improved version of the 'code_under_test' code snippet:
 
+    -- Check if the Shift key is pressed and the player is not in combat
     if IsShiftKeyDown() and not UnitAffectingCombat("player") then
-        if (table.getn(_info.key_ru) > 0) then
-            total = ""
-            if (_prep ~= nill) then
-                if (total_run[_prep[1]].tier6 > 0 and bestTotalNum ~= "tier6") then
-                    GameTooltip:AddLine(string.format("|cffffff00Ключи в таймер:|r |cfffb792e+30-34|r - |cffffffff(%s)|r"
-                        ,
-                        total_run[_prep[1]].tier6), _, _, _, false)
+        -- Check if there are any dungeon runs recorded
+        if table.getn(_info.key_ru) > 0 then
+            local total = ""
+        
+            -- Check if _prep is not nil
+            if _prep ~= nil then
+                -- Check the total number of runs completed at each tier and add lines to the game tooltip
+                if total_run[_prep[1]].tier6 > 0 and bestTotalNum ~= "tier6" then
+                    GameTooltip:AddLine(string.format("|cffffff00" .. L["Ключи в таймер:"] .. "|r |cfffb792e+30-34|r - |cffffffff(%s)|r", total_run[_prep[1]].tier6), _, _, _, false)
                 end
-                if (total_run[_prep[1]].tier5 > 0 and bestTotalNum ~= "tier5") then
-                    GameTooltip:AddLine(string.format("|cffffff00Ключи в таймер:|r |cffe1588e+25-29|r - |cffffffff(%s)|r"
-                        ,
-                        total_run[_prep[1]].tier5), _, _, _, false)
+                if total_run[_prep[1]].tier5 > 0 and bestTotalNum ~= "tier5" then
+                    GameTooltip:AddLine(string.format("|cffffff00" .. L["Ключи в таймер:"] .. "|r |cffe1588e+25-29|r - |cffffffff(%s)|r", total_run[_prep[1]].tier5), _, _, _, false)
                 end
-                if (total_run[_prep[1]].tier4 > 0 and bestTotalNum ~= "tier4") then
-                    GameTooltip:AddLine(string.format("|cffffff00Ключи в таймер:|r |cffab38e6+20-24|r - |cffffffff(%s)|r"
-                        ,
-                        total_run[_prep[1]].tier4), _, _, _, false)
+                if total_run[_prep[1]].tier4 > 0 and bestTotalNum ~= "tier4" then
+                    GameTooltip:AddLine(string.format("|cffffff00" .. L["Ключи в таймер:"] .. "|r |cffab38e6+20-24|r - |cffffffff(%s)|r", total_run[_prep[1]].tier4), _, _, _, false)
                 end
-                if (total_run[_prep[1]].tier3 > 0 and bestTotalNum ~= "tier3") then
-                    GameTooltip:AddLine(string.format("|cffffff00Ключи в таймер:|r |cff695ee4+15-19|r - |cffffffff(%s)|r"
-                        ,
-                        total_run[_prep[1]].tier3), _, _, _, false)
+                if total_run[_prep[1]].tier3 > 0 and bestTotalNum ~= "tier3" then
+                    GameTooltip:AddLine(string.format("|cffffff00" .. L["Ключи в таймер:"] .. "|r |cff695ee4+15-19|r - |cffffffff(%s)|r", total_run[_prep[1]].tier3), _, _, _, false)
                 end
-                if (total_run[_prep[1]].tier2 > 0 and bestTotalNum ~= "tier2") then
-                    GameTooltip:AddLine(string.format("|cffffff00Ключи в таймер:|r |cff4687c5+10-14|r - |cffffffff(%s)|r"
-                        ,
-                        total_run[_prep[1]].tier2), _, _, _, false)
+                if total_run[_prep[1]].tier2 > 0 and bestTotalNum ~= "tier2" then
+                    GameTooltip:AddLine(string.format("|cffffff00" .. L["Ключи в таймер:"] .. "|r |cff4687c5+10-14|r - |cffffffff(%s)|r", total_run[_prep[1]].tier2), _, _, _, false)
                 end
-                if (total_run[_prep[1]].tier1 > 0 and bestTotalNum ~= "tier1") then
-                    GameTooltip:AddLine(string.format("|cffffff00Ключи в таймер:|r |cff55dc62 +5-9|r - |cffffffff(%s)|r"
-                        ,
-                        total_run[_prep[1]].tier1), _, _, _, false)
+                if total_run[_prep[1]].tier1 > 0 and bestTotalNum ~= "tier1" then
+                    GameTooltip:AddLine(string.format("|cffffff00" .. L["Ключи в таймер:"] .. "|r |cff55dc62 +5-9|r - |cffffffff(%s)|r", total_run[_prep[1]].tier1), _, _, _, false)
                 end
             end
-            GameTooltip:AddLine("\nЛучшие прохождения:")
+        
+            -- Add a line to the game tooltip indicating the start of the "Best Runs" section
+            GameTooltip:AddLine("\n" .. L["Лучшие прохождения:"])
+        
+            -- Iterate over each dungeon run recorded and format the dungeon name based on the number of runs completed
             for _, key in ipairs(_info.key_ru) do
                 local dungeonName = key:sub(3)
-                if (string.match(dungeonName, "(+0)") == nil) then
-                    dungeonName = string.format("|cffA0A0A4%s|r", key:sub(3))
+                local displayedName
+                -- Format the dungeon name based on the number of runs completed
+                if not string.match(dungeonName, "(+0)") then
+                    displayedName = string.format("|cffA0A0A4%s |r", L[string.gsub(string.gsub(key, "^[%s%d%+%-%*%/]+", ""), "[%s%d%+%-%*%/]+$", "")])
                 end
-                if (string.match(dungeonName, "1")) then
-                    dungeonName = string.format("|cffffffff%s|r", key:sub(3, key:len() - 2) .. STAR_ICON)
+                if string.match(dungeonName, "1") then
+                    displayedName = string.format("|cffffffff%s |r", L[string.gsub(string.gsub(key, "^[%s%d%+%-%*%/]+", ""), "[%s%d%+%-%*%/]+$", "")] .. STAR_ICON)
                 end
-                if (string.match(dungeonName, "2")) then
-                    dungeonName = string.format("|cffffffff%s|r", key:sub(3, key:len() - 2) .. STAR_ICON .. STAR_ICON)
+                if string.match(dungeonName, "2") then
+                    displayedName = string.format("|cffffffff%s |r", L[string.gsub(string.gsub(key, "^[%s%d%+%-%*%/]+", ""), "[%s%d%+%-%*%/]+$", "")] .. STAR_ICON .. STAR_ICON)
                 end
-                if (string.match(dungeonName, "3")) then
-                    dungeonName = string.format("|cffffffff%s|r",
-                        key:sub(3, key:len() - 2) .. STAR_ICON .. STAR_ICON .. STAR_ICON)
+                if string.match(dungeonName, "3") then
+                    displayedName = string.format("|cffffffff%s |r", L[string.gsub(string.gsub(key, "^[%s%d%+%-%*%/]+", ""), "[%s%d%+%-%*%/]+$", "")] .. STAR_ICON .. STAR_ICON .. STAR_ICON)
+                    
                 end
-                GameTooltip:AddLine(string.format("|cff00a000%s|r", key:sub(0, 2)) ..
-                    dungeonName)
+            
+                -- Add the formatted dungeon name as a line to the game tooltip
+                GameTooltip:AddLine(string.format("|cff00a000%s |r", key:sub(0, 2)) .. displayedName)
             end
         end
     end
-    if (raidProgress == "") then
-        GameTooltip:AddLine("|cffffff00Ни'алота: |r No info")
-    end
-    if (raidProgress ~= "") then
-        GameTooltip:AddLine("|cffffff00Ни'алота: |r"..raidProgress)
-    if IsShiftKeyDown() and not UnitAffectingCombat("player") then
-          
-        local modes = {M, H, N, LFR}
 
-        local modeWithKills 
-        
-        for _,mode in ipairs(modes) do
-          for _,killed in ipairs(mode.raid) do
-            if killed ~= 0 then
-              modeWithKills = mode
-              break
+    if (raidProgress == nil) then
+        GameTooltip:AddLine("|cffffff00" .. L["Ни'алота:"] .. "|r No info")
+    end
+    
+    if (raidProgress ~= "") then
+        GameTooltip:AddLine("|cffffff00" .. L["Ни'алота:"] .. "|r"..raidProgress)
+      
+        if IsShiftKeyDown() and not UnitAffectingCombat("player") then
+      
+          local modes = {M, H, N, LFR}      
+          local killedBosses = { raid = {}}
+      
+          for _,mode in ipairs(modes) do
+            for id,killed in ipairs(mode.raid) do
+              if killed ~= 0 and not killedBosses[id] then
+                killedBosses[id] = mode.modeName
+                killedBosses.raid[id] = mode.raid[id]
+              end
             end
           end
-        end
-        
-        if modeWithKills then
-          GameTooltip:ClearLines()
-          GameTooltip:AddLine("|cffffff00Побеждённые боссы:|r")
-        
-          for id,killed in ipairs(modeWithKills.raid) do
-            local name = bossNames[id]
-            if killed ~= 0 then
-              GameTooltip:AddDoubleLine(killed.." "..name, "", 1, 1, 1)
-            else
-              GameTooltip:AddDoubleLine(killed.." ".."|cffA0A0A4"..name.."|r", "", 1, 1, 1)
+      
+          if next(killedBosses) ~= nil then
+            GameTooltip:AddLine("|cffffff00" .. L["Побеждённые боссы:"] .. "|r")
+      
+            for id,name in ipairs(bossNames) do
+              local mode = killedBosses[id]
+              if mode then
+                GameTooltip:AddDoubleLine(killedBosses.raid[id] .. " |cffffff00".. L[name] .. " (" .. mode .. ")", "|r", 1, 1, 1) 
+              else
+                GameTooltip:AddDoubleLine(0 .." ".."|cffA0A0A4"..L[name].."|r", "", 1, 1, 1)
+              end
             end
           end
+      
         end
-        end
-end
-    setDefaultKilledRaidBossesValue()
+      end
     ClearAchievementComparisonUnit()
     GameTooltip:Show()
 end
+
+local function getTableName(tbl)
+    local info = debug.getinfo(tbl)
+    return info.name
+  end
 
 LFGRegionMixin = {}
 
@@ -523,22 +547,22 @@ function LFGRegionMixin:CheckMythicScore(leaderName, activityID)
 
         local dungeonName = _info.bestKey:sub(3)
         if (string.match(dungeonName, "(+0)") == nil) then
-            dungeonName = string.format("|cffA0A0A4%s|r", _info.bestKey:sub(3))
+            dungeonName = string.format("|cffA0A0A4%s|r", L[_info.bestKey:sub(4, _info.bestKey:len() - 5)])
         end
         if (string.match(dungeonName, "(+1)")) then
-            dungeonName = string.format("|cffffffff%s|r", _info.bestKey:sub(3, _info.bestKey:len() - 4) .. STAR_ICON)
+            dungeonName = string.format("|cffffffff%s|r", L[_info.bestKey:sub(4, _info.bestKey:len() - 5)] .. STAR_ICON)
         end
         if (string.match(dungeonName, "(+2)")) then
             dungeonName = string.format("|cffffffff%s|r",
-                _info.bestKey:sub(3, _info.bestKey:len() - 4) .. STAR_ICON .. STAR_ICON)
+            L[_info.bestKey:sub(4, _info.bestKey:len() - 5)] .. STAR_ICON .. STAR_ICON)
         end
         if (string.match(dungeonName, "(+3)")) then
             dungeonName = string.format("|cffffffff%s|r",
-                _info.bestKey:sub(3, _info.bestKey:len() - 4) .. STAR_ICON .. STAR_ICON .. STAR_ICON)
+            L[_info.bestKey:sub(4, _info.bestKey:len() - 5)] .. STAR_ICON .. STAR_ICON .. STAR_ICON)
         end
 
-        local leaderRecord = string.format("\nРекорд лидера группы:\n" .. "|cff00a000%s|r",
-            _info.bestKey:sub(0, 2)) .. dungeonName
+        local leaderRecord = string.format("\n" .. L["Рекорд лидера группы:"] .. "\n" .. "|cff00a000%s |r",
+            _info.bestKey:sub(0, 2)) .. L[_info.bestKey:sub(4, _info.bestKey:len() - 5)]
 
         if table.getn(_info.score) > 0 then
             summary = string.format(ROLE_ICONS[string.match(_info.score[1], "%u*")].full ..
@@ -573,107 +597,82 @@ function tableHasKey(table, key)
     return table[key] ~= nil
 end
 
-function LFGRegionMixin:AddRegion(_score, _info, activityID, _prep)
+function LFGRegionMixin:AddRegion(score, info, id, prep)
+
     local currentBest
     local currentLevel
     local currentChest
-
-    if (tableHasKey(playerBest, activityID) == true) then
-        currentBest = playerBest[activityID].dungeon_ru
-        currentLevel = playerBest[activityID].level
-        currentChest = playerBest[activityID].chest
+  
+    if playerBest[id] then
+      currentBest = L[playerBest[id].dungeon_ru]
+      currentLevel = playerBest[id].level 
+      currentChest = playerBest[id].chest
     end
-
+  
     GameTooltip:AddLine(" ")
-    GameTooltip:AddLine(string.format("M+ Score: %s", _score))
-    GameTooltip:Show()
-    if (_info ~= 1) then
-        if (table.getn(_info.key_ru) > 0) then
-            GameTooltip:AddLine("Лучшие прохождения лидера группы:")
-            for _, key in ipairs(_info.key_ru) do
-                local dungeonName = key:sub(3)
-                if (string.match(dungeonName, "+") == nil) then
-                    dungeonName = string.format("|cffA0A0A4%s|r", key:sub(3))
-                end
-                if (string.match(dungeonName, "+") == "+") then
-                    if (string.match(dungeonName, "1")) then
-                        dungeonName = string.format("|cffffffff%s|r", key:sub(3, key:len() - 2) .. STAR_ICON)
-                    end
-                    if (string.match(dungeonName, "2")) then
-                        dungeonName = string.format("|cffffffff%s|r", key:sub(3, key:len() - 2) .. STAR_ICON .. STAR_ICON)
-                    end
-                    if (string.match(dungeonName, "3")) then
-                        dungeonName = string.format("|cffffffff%s|r",
-                            key:sub(3, key:len() - 2) .. STAR_ICON .. STAR_ICON .. STAR_ICON)
-                    end
-                end
-                GameTooltip:AddLine(string.format("|cff00a000%s|r", key:sub(0, 2)) ..
-                    dungeonName)
-            end
+    GameTooltip:AddLine(format("M+ Score: %s", score))
+  
+    if info ~= 1 and #info.key_ru > 0 then
+      GameTooltip:AddLine(L["Лучшие прохождения лидера группы:"])
+      
+      for _,key in ipairs(info.key_ru) do
+        local stars = ""
+        local dungeonName = key:sub(3)
+        
+        if string.match(dungeonName, "1") then  
+          stars = stars .. STAR_ICON
         end
+        
+        if string.match(dungeonName, "2") then
+          stars = stars .. STAR_ICON .. STAR_ICON
+        end
+        
+        if string.match(dungeonName, "3") then
+          stars = stars .. STAR_ICON .. STAR_ICON .. STAR_ICON
+        end
+  
+        if string.match(dungeonName, "+") == nil then
+          dungeonName = format("|cffA0A0A4%s|r", L[dungeonName:sub(3, key:len() - 3)])
+          GameTooltip:AddLine(format("|cff00a000%s |r%s%s", key:sub(1,2), dungeonName, stars))
+        else
+            GameTooltip:AddLine(format("|cff00a000%s |r|cffffffff%s|r%s", key:sub(1,2), L[dungeonName:sub(3, key:len() - 5)], stars))
+        end
+  
+      end
     end
-
-    local total = ""
-
-    if (_prep ~= nill) then
+  
+    if prep then  
+      local total = ""
+      for _,tier in ipairs(tiers) do
+        if total_run[prep[1]]["tier"..tier.level] > 0 then
+          total = format("|cffffff00" .. L["Ключи в таймер:"] .. "|r |cff%s+5-9|r - |cffffffff(%s)|r", tier.color, total_run[prep[1]]["tier"..tier.level])
+          break
+        end
+      end
+      
+      if total ~= "" then
         GameTooltip:AddLine("----------------------------------")
-        if (total_run[_prep[1]].tier1 > 0) then
-            total = string.format("|cffffff00Ключи в таймер:|r |cff55dc62 +5-9|r - |cffffffff(%s)|r",
-                total_run[_prep[1]].tier1)
-            GameTooltip:AddLine(total, _, _, _, false)
-        end
-        if (total_run[_prep[1]].tier2 > 0) then
-            total = string.format("|cffffff00Ключи в таймер:|r |cff4687c5+10-14|r - |cffffffff(%s)|r",
-                total_run[_prep[1]].tier2)
-            GameTooltip:AddLine(total, _, _, _, false)
-        end
-        if (total_run[_prep[1]].tier3 > 0) then
-            total = string.format("|cffffff00Ключи в таймер:|r |cff695ee4+15-19|r - |cffffffff(%s)|r",
-                total_run[_prep[1]].tier3)
-            GameTooltip:AddLine(total, _, _, _, false)
-        end
-        if (total_run[_prep[1]].tier4 > 0) then
-            total = string.format("|cffffff00Ключи в таймер:|r |cffab38e6+20-24|r - |cffffffff(%s)|r",
-                total_run[_prep[1]].tier4)
-            GameTooltip:AddLine(total, _, _, _, false)
-        end
-        if (total_run[_prep[1]].tier5 > 0) then
-            total = string.format("|cffffff00Ключи в таймер:|r |cffe1588e+25-29|r - |cffffffff(%s)|r",
-                total_run[_prep[1]].tier5)
-            GameTooltip:AddLine(total, _, _, _, false)
-        end
-        if (total_run[_prep[1]].tier6 > 0) then
-            total = string.format("|cffffff00Ключи в таймер:|r |cfffb792e+30-34|r - |cffffffff(%s)|r",
-                total_run[_prep[1]].tier6)
-            GameTooltip:AddLine(total, _, _, _, false)
-        end
+        GameTooltip:AddLine(total, _, _, _, false)
+      end
     end
-    GameTooltip:Show()
-    if (tableHasKey(playerBest, activityID) == true) then
-        currentBest = playerBest[activityID].dungeon_ru
-        currentLevel = playerBest[activityID].level
-        currentChest = playerBest[activityID].chest
-
-        local stars = " "
-
-        if (currentChest == 0) then
-            stars = "(+0)"
-        end
-        if (currentChest == "1") then
-            stars = stars .. STAR_ICON
-        end
-        if (currentChest == "2") then
-            stars = stars .. STAR_ICON .. STAR_ICON
-        end
-        if (currentChest == "3") then
-            stars = stars .. STAR_ICON .. STAR_ICON .. STAR_ICON
-        end
-        GameTooltip:AddLine(string.format("\n----------------------------------\nВаш рекорд в текущем подземелье:\n|cff42aaff%s|r "
-            , currentLevel) ..
-            string.format("|cffc5d0e6%s|r ", currentBest) .. stars)
+  
+    if playerBest[id] then
+  
+      local stars = ""
+      if currentChest == "1" then stars = stars .. STAR_ICON end
+      if currentChest == "2" then stars = stars .. STAR_ICON .. STAR_ICON end
+      if currentChest == "3" then stars = stars .. STAR_ICON .. STAR_ICON .. STAR_ICON end
+  
+      local line = format("\n----------------------------\n" .. L["Ваш рекорд в текущем подземелье:"] .. "\n|cff42aaff%s|r ", currentLevel)
+      line = line .. format("|cffc5d0e6%s|r %s", currentBest, stars)
+      
+      GameTooltip:AddLine(line)
+  
     end
+  
     GameTooltip:Show()
-end
+  
+  end
 
 local hooked = {}
 local OnEnter
@@ -726,109 +725,48 @@ end
 
 LFGApplicantInit()
 
-function printMythicScoreInfo(unitName)
-
-    local unitName = unitName
-    local summary  = ""
+local function printMythicScoreInfo(unitName)
 
     local _prep = getCharacterIdByName(unitName)
-
-    if _prep ~= nil then
-        local _info = getMythicScore(_prep[1])
-        local classColor = classColors[_info.class][1]
-        local total = ""
-
-        if (_prep ~= nill) then
-            if (total_run[_prep[1]].tier1 > 0) then
-                total = string.format("|cffffff00Ключи в таймер:|r |cff55dc62 +5-9|r - |cffffffff(%s)|r",
-                    total_run[_prep[1]].tier1)
-            end
-            if (total_run[_prep[1]].tier2 > 0) then
-                total = string.format("|cffffff00Ключи в таймер:|r |cff4687c5+10-14|r - |cffffffff(%s)|r",
-                    total_run[_prep[1]].tier2)
-            end
-            if (total_run[_prep[1]].tier3 > 0) then
-                total = string.format("|cffffff00Ключи в таймер:|r |cff695ee4+15-19|r - |cffffffff(%s)|r",
-                    total_run[_prep[1]].tier3)
-            end
-            if (total_run[_prep[1]].tier4 > 0) then
-                total = string.format("|cffffff00Ключи в таймер:|r |cffab38e6+20-24|r - |cffffffff(%s)|r",
-                    total_run[_prep[1]].tier4)
-            end
-            if (total_run[_prep[1]].tier5 > 0) then
-                total = string.format("|cffffff00Ключи в таймер:|r |cffe1588e+25-30|r - |cffffffff(%s)|r",
-                    total_run[_prep[1]].tier5)
-            end
-            if (total_run[_prep[1]].tier6 > 0) then
-                total = string.format("|cffffff00Ключи в таймер:|r |cfffb792e+30-34|r - |cffffffff(%s)|r",
-                    total_run[_prep[1]].tier6)
-            end
-        end
-
-        if table.getn(_info.score) > 0 then
-            if table.getn(_info.score) == 1 then
-                summary = string.format(classColor, unitName) ..
-                    ": " .. string.format(_info.score[1]:gsub('%d', ''):gsub('%s', '') ..
-                        findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers), _info.score[1]) ..
-                    string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3)))
-                print("|cffffff00-------------------------------|r\n" .. summary .. "\n" .. total)
-                print("|cffffff00-------------------------------|r")
-            end
-
-            if table.getn(_info.score) == 2 then
-                summary = string.format(classColor, unitName) ..
-                    ": " .. string.format(ROLE_ICONS[string.match(_info.score[1], "%u*")].full ..
-                        findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers),
-                        string.match(_info.score[1], '%S+$')) ..
-                    string.format("\n|cffffff00Рекорд сезона:|r |cff00a000%s|r", _info.bestKey:sub(0, 2)) ..
-                    string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3)))
-                print("|cffffff00-------------------------------|r\n" .. summary .. "\n" .. total)
-                print("|cffffff00-------------------------------|r")
-            end
-
-            if table.getn(_info.score) == 3 then
-                summary = string.format(classColor, unitName) ..
-                    ": " .. string.format(ROLE_ICONS[string.match(_info.score[1], "%u*")].full ..
-                        findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers),
-                        string.match(_info.score[1], '%S+$')) ..
-                    string.format("" ..
-                        ROLE_ICONS[string.match(_info.score[2], "%u*")].full ..
-                        findClosest(tonumber(string.match(_info.score[2], '%S+$')), scoreTiers),
-                        string.match(_info.score[2], '%S+$')) ..
-                    string.format("\n|cffffff00Рекорд сезона:|r |cff00a000%s|r", _info.bestKey:sub(0, 2)) ..
-                    string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3)))
-                print("|cffffff00-------------------------------|r\n" .. summary .. "\n" .. total)
-                print("|cffffff00-------------------------------|r")
-            end
-
-            if table.getn(_info.score) == 4 then
-                summary = string.format(classColor, unitName) ..
-                    ": " .. string.format(ROLE_ICONS[string.match(_info.score[1], "%u*")].full ..
-                        findClosest(tonumber(string.match(_info.score[1], '%S+$')), scoreTiers),
-                        string.match(_info.score[1], '%S+$')) ..
-                    string.format("" ..
-                        ROLE_ICONS[string.match(_info.score[2], "%u*")].full ..
-                        findClosest(tonumber(string.match(_info.score[2], '%S+$')), scoreTiers),
-                        string.match(_info.score[2], '%S+$')) ..
-                    string.format("" ..
-                        ROLE_ICONS[string.match(_info.score[3], "%u*")].full ..
-                        findClosest(tonumber(string.match(_info.score[3], '%S+$')), scoreTiers),
-                        string.match(_info.score[3], '%S+$')) ..
-                    string.format("\n|cffffff00Рекорд сезона:|r |cff00a000%s|r", _info.bestKey:sub(0, 2)) ..
-                    string.format(string.format("|cffffffff%s|r", _info.bestKey:sub(3)))
-                print("|cffffff00-------------------------------|r\n" .. summary .. "\n" .. total)
-                print("|cffffff00-------------------------------|r")
-            end
-        end
-        if table.getn(_info.score) == 0 then
-            print(string.format("|cffffff00M+ Score:|r |cffffffff%s|r", "Нет информации о прогрессе"))
-        end
+  
+    if not _prep then
+      print("|cffffff00M+ Score:|r |cffffffffНет информации о прогрессе|r")
+      return 
     end
-    if _prep == nil then
-        print(string.format("|cffffff00M+ Score:|r |cffffffff%s|r", "Нет информации о прогрессе"))
+  
+    local _info = getMythicScore(_prep[1])
+    local classColor = classColors[_info.class][1]
+  
+    local totalKeys = ""
+  
+    for _,tier in ipairs(tiers) do
+      if total_run[_prep[1]]["tier"..tier.level] > 0 then
+        totalKeys = format("|cffffff00" .. L["Ключи в таймер:"] .. "|r |cff%s+5-9|r - |cffffffff(%s)|r", tier.color, total_run[_prep[1]]["tier"..tier.level])
+        break
+      end
     end
-end
-
+  
+    if #_info.score == 0 then
+      print(format("|cffffff00M+ Score:|r |cffffffff%s|r", L["Нет информации о прогрессе"]))
+      return
+    end
+  
+    local bestKey = format("|cff00a000%s|r %s", strsub(_info.bestKey, 1, 2), strsub(_info.bestKey, 3))
+  
+    local lines = {}
+  
+    for i=1,math.min(#_info.score, 4) do
+      local roleIcon = ROLE_ICONS[match(_info.score[i], "%u*")].full
+      local score = match(_info.score[i], "%d+")
+      local tier = findClosest(tonumber(score), scoreTiers)
+      lines[#lines+1] = format("%s %s", roleIcon, tier)
+    end
+  
+    local summary = format("%s: %s", classColor, unitName, concat(lines, "\n"))
+  
+    print(format("|cffffff00-------------------------------|r\n%s\n%s\n%s", summary, totalKeys, bestKey))
+  
+  end
 
 --Временно отключено из-за конфликтов с выпадающим меню
 -- UnitPopupButtons["MM"] = { text = "|cffff8000Прогресс M+Score|r",
