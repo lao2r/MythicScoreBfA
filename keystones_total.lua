@@ -5545,7 +5545,7 @@ tier6 = 0
 },
 [694] = {
 tier1 = 24,
-tier2 = 35,
+tier2 = 36,
 tier3 = 22,
 tier4 = 0,
 tier5 = 0,
@@ -18241,7 +18241,7 @@ tier6 = 0
 },
 [2281] = {
 tier1 = 0,
-tier2 = 7,
+tier2 = 8,
 tier3 = 2,
 tier4 = 0,
 tier5 = 0,
@@ -20225,7 +20225,7 @@ tier6 = 0
 },
 [2529] = {
 tier1 = 1,
-tier2 = 17,
+tier2 = 19,
 tier3 = 5,
 tier4 = 0,
 tier5 = 0,
@@ -110225,7 +110225,7 @@ tier6 = 0
 },
 [13782] = {
 tier1 = 2,
-tier2 = 0,
+tier2 = 1,
 tier3 = 0,
 tier4 = 0,
 tier5 = 0,
@@ -123417,7 +123417,7 @@ tier6 = 0
 },
 [15432] = {
 tier1 = 0,
-tier2 = 1,
+tier2 = 2,
 tier3 = 0,
 tier4 = 0,
 tier5 = 0,
@@ -166449,8 +166449,8 @@ tier6 = 0
 },
 [20812] = {
 tier1 = 36,
-tier2 = 51,
-tier3 = 25,
+tier2 = 52,
+tier3 = 26,
 tier4 = 0,
 tier5 = 0,
 tier6 = 0
@@ -174153,7 +174153,7 @@ tier6 = 0
 },
 [21776] = {
 tier1 = 20,
-tier2 = 14,
+tier2 = 15,
 tier3 = 0,
 tier4 = 0,
 tier5 = 0,
@@ -208873,8 +208873,8 @@ tier6 = 0
 },
 [26127] = {
 tier1 = 0,
-tier2 = 8,
-tier3 = 1,
+tier2 = 10,
+tier3 = 4,
 tier4 = 0,
 tier5 = 0,
 tier6 = 0
@@ -209121,7 +209121,7 @@ tier6 = 0
 },
 [26158] = {
 tier1 = 0,
-tier2 = 6,
+tier2 = 7,
 tier3 = 0,
 tier4 = 0,
 tier5 = 0,
@@ -209833,7 +209833,7 @@ tier6 = 0
 },
 [26254] = {
 tier1 = 0,
-tier2 = 7,
+tier2 = 8,
 tier3 = 0,
 tier4 = 0,
 tier5 = 0,
@@ -211321,7 +211321,7 @@ tier6 = 0
 },
 [26440] = {
 tier1 = 0,
-tier2 = 9,
+tier2 = 10,
 tier3 = 0,
 tier4 = 0,
 tier5 = 0,
@@ -212081,7 +212081,7 @@ tier6 = 0
 },
 [26535] = {
 tier1 = 0,
-tier2 = 0,
+tier2 = 1,
 tier3 = 0,
 tier4 = 0,
 tier5 = 0,
@@ -212241,7 +212241,7 @@ tier6 = 0
 },
 [26555] = {
 tier1 = 0,
-tier2 = 1,
+tier2 = 6,
 tier3 = 0,
 tier4 = 0,
 tier5 = 0,
@@ -212376,6 +212376,14 @@ tier5 = 0,
 tier6 = 0
 },
 [26601] = {
+tier1 = 0,
+tier2 = 2,
+tier3 = 0,
+tier4 = 0,
+tier5 = 0,
+tier6 = 0
+},
+[26603] = {
 tier1 = 0,
 tier2 = 1,
 tier3 = 0,
@@ -212552,6 +212560,14 @@ tier5 = 0,
 tier6 = 0
 },
 [26641] = {
+tier1 = 0,
+tier2 = 0,
+tier3 = 0,
+tier4 = 0,
+tier5 = 0,
+tier6 = 0
+},
+[26642] = {
 tier1 = 0,
 tier2 = 0,
 tier3 = 0,
