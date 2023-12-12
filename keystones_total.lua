@@ -81313,8 +81313,8 @@ tier6 = 0
 },
 [10166] = {
 tier1 = 14,
-tier2 = 15,
-tier3 = 7,
+tier2 = 16,
+tier3 = 11,
 tier4 = 0,
 tier5 = 0,
 tier6 = 0
@@ -212778,6 +212778,14 @@ tier6 = 0
 [26723] = {
 tier1 = 0,
 tier2 = 6,
+tier3 = 0,
+tier4 = 0,
+tier5 = 0,
+tier6 = 0
+},
+[26810] = {
+tier1 = 0,
+tier2 = 2,
 tier3 = 0,
 tier4 = 0,
 tier5 = 0,
