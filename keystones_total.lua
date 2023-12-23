@@ -11674,7 +11674,7 @@ tier6 = 0
 [1460] = {
 tier1 = 30,
 tier2 = 37,
-tier3 = 29,
+tier3 = 30,
 tier4 = 1,
 tier5 = 0,
 tier6 = 0
@@ -92617,8 +92617,8 @@ tier6 = 0
 },
 [11580] = {
 tier1 = 21,
-tier2 = 18,
-tier3 = 0,
+tier2 = 21,
+tier3 = 1,
 tier4 = 0,
 tier5 = 0,
 tier6 = 0
@@ -111649,9 +111649,9 @@ tier6 = 0
 },
 [13960] = {
 tier1 = 90,
-tier2 = 104,
-tier3 = 76,
-tier4 = 4,
+tier2 = 108,
+tier3 = 88,
+tier4 = 5,
 tier5 = 0,
 tier6 = 0
 },
@@ -117161,7 +117161,7 @@ tier6 = 0
 },
 [14649] = {
 tier1 = 137,
-tier2 = 167,
+tier2 = 168,
 tier3 = 49,
 tier4 = 1,
 tier5 = 0,
@@ -119033,8 +119033,8 @@ tier6 = 0
 },
 [14883] = {
 tier1 = 60,
-tier2 = 49,
-tier3 = 26,
+tier2 = 50,
+tier3 = 34,
 tier4 = 0,
 tier5 = 0,
 tier6 = 0
@@ -137033,8 +137033,8 @@ tier6 = 0
 },
 [17135] = {
 tier1 = 14,
-tier2 = 9,
-tier3 = 12,
+tier2 = 11,
+tier3 = 17,
 tier4 = 0,
 tier5 = 0,
 tier6 = 0
@@ -155697,8 +155697,8 @@ tier6 = 0
 },
 [19468] = {
 tier1 = 22,
-tier2 = 26,
-tier3 = 48,
+tier2 = 31,
+tier3 = 49,
 tier4 = 0,
 tier5 = 0,
 tier6 = 0
@@ -157801,8 +157801,8 @@ tier6 = 0
 },
 [19731] = {
 tier1 = 43,
-tier2 = 18,
-tier3 = 23,
+tier2 = 19,
+tier3 = 24,
 tier4 = 2,
 tier5 = 0,
 tier6 = 0
@@ -159585,7 +159585,7 @@ tier6 = 0
 },
 [19954] = {
 tier1 = 130,
-tier2 = 138,
+tier2 = 139,
 tier3 = 123,
 tier4 = 9,
 tier5 = 0,
@@ -197185,7 +197185,7 @@ tier6 = 0
 },
 [24655] = {
 tier1 = 0,
-tier2 = 28,
+tier2 = 29,
 tier3 = 46,
 tier4 = 6,
 tier5 = 0,
@@ -200993,9 +200993,9 @@ tier6 = 0
 },
 [25131] = {
 tier1 = 0,
-tier2 = 29,
-tier3 = 56,
-tier4 = 0,
+tier2 = 40,
+tier3 = 87,
+tier4 = 5,
 tier5 = 0,
 tier6 = 0
 },
@@ -204305,9 +204305,9 @@ tier6 = 0
 },
 [25545] = {
 tier1 = 0,
-tier2 = 52,
-tier3 = 45,
-tier4 = 1,
+tier2 = 61,
+tier3 = 68,
+tier4 = 9,
 tier5 = 0,
 tier6 = 0
 },
@@ -212874,7 +212874,7 @@ tier6 = 0
 [26815] = {
 tier1 = 0,
 tier2 = 8,
-tier3 = 6,
+tier3 = 7,
 tier4 = 0,
 tier5 = 0,
 tier6 = 0
@@ -213248,6 +213248,22 @@ tier5 = 0,
 tier6 = 0
 },
 [27179] = {
+tier1 = 0,
+tier2 = 1,
+tier3 = 0,
+tier4 = 0,
+tier5 = 0,
+tier6 = 0
+},
+[27180] = {
+tier1 = 0,
+tier2 = 1,
+tier3 = 0,
+tier4 = 0,
+tier5 = 0,
+tier6 = 0
+},
+[27181] = {
 tier1 = 0,
 tier2 = 1,
 tier3 = 0,
