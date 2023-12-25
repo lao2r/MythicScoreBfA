@@ -213143,6 +213143,14 @@ tier4 = 0,
 tier5 = 0,
 tier6 = 0
 },
+[27038] = {
+tier1 = 0,
+tier2 = 1,
+tier3 = 1,
+tier4 = 0,
+tier5 = 0,
+tier6 = 0
+},
 [27039] = {
 tier1 = 0,
 tier2 = 0,
