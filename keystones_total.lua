@@ -127721,9 +127721,9 @@ tier6 = 0
 },
 [15970] = {
 tier1 = 47,
-tier2 = 90,
-tier3 = 79,
-tier4 = 19,
+tier2 = 93,
+tier3 = 81,
+tier4 = 28,
 tier5 = 0,
 tier6 = 0
 },
@@ -170233,9 +170233,9 @@ tier6 = 0
 },
 [21286] = {
 tier1 = 1,
-tier2 = 15,
-tier3 = 64,
-tier4 = 41,
+tier2 = 17,
+tier3 = 71,
+tier4 = 62,
 tier5 = 4,
 tier6 = 0
 },
