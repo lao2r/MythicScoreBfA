@@ -38971,7 +38971,7 @@ tier6 = 0
 tier1 = 7,
 tier2 = 24,
 tier3 = 94,
-tier4 = 42,
+tier4 = 50,
 tier5 = 0,
 tier6 = 0
 },
@@ -191850,7 +191850,7 @@ tier6 = 0
 [23988] = {
 tier1 = 5,
 tier2 = 7,
-tier3 = 5,
+tier3 = 7,
 tier4 = 0,
 tier5 = 0,
 tier6 = 0
