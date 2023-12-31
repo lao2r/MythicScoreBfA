@@ -26715,4 +26715,6 @@ library = {
 ["Auceps"]={27199},
 ["Scull"]={27200},
 ["Eyvor"]={27201},
+["Spodik"]={27202},
+["Crystalbeast"]={27203},
 }
