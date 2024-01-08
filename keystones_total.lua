@@ -17465,7 +17465,7 @@ tier6 = 0
 },
 [2184] = {
 tier1 = 0,
-tier2 = 33,
+tier2 = 34,
 tier3 = 24,
 tier4 = 1,
 tier5 = 0,
@@ -186217,8 +186217,8 @@ tier6 = 0
 },
 [23284] = {
 tier1 = 2,
-tier2 = 0,
-tier3 = 0,
+tier2 = 1,
+tier3 = 1,
 tier4 = 0,
 tier5 = 0,
 tier6 = 0
@@ -213833,7 +213833,7 @@ tier6 = 0
 },
 [27243] = {
 tier1 = 0,
-tier2 = 1,
+tier2 = 2,
 tier3 = 0,
 tier4 = 0,
 tier5 = 0,
