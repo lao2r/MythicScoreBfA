@@ -11673,8 +11673,8 @@ tier6 = 0
 },
 [1460] = {
 tier1 = 30,
-tier2 = 37,
-tier3 = 44,
+tier2 = 38,
+tier3 = 54,
 tier4 = 1,
 tier5 = 0,
 tier6 = 0
@@ -148690,8 +148690,8 @@ tier6 = 0
 [18592] = {
 tier1 = 71,
 tier2 = 89,
-tier3 = 203,
-tier4 = 42,
+tier3 = 206,
+tier4 = 43,
 tier5 = 5,
 tier6 = 0
 },
