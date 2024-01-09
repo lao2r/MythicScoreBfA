@@ -63433,8 +63433,8 @@ tier6 = 0
 },
 [7931] = {
 tier1 = 20,
-tier2 = 19,
-tier3 = 14,
+tier2 = 21,
+tier3 = 18,
 tier4 = 0,
 tier5 = 0,
 tier6 = 0
@@ -165097,8 +165097,8 @@ tier6 = 0
 },
 [20643] = {
 tier1 = 8,
-tier2 = 25,
-tier3 = 15,
+tier2 = 29,
+tier3 = 24,
 tier4 = 0,
 tier5 = 0,
 tier6 = 0
