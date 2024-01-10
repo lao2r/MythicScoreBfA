@@ -167417,9 +167417,9 @@ tier6 = 0
 },
 [20933] = {
 tier1 = 24,
-tier2 = 49,
-tier3 = 114,
-tier4 = 12,
+tier2 = 52,
+tier3 = 120,
+tier4 = 13,
 tier5 = 0,
 tier6 = 0
 },
