@@ -82113,8 +82113,8 @@ tier6 = 0
 },
 [10266] = {
 tier1 = 14,
-tier2 = 18,
-tier3 = 33,
+tier2 = 19,
+tier3 = 34,
 tier4 = 1,
 tier5 = 0,
 tier6 = 0
@@ -201945,7 +201945,7 @@ tier6 = 0
 },
 [25250] = {
 tier1 = 0,
-tier2 = 4,
+tier2 = 5,
 tier3 = 15,
 tier4 = 0,
 tier5 = 0,
@@ -212129,7 +212129,7 @@ tier6 = 0
 },
 [26541] = {
 tier1 = 0,
-tier2 = 6,
+tier2 = 7,
 tier3 = 11,
 tier4 = 0,
 tier5 = 0,
@@ -213233,7 +213233,7 @@ tier6 = 0
 },
 [27005] = {
 tier1 = 0,
-tier2 = 9,
+tier2 = 10,
 tier3 = 12,
 tier4 = 1,
 tier5 = 0,
@@ -213665,7 +213665,7 @@ tier6 = 0
 },
 [27186] = {
 tier1 = 0,
-tier2 = 6,
+tier2 = 7,
 tier3 = 1,
 tier4 = 0,
 tier5 = 0,
