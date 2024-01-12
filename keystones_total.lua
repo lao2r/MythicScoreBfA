@@ -127722,8 +127722,8 @@ tier6 = 0
 [15970] = {
 tier1 = 47,
 tier2 = 93,
-tier3 = 81,
-tier4 = 29,
+tier3 = 82,
+tier4 = 30,
 tier5 = 0,
 tier6 = 0
 },
