@@ -214143,4 +214143,20 @@ tier4 = 0,
 tier5 = 0,
 tier6 = 0
 },
+[27265] = {
+tier1 = 0,
+tier2 = 0,
+tier3 = 0,
+tier4 = 0,
+tier5 = 0,
+tier6 = 0
+},
+[27266] = {
+tier1 = 0,
+tier2 = 0,
+tier3 = 0,
+tier4 = 0,
+tier5 = 0,
+tier6 = 0
+},
 }
