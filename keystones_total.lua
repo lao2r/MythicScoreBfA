@@ -126777,9 +126777,9 @@ tier6 = 0
 },
 [15852] = {
 tier1 = 10,
-tier2 = 12,
-tier3 = 29,
-tier4 = 7,
+tier2 = 13,
+tier3 = 49,
+tier4 = 22,
 tier5 = 0,
 tier6 = 0
 },
