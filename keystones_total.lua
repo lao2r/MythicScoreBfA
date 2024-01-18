@@ -48545,9 +48545,9 @@ tier6 = 0
 },
 [6069] = {
 tier1 = 39,
-tier2 = 47,
-tier3 = 38,
-tier4 = 1,
+tier2 = 48,
+tier3 = 40,
+tier4 = 3,
 tier5 = 0,
 tier6 = 0
 },
