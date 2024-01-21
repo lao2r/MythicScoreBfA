@@ -149241,8 +149241,8 @@ tier6 = 0
 },
 [18661] = {
 tier1 = 30,
-tier2 = 14,
-tier3 = 2,
+tier2 = 27,
+tier3 = 6,
 tier4 = 0,
 tier5 = 0,
 tier6 = 0
