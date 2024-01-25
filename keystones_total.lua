@@ -29027,7 +29027,7 @@ tier6 = 0
 tier1 = 8,
 tier2 = 8,
 tier3 = 36,
-tier4 = 28,
+tier4 = 34,
 tier5 = 0,
 tier6 = 0
 },
