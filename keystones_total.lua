@@ -4826,9 +4826,9 @@ tier6 = 0
 [604] = {
 tier1 = 12,
 tier2 = 36,
-tier3 = 185,
-tier4 = 250,
-tier5 = 77,
+tier3 = 187,
+tier4 = 251,
+tier5 = 83,
 tier6 = 0
 },
 [605] = {
