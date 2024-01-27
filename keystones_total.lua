@@ -48561,7 +48561,7 @@ tier6 = 0
 },
 [6071] = {
 tier1 = 34,
-tier2 = 42,
+tier2 = 43,
 tier3 = 34,
 tier4 = 2,
 tier5 = 0,
