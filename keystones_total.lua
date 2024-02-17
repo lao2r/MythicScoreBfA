@@ -185067,7 +185067,7 @@ tier6 = 0
 tier1 = 39,
 tier2 = 26,
 tier3 = 38,
-tier4 = 1,
+tier4 = 2,
 tier5 = 0,
 tier6 = 0
 },
@@ -192475,7 +192475,7 @@ tier6 = 0
 tier1 = 1,
 tier2 = 3,
 tier3 = 28,
-tier4 = 1,
+tier4 = 2,
 tier5 = 0,
 tier6 = 0
 },
@@ -213291,7 +213291,7 @@ tier6 = 0
 tier1 = 0,
 tier2 = 17,
 tier3 = 31,
-tier4 = 6,
+tier4 = 7,
 tier5 = 0,
 tier6 = 0
 },
@@ -213611,7 +213611,7 @@ tier6 = 0
 tier1 = 0,
 tier2 = 30,
 tier3 = 24,
-tier4 = 0,
+tier4 = 1,
 tier5 = 0,
 tier6 = 0
 },
@@ -214139,7 +214139,7 @@ tier6 = 0
 tier1 = 0,
 tier2 = 2,
 tier3 = 3,
-tier4 = 0,
+tier4 = 1,
 tier5 = 0,
 tier6 = 0
 },
