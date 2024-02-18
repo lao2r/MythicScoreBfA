@@ -141682,8 +141682,8 @@ tier6 = 0
 [17716] = {
 tier1 = 11,
 tier2 = 23,
-tier3 = 48,
-tier4 = 1,
+tier3 = 51,
+tier4 = 2,
 tier5 = 0,
 tier6 = 0
 },
