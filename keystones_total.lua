@@ -96137,9 +96137,9 @@ tier6 = 0
 },
 [12020] = {
 tier1 = 27,
-tier2 = 75,
-tier3 = 131,
-tier4 = 15,
+tier2 = 82,
+tier3 = 142,
+tier4 = 16,
 tier5 = 0,
 tier6 = 0
 },
