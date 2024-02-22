@@ -203522,8 +203522,8 @@ tier6 = 0
 [25447] = {
 tier1 = 0,
 tier2 = 13,
-tier3 = 14,
-tier4 = 0,
+tier3 = 20,
+tier4 = 1,
 tier5 = 0,
 tier6 = 0
 },
